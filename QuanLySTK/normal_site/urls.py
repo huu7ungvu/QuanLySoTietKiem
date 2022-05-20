@@ -20,9 +20,9 @@ from . import views
 app_name = 'normal_site'
 urlpatterns = [
     path('home', views.home, name='home'),
-    path('lap_phieu_tiet_kiem', views.LapPhieuTietKiem.as_view(), name='lap_phieu_tiet_kiem'),
-    path('tim_kiem_phieu_tiet_kiem', views.TimKiemPhieuTietKiem.as_view(), name='tim_kiem_phieu_rut_tien'),
-    path('rut_phieu_tiet_kiem\<char:maptk>', views.RutPhieuTietKiem.as_view(), name='rut_phieu_tiet_kiem'),
-    path('tra_cuu',views.TraCuu, name='tra_cuu'),
-    path('thong_ke',views.ThongKe,name='thong_ke'),
+    # path('lap_phieu_tiet_kiem', views.LapPhieuTietKiem.as_view(), name='lap_phieu_tiet_kiem'),
+    # path('tim_kiem_phieu_tiet_kiem', views.TimKiemPhieuTietKiem.as_view(), name='tim_kiem_phieu_rut_tien'),
+    # path('rut_phieu_tiet_kiem\<char:maptk>', views.RutPhieuTietKiem.as_view(), name='rut_phieu_tiet_kiem'),
+    # path('tra_cuu',views.TraCuu, name='tra_cuu'),
+    # path('thong_ke',views.ThongKe,name='thong_ke'),
     ]
