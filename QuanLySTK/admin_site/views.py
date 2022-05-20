@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from admin_site import models
 
 
 # Create group_required decorator
@@ -42,18 +43,21 @@ def signup(request):
         password2 = request.POST.get('password2')
         email = request.POST.get('email')
         position = request.POST.get('position', False)
-        manv = request.POST.get('manv')
 
+        # Xử lý mã nhân viên
+        manv = 'NV' + str(int(models.Thamso.objects.get(tenthamso='SLNguoiDung').giatri)+1)
 
         if password1 == password2:
             if User.objects.filter(username=username).exists():
                 messages.error(request,"Username already exists")
-                return redirect('/adsite/signup')
+                return redirect('adsite:signup')
             else:
-                user = User.objects.create_user(username=username,password=password1,first_name=name,last_name=manv,email=email)
+                user = User.objects.create_user(username=username,password=password1,first_name=name,email=email)
                 user.first_name = name # first name equal full name
-                user.last_name = manv # add manv into last_name
                 user.save()
+
+                user_extend= models.UsersExtendClass.objects.create(user=user,manv=manv)
+                user_extend.save()
 
                 if position == "NhanVien":
                     group = Group.objects.get(name='NhanVien')
@@ -69,12 +73,12 @@ def signup(request):
                     user.is_staff = True
 
                 messages.success(request,"You are registered successfully")
-                return redirect('/accounts/signin')
+                return redirect('accounts:signin')
         else:
             messages.error(request,"Password not matched")
-            return redirect('/adsite/signup')
+            return redirect('adsite:signup')
 
-    return render(request,"admin_site/signup.html")
+    return render(request,"admin_site/Register/register.html")
 
 def home (request):
     return HttpResponse("Hello, This is admin Site")
