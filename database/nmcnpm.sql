@@ -125,6 +125,8 @@ FOREIGN KEY (manhom) REFERENCES Nhomnguoidung(manhom);
 
 # Insert dữ liệu
 # Bảng khách hàng
+
+
 INSERT INTO KhachHang (makh, tenkh, diachi,cccd) VALUES ('0001','Nguyen Thi Mai Phuong','Nghe An', '012345678');
 INSERT INTO KhachHang (makh, tenkh, diachi,cccd) VALUES ('0002','Tran Van Huynh','Binh Dinh', '013678562');
 INSERT INTO KhachHang (makh, tenkh, diachi,cccd) VALUES ('0003','Nguyen Minh Hieu','Da Nang', '123456789');
@@ -149,7 +151,6 @@ INSERT INTO loaitietkiem(maltk,ltk,kyhan,sotiengoitoithieu,thoigiangoitoithieu,l
 INSERT INTO loaitietkiem(maltk,ltk,kyhan,sotiengoitoithieu,thoigiangoitoithieu,laisuat) VALUES ('LTK03','6 thang ',180,'100000','180','5.5');
 
 # Phieutietkiem
-# SET DATEFORMAT DMY;
 INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,sodu,tinhtrang) VALUES ('PTK001','0001','LTK03','100000000',STR_TO_DATE('01-04-2022', '%d-%m-%Y'),STR_TO_DATE('01-10-2022', '%d-%m-%Y'),'100000000','1');
 INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,sodu,tinhtrang) VALUES ('PTK002','0002','LTK02','250000000',STR_TO_DATE('10-05-2022', '%d-%m-%Y'),STR_TO_DATE('10-08-2022', '%d-%m-%Y'),'250000000','1');
 INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,sodu,tinhtrang) VALUES ('PTK003','0003','LTK01','200000000',STR_TO_DATE('09-02-2022', '%d-%m-%Y'),STR_TO_DATE('07-05-2022', '%d-%m-%Y'),'0','0');
