@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lập phiếu rút tiết kiệm</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'css/lap_phieu_rut_tien.css' %}">
 </head>
 <body>
     <div class="header-container">
@@ -20,7 +21,7 @@
                         <p class="id">ID</p>
                     </div>
                     <div class="user-avatar">
-                        <img src="./img/avatar.svg" alt="avatar">
+                        <img src="{% static 'img/avatar.svg' %}" alt="avatar">
                     </div>
                 </div>
             </nav>
@@ -81,6 +82,5 @@
             Footer
         </div>
     </div>
-    <script src="main.js"></script>
 </body>
 </html>
