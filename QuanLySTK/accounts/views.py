@@ -11,6 +11,8 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import user_passes_test, login_required, permission_required # add login and permission required decorator
 from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin,AccessMixin # add login and permission mixin 
 from braces.views import GroupRequiredMixin # add GroupRequiredMixin to the class 
+from django.urls import reverse
+
 
 # Create group_required decorator
 def group_required(*group_names, login_url=None, raise_exception=False):
@@ -49,11 +51,10 @@ def signin(request):
                 if user.is_superuser==False:
                     login(request,user)
                     
-                    return redirect('normal_site:home') # điều hướng về trang admin
+                    return redirect('normal_site:home',username) # điều hướng về trang chủ
                 else:
                     login(request,user)
-                    return HttpResponse('Success')
-                    #return redirect('adsite:home') # điều hướng về trang chủ
+                    return redirect('adsite:home') # điều hướng về admin
         else:
             messages.error(request,"Invalid Credentials")
             return redirect('accounts:signin')

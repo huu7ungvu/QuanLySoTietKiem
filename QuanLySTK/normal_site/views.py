@@ -37,8 +37,17 @@ from dateutil.relativedelta import *
 
 @login_required()
 #@group_required('NhanVien',)
-def home(request):
-    return render(request,"normal_site/Home/home.html")
+def home(request,username):
+    user = models.User.objects.get(username=username)
+    #user_2 = models.UsersExtendClass.objects.get(username=request.POST.get('tendangnhap'))
+    context = {'user': user}
+    return render(request,"normal_site/Home/home.html",context)
+
+def profile(request,username):
+    user = models.User.objects.get(username=username)
+    #list_user = models.User.objects.filter(groups__name=)
+    context = {'user': user}
+    return render(request,"normal_site/Profile/profile.html",context)
 
 # class LapPhieuTietKiem(View):
 #     model = models.Phieutietkiem
