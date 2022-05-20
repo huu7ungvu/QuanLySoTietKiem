@@ -12,7 +12,6 @@
 --     }
 -- }
 
-
 use quan_ly_phieu_tiet_kiem;
 # Create tables
 create table KhachHang 
@@ -114,6 +113,15 @@ tencn varchar(20) not null,
 tenmanhinhduocloat varchar(20) not null,
 primary key (macn));
 
+# Create thamso table
+create table Thamso
+( tenthamso varchar(20) not null,
+giatri varchar(10) not null,
+primary key (tenthamso));
+
+drop table thamso;
+
+
 # Create foreign key of privilege tables
 ALTER TABLE Phanquyen
 ADD CONSTRAINT FK_PQ_1
@@ -143,7 +151,7 @@ INSERT INTO KhachHang (makh, tenkh, diachi,cccd) VALUES ('0013','Nguyen Thi Huye
 INSERT INTO KhachHang (makh, tenkh, diachi,cccd) VALUES ('0014','Tran Hue Linh','Ca Mau', '012345987');
 INSERT INTO KhachHang (makh, tenkh, diachi,cccd) VALUES ('0015','Pham Van Hung','Tp.HCM', '134798567');
 
-select * from khachhang
+select * from loaitietkiem;
 
 # Loại tiết kiệm
 INSERT INTO loaitietkiem(maltk,ltk,kyhan,sotiengoitoithieu,thoigiangoitoithieu,laisuat) VALUES ('LTK01','Khong ky han',0,'100000','15','0.5');
@@ -169,7 +177,7 @@ INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,
 INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,sodu,tinhtrang) VALUES ('PTK016','0001','LTK02','160000000',STR_TO_DATE('21-04-2022', '%d-%m-%Y'),STR_TO_DATE('21-07-2022', '%d-%m-%Y'),'160000000','1');
 INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,sodu,tinhtrang) VALUES ('PTK017','0002','LTK02','600000000',STR_TO_DATE('09-01-2022', '%d-%m-%Y'),STR_TO_DATE('09-04-2022', '%d-%m-%Y'),'0','0');
 
-select * from phieutietkiem;
+select * from phieuruttien;
 
 # Phiếu rút tiền
 INSERT INTO Phieuruttien (maprt,makh,maptk,ngayrut,sotienrut) VALUES ('PRT001','0003','PTK003',STR_TO_DATE('07-05-2022', '%d-%m-%Y'),'200000000');
@@ -179,11 +187,13 @@ INSERT INTO Phieuruttien (maprt,makh,maptk,ngayrut,sotienrut) VALUES ('PRT004','
 INSERT INTO Phieuruttien (maprt,makh,maptk,ngayrut,sotienrut) VALUES ('PRT005','0013','PTK013',STR_TO_DATE('04-05-2021', '%d-%m-%Y'),'130000000');
 INSERT INTO Phieuruttien (maprt,makh,maptk,ngayrut,sotienrut) VALUES ('PRT006','0002','PTK017',STR_TO_DATE('04-09-2021', '%d-%m-%Y'),'600000000');
 
+# bangthamso
+Insert into thamso (tenthamso, giatri) values ('SLNguoiDung','1');
+Insert into thamso (tenthamso, giatri) values ('SLKhachHang','15');
+Insert into thamso (tenthamso, giatri) values ('SLPhieuTietKiem','17');
+Insert into thamso (tenthamso, giatri) values ('SLPhieuRutTien','6');
 
-# Create Contraint
-# PTK: So Tien Goi >= So tien toi thieu maltk
-# PTK: Ngay dong phieu >= Ngay mo phieu + Thoi gian goi toi thieu
-# PTK: So du = tổng số tiền có tính lãi - số tiền đã rut
-# PTK: So du = 0 => Tình trạng False
-# PRT: So tien rut <= tổng số tiền có tính lãi (Tùy loại maltk)
-# PRT: Ngay rut >= Ngay mo phieu + Thoi gian goi toi thieu
+select * from phieuruttien;
+
+-- SHOW VARIABLES LIKE "sql_safe_updates";
+-- SET SQL_SAFE_UPDATES = 'OFF';
