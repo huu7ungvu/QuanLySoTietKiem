@@ -19,9 +19,9 @@ from . import views
 
 app_name = 'normal_site'
 urlpatterns = [
-    path('home/<str:username>', views.home, name='home'),
+    path('home/<str:username>', views.Home.as_view(), name='home'),
     path('home/profile/<str:username>', views.profile, name='profile'),
-    # path('lap_phieu_tiet_kiem', views.LapPhieuTietKiem.as_view(), name='lap_phieu_tiet_kiem'),
+    path('home/lap_phieu_tiet_kiem/', views.LapPhieuTietKiem.as_view(), name='lap_phieu_tiet_kiem'),
     # path('tim_kiem_phieu_tiet_kiem', views.TimKiemPhieuTietKiem.as_view(), name='tim_kiem_phieu_rut_tien'),
     # path('rut_phieu_tiet_kiem/<char:maptk>', views.RutPhieuTietKiem.as_view(), name='rut_phieu_tiet_kiem'),
     # path('tra_cuu',views.TraCuu, name='tra_cuu'),

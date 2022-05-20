@@ -35,13 +35,25 @@ from dateutil.relativedelta import *
 
 # Create your views here.
 
-@login_required()
+#@login_required()
 #@group_required('NhanVien',)
-def home(request,username):
-    user = models.User.objects.get(username=username)
-    #user_2 = models.UsersExtendClass.objects.get(username=request.POST.get('tendangnhap'))
-    context = {'user': user}
-    return render(request,"normal_site/Home/home.html",context)
+class Home (View):
+    def get(self,request,username):
+        user = models.User.objects.get(username=username)
+        context = {'user': user}
+        return render(request,"normal_site/Home/home.html",context)
+    def get(self, request, *args, **kwargs):
+        return render(request, 'normal_site/Home/home.html')
+
+
+
+
+
+# def home(request,username):
+#         user = models.User.objects.get(username=username)
+#         #user_2 = models.UsersExtendClass.objects.get(username=request.POST.get('tendangnhap'))
+#         context = {'user': user}
+#         return render(request,"normal_site/Home/home.html",context)
 
 def profile(request,username):
     user = models.User.objects.get(username=username)
@@ -49,71 +61,71 @@ def profile(request,username):
     context = {'user': user}
     return render(request,"normal_site/Profile/profile.html",context)
 
-# class LapPhieuTietKiem(View):
-#     model = models.Phieutietkiem
-#     template_name = 'normal_site/lap_phieu_tiet_kiem.html'
-#     form_class = forms.PhieuTietKiemForm
+class LapPhieuTietKiem(View):
+    model = models.Phieutietkiem
+    template_name = 'normal_site\PhieuTK\phieutk.html'
+    #form_class = forms.PhieuTietKiemForm
 
-#     def get(self, request, *args, **kwargs):
-#         form = self.form_class()
-#         context = {'form': form}
-#         return render(request,self.template_name,context)
+    def get(self, request, *args, **kwargs):
+        #form = self.form_class()
+        #context = {'form': form}
+        return render(request,self.template_name,context)
     
-#     def post(self, request, *args, **kwargs):
-#         # lấy thông tin từ request
-#         tenkh = request.POST.get('tenkh')
-#         CMND = request.POST.get('CMND')
-#         diachi = request.POST.get('diachi')
-#         sotiengoi = request.POST.get('sotiengoi')
-#         loaitietkiem = request.POST.get('loaitietkiem',False)
+    def post(self, request, *args, **kwargs):
+        # lấy thông tin từ request
+        tenkh = request.POST.get('tenkh')
+        CMND = request.POST.get('CMND')
+        diachi = request.POST.get('diachi')
+        sotiengoi = request.POST.get('sotiengoi')
+        loaitietkiem = request.POST.get('loaitietkiem',False)
 
-#         # check từng thông tin một
-#         if (len(CMND)!=9 or len(CMND)!=12):
-#             form = self.form_class(request.POST)
-#             context = {'form': form}
-#             messages.error(request,"CMND không hợp lệ")
-#             return render(request,self.template_name,context)
-#         else:
-#             khachhang = models.Khachhang.objects.get(cccd=CMND)
-#             if khachhang.exists():
-#                 if khachhang.tenkh.lower() != tenkh.lower():
-#                     form = self.form_class(request.POST)
-#                     context = {'form': form}
-#                     messages.error(request,"Tên khách hàng và CMND không khớp với thông tin khách hàng trong hệ thống")
-#                     return render(request,self.template_name,context)
-#                 else:
-#                     flag_khachhangdatontai = True
+        # check từng thông tin một
+        if (len(CMND)!=9 or len(CMND)!=12):
+            form = self.form_class(request.POST)
+            context = {'form': form}
+            messages.error(request,"CMND không hợp lệ")
+            return render(request,self.template_name,context)
+        else:
+            khachhang = models.Khachhang.objects.get(cccd=CMND)
+            if khachhang.exists():
+                if khachhang.tenkh.lower() != tenkh.lower():
+                    form = self.form_class(request.POST)
+                    context = {'form': form}
+                    messages.error(request,"Tên khách hàng và CMND không khớp với thông tin khách hàng trong hệ thống")
+                    return render(request,self.template_name,context)
+                else:
+                    flag_khachhangdatontai = True
 
-#         sotiengoitoithieu = models.Loaitietkiem.objects.get(ltk=loaitietkiem).sotiengoitoithieu # có thể điều kiện get thay đổi tuy thuộc vào database
-#         if (float(sotiengoi) < sotiengoitoithieu):
-#                 form = self.form_class(request.POST)
-#                 context = {'form': form}
-#                 messages.error(request,"Số tiền gởi phải lớn hơn hoặc bằng {}".format(sotiengoitoithieu))
+        sotiengoitoithieu = models.Loaitietkiem.objects.get(ltk=loaitietkiem).sotiengoitoithieu # có thể điều kiện get thay đổi tuy thuộc vào database
+        if (float(sotiengoi) < sotiengoitoithieu):
+                form = self.form_class(request.POST)
+                context = {'form': form}
+                messages.error(request,"Số tiền gởi phải lớn hơn hoặc bằng {}".format(sotiengoitoithieu))
                 
-#                 return render(request,self.template_name,context)
-#         # oke thì lưu lại -> 2 hướng (1: nếu khách hàng có thông tin rồi thì chỉ lưu vào bảng phieutietkiem; 2: ngược lại)
-#         if flag_khachhangdatontai:
-#             phieutietkiem = models.Phieutietkiem.objects.create(maptk=random.randint(1000,10000), # random là sai nha
-#             makh=models.Khachhang.objects.get(cccd=CMND).makh,
-#             maltk=models.Loaitietkiem.objects.get(ltk=loaitietkiem).maltk,
-#             sotiengoi=sotiengoi,ngaymophieu=str(date.today()),
-#             ngaydongphieu='',sodu=sotiengoi,tinhtrang=1)
-#             phieutietkiem.save()
+                return render(request,self.template_name,context)
+        # oke thì lưu lại -> 2 hướng (1: nếu khách hàng có thông tin rồi thì chỉ lưu vào bảng phieutietkiem; 2: ngược lại)
+        if flag_khachhangdatontai:
+            phieutietkiem = models.Phieutietkiem.objects.create(maptk=random.randint(1000,10000), # random là sai nha
+            makh=models.Khachhang.objects.get(cccd=CMND).makh,
+            maltk=models.Loaitietkiem.objects.get(ltk=loaitietkiem).maltk,
+            sotiengoi=sotiengoi,ngaymophieu=str(date.today()),
+            ngaydongphieu='',sodu=sotiengoi,tinhtrang=1)
+            phieutietkiem.save()
 
-#             # chuyen trang
-#             return redirect('/normal_site/phieutietkiem/')
-#         else:
-#             khachhang_save = models.Khachhang.objects.create(makh=random.randint(1000,10000),tenkh=tenkh,diachi=diachi,cccd=CMND) # random cũng là sai nha
-#             khachhang_save.save()
+            # chuyen trang
+            return redirect('/normal_site/phieutietkiem/')
+        else:
+            khachhang_save = models.Khachhang.objects.create(makh=random.randint(1000,10000),tenkh=tenkh,diachi=diachi,cccd=CMND) # random cũng là sai nha
+            khachhang_save.save()
 
-#             phieutietkiem = models.Phieutietkiem.objects.create(maptk=random.randint(1000,10000), # random là sai nha
-#             makh=models.Khachhang.objects.get(cccd=CMND).makh,
-#             maltk=models.Loaitietkiem.objects.get(ltk=loaitietkiem).maltk,
-#             sotiengoi=sotiengoi,ngaymophieu=str(date.today()),
-#             ngaydongphieu='',sodu=sotiengoi,tinhtrang=1)
-#             phieutietkiem.save()
-#             # chuyen trang
-#             return redirect('/normal_site/phieutietkiem/')
+            phieutietkiem = models.Phieutietkiem.objects.create(maptk=random.randint(1000,10000), # random là sai nha
+            makh=models.Khachhang.objects.get(cccd=CMND).makh,
+            maltk=models.Loaitietkiem.objects.get(ltk=loaitietkiem).maltk,
+            sotiengoi=sotiengoi,ngaymophieu=str(date.today()),
+            ngaydongphieu='',sodu=sotiengoi,tinhtrang=1)
+            phieutietkiem.save()
+            # chuyen trang
+            return redirect('/normal_site/phieutietkiem/')
 
 # def TraCuu(request):
 #     query = request.GET.get('q',None)
