@@ -1,6 +1,3 @@
-from django.db import models
-from django.contrib.auth.models import User
-# Create your models here.
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -9,6 +6,11 @@ from django.contrib.auth.models import User
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.auth.models import User, Group
+
+class UsersExtendClass(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    manv = models.CharField(max_length=12)
 
 
 class AuthGroup(models.Model):
@@ -206,10 +208,6 @@ class Loaitietkiem(models.Model):
         db_table = 'loaitietkiem'
 
 
-class UsersExtendClass(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    manv = models.CharField(max_length=12)
-
 class Nguoidung(models.Model):
     tendn = models.CharField(primary_key=True, max_length=50)
     matkhau = models.CharField(max_length=50)
@@ -252,15 +250,24 @@ class Phieuruttien(models.Model):
 
 
 class Phieutietkiem(models.Model):
-    maptk = models.CharField(primary_key=True, max_length=10) # auto
-    makh = models.ForeignKey(Khachhang, models.DO_NOTHING, db_column='makh') # auto
+    maptk = models.CharField(primary_key=True, max_length=10)
+    makh = models.ForeignKey(Khachhang, models.DO_NOTHING, db_column='makh')
     maltk = models.ForeignKey(Loaitietkiem, models.DO_NOTHING, db_column='maltk')
     sotiengoi = models.DecimalField(max_digits=13, decimal_places=2)
     ngaydongphieu = models.DateField(blank=True, null=True)
-    ngaymophieu = models.DateField() # auto
+    ngaymophieu = models.DateField()
     sodu = models.DecimalField(max_digits=13, decimal_places=2)
     tinhtrang = models.IntegerField()
 
     class Meta:
         managed = False
         db_table = 'phieutietkiem'
+
+
+class Thamso(models.Model):
+    tenthamso = models.CharField(primary_key=True, max_length=20)
+    giatri = models.CharField(max_length=10)
+
+    class Meta:
+        managed = False
+        db_table = 'thamso'
