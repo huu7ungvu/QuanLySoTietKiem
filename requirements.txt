@@ -3,5 +3,3 @@ braces
 mysqlclient
 six
 dateutil
-
----- tôi sửa ----
