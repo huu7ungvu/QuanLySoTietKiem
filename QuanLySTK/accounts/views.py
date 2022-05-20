@@ -1,4 +1,5 @@
 from urllib import response
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -40,19 +41,21 @@ class MyPasswordChangeView(PasswordChangeView):
 # Create your views here.
 def signin(request):
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('tendangnhap')
+        password = request.POST.get('matkhau')
         user = authenticate(request,username=username,password=password)
         if user is not None:
             if user.is_active:
                 if user.is_superuser==False:
                     login(request,user)
+                    
                     return redirect('normal_site:home') # điều hướng về trang admin
                 else:
                     login(request,user)
-                    return redirect('adsite:home') # điều hướng về trang chủ
+                    return HttpResponse('Success')
+                    #return redirect('adsite:home') # điều hướng về trang chủ
         else:
             messages.error(request,"Invalid Credentials")
             return redirect('accounts:signin')
 
-    return render(request,"accounts/signin.html")
+    return render(request,"accounts/login.html")

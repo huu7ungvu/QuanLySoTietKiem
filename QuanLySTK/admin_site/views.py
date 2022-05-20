@@ -36,23 +36,25 @@ def group_required(*group_names, login_url=None, raise_exception=False):
 
 def signup(request):
     if request.method == "POST":
-        username = request.POST['username']
-        fname = request.POST['firstname']
-        lname =request.POST['lastname']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        email = request.POST['email']
+        username = request.POST.get('username')
+        name = request.POST.get('name')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        email = request.POST.get('email')
         position = request.POST.get('position', False)
-        print(position)
+        manv = request.POST.get('manv')
+
+
         if password1 == password2:
             if User.objects.filter(username=username).exists():
                 messages.error(request,"Username already exists")
                 return redirect('/adsite/signup')
             else:
-                user = User.objects.create_user(username=username,password=password1,first_name=fname,last_name=lname)
-                user.first_name = fname
-                user.last_name = lname
+                user = User.objects.create_user(username=username,password=password1,first_name=name,last_name=manv,email=email)
+                user.first_name = name # first name equal full name
+                user.last_name = manv # add manv into last_name
                 user.save()
+
                 if position == "NhanVien":
                     group = Group.objects.get(name='NhanVien')
                     user.groups.add(group)

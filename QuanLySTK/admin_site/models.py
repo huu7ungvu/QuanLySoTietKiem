@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
@@ -205,6 +205,10 @@ class Loaitietkiem(models.Model):
         managed = False
         db_table = 'loaitietkiem'
 
+
+class UsersExtendClass(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    manv = models.CharField(max_length=12)
 
 class Nguoidung(models.Model):
     tendn = models.CharField(primary_key=True, max_length=50)
