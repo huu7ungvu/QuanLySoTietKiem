@@ -15,28 +15,28 @@ from django.contrib import messages
 from datetime import datetime
 from dateutil.relativedelta import *
 
-# Create group_required decorator
-def group_required(*group_names, login_url=None, raise_exception=False):
-    def check_permission(user):
-        if isinstance(group_names, six.string_types):
-            group_names = (group_names, )
-        else:
-            group_names = group_names
-        # fist check if user has the permission (even anon users)
+# # Create group_required decorator
+# def group_required(*group_names, login_url=None, raise_exception=False):
+#     def check_permission(user):
+#         if isinstance(group_names, six.string_types):
+#             group_names = (group_names, )
+#         else:
+#             group_names = group_names
+#         # fist check if user has the permission (even anon users)
     
-        if user.groups.filter(name__in=group_names).exists():
-            return True
-        # In case the 403 handler should be called raise the exception
-        if raise_exception:
-            raise PermissionDenied
-        # As the last resort, show the login form
-        return False
-    return user_passes_test(check_permission, login_url=login_url)
+#         if user.groups.filter(name__in=group_names).exists():
+#             return True
+#         # In case the 403 handler should be called raise the exception
+#         if raise_exception:
+#             raise PermissionDenied
+#         # As the last resort, show the login form
+#         return False
+#     return user_passes_test(check_permission, login_url=login_url)
 
 # Create your views here.
 
-#@login_required()
-#@group_required()
+@login_required()
+#@group_required('NhanVien',)
 def home(request):
     return render(request,"normal_site/Home/home.html")
 
