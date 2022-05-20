@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm phiếu rút</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header-container">
+        <div class="wrapper">
+            <nav>
+                <div class="logo">
+                    Logo
+                </div>
+                <div class="user">
+                    <div class="user-info">
+                        <p class="username">User name</p>
+                        <p class="id">ID</p>
+                    </div>
+                    <div class="user-avatar">
+                        <img src="./img/avatar.svg" alt="avatar">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <div class="wrapper">
+            <h1 class="title">Rút tiết kiệm</h1>
+            <hr>
+            <form action="" class="form-input">
+                <div class="form-control">
+                    <label for="option-input">Tìm phiếu muốn rút theo:</label>
+                    <select name="option-input" id="option-input">
+                        <option value="id-option">ID phiếu</option>
+                        <option value="ngaylap-option">Ngày lập phiếu</option>
+                        <option value="sodu-option">Số dư</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label for="value-input">Nhập giá trị:</label>
+                    <input type="text" name="value-input" id="value-input">
+                </div>
+                <div class="form-submit">
+                    <input type="submit" value="Tìm phiếu">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer-container">
+        <div class="wrapper">
+            Footer
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

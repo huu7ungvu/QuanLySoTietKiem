@@ -1,0 +1,122 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+.header-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 64px;
+    margin-top: 18px;
+}
+
+.header-container nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-container .logo {
+    background-color: #C4C4C4;
+    width: 114px;
+    height: 52px;
+    text-align: center;
+    line-height: 52px;
+}
+
+.header-container .user {
+    display: flex;
+}
+
+.header-container .user .user-info {
+    width: 128px;
+    text-align: right;
+}
+
+.header-container .user .user-avatar {
+    width: 31px;
+    margin-left: 16px;
+}
+
+.content-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content-container .title {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.content-container hr {
+    color: #48B2FF;
+    margin-bottom: 16px;
+}
+
+.content-container .form-input {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.content-container .form-control {
+    padding: 2px;
+}
+
+.content-container .form-input label {
+    font-size: 18px;
+    font-weight: 700;
+    display: inline-block;
+    width: 250px;
+}
+
+.content-container .form-input select {
+    font-size: 18px;
+}
+
+.content-container .form-input input {
+    margin-top: 16px;
+    font-size: 18px;
+    color: #000;
+    background-color: #DDDCDC;
+    display: inline-block;
+    border: none;
+}
+
+.content-container .form-submit {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.content-container .form-submit input {
+    width: 220px;
+    padding: 4px 0;
+    background-color: #0ba6da;
+    border: 1px solid #007094;
+    border-radius: 10px;
+}
+
+.footer-container {
+    background-color: #C4C4C4;
+    height: 64px;
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+}
+
+.footer-container .wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
