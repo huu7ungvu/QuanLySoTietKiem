@@ -1,0 +1,43 @@
+{% if message %}
+<ul class="messages">
+    {% for message in message %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<form method ="GET" action='/thong_ke/'>
+
+    <label for="Kiểu"> Chọn kiểu thống kê : </label>
+    <select name="t" id="Kieu" placeholder ='Chọn kiểu thống kê' Required = True>
+        <option value="1">Thống kê theo ngày </option>
+        <option value="2">Thống kê theo tháng</option>
+    </select>
+
+</form>
+
+{% if t == 1 %} <!-- chưa chắc chắn--> 
+<form method ="GET" action='/thong_ke/'> <!-- Sai cần chỉnh lại -->
+
+    <label for="Chọn ngày"> Chọn ngày: </label>
+    <input type="date" id="date" name = "d"
+    value="{% if d %}{{ d }}{% endif %}"
+    min="2000-01-01" max="2050-12-31" required = True>
+    >
+
+</form>
+{% end if%}
+
+{% if t == 2 %} <!-- chưa chắc chắn--> 
+<form method ="GET" action='/thong_ke/'> <!-- Sai cần chỉnh lại -->
+
+    <label for="Chọn tháng"> Chọn tháng: </label>
+    <input type="month" id="date" name = "d"
+    value="{% if d %}{{ d }}{% endif %}"
+    min="2000-01" max="2050-12" required = True>
+    >
+
+</form>
+{% end if%}
+
+<!-- Block list tất các tìm kiếm-->
