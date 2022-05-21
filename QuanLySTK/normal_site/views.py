@@ -45,10 +45,6 @@ class Home (View):
     def get(self, request, *args, **kwargs):
         return render(request, 'normal_site/Home/home.html')
 
-
-
-
-
 # def home(request,username):
 #         user = models.User.objects.get(username=username)
 #         #user_2 = models.UsersExtendClass.objects.get(username=request.POST.get('tendangnhap'))

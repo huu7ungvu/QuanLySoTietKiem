@@ -163,27 +163,6 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class HelloWorldChoice(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField()
-    question = models.ForeignKey('HelloWorldQuestion', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'hello_world_choice'
-
-
-class HelloWorldQuestion(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    question_text = models.CharField(max_length=200)
-    time_published = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'hello_world_question'
-
-
 class Khachhang(models.Model):
     makh = models.CharField(primary_key=True, max_length=10)
     tenkh = models.CharField(max_length=50)
