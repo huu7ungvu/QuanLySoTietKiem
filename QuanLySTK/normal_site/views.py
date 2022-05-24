@@ -40,7 +40,13 @@ from dateutil.relativedelta import *
 class Home (View):
     def get(self,request,username):
         user = models.User.objects.get(username=username)
-        context = {'user': user}
+        position=user.groups.all().values()[0]['name']
+        if position =='NhanVien':
+            context = {'user': user,'position':'Nhân Viên'}
+        elif position =='GiamDoc':
+            context = {'user': user,'position':'Giám Đốc'}
+        else:
+            context = {'user': user,'position':'Nhân Viên Phân Tích Dữ Liệu'}
         return render(request,"normal_site/Home/home.html",context)
     def get(self, request, *args, **kwargs):
         return render(request, 'normal_site/Home/home.html')
@@ -53,8 +59,13 @@ class Home (View):
 
 def profile(request,username):
     user = models.User.objects.get(username=username)
-    #list_user = models.User.objects.filter(groups__name=)
-    context = {'user': user}
+    position=user.groups.all().values()[0]['name']
+    if position=='NhanVien':
+            context = {'user': user,'position':'Nhân Viên'}
+    elif position=='GiamDoc':
+            context = {'user': user,'position':'Giám Đốc'}
+    else:
+            context = {'user': user,'position':'Nhân Viên Phân Tích Dữ Liệu'}
     return render(request,"normal_site/Profile/profile.html",context)
 
 class LapPhieuTietKiem(View):
@@ -65,7 +76,7 @@ class LapPhieuTietKiem(View):
     def get(self, request, *args, **kwargs):
         #form = self.form_class()
         #context = {'form': form}
-        return render(request,self.template_name,context)
+        return render(request,self.template_name)
     
     def post(self, request, *args, **kwargs):
         # lấy thông tin từ request

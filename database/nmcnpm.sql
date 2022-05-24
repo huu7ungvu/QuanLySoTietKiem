@@ -13,6 +13,7 @@
 -- }
 
 use quan_ly_phieu_tiet_kiem;
+
 -- Create tables
 create table KhachHang 
 ( makh varchar(10) not null,
