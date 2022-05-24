@@ -12,7 +12,7 @@ from admin_site import models
 from . import forms 
 import random
 from django.contrib import messages
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.relativedelta import *
 
 # # Create group_required decorator
@@ -74,65 +74,92 @@ class LapPhieuTietKiem(View):
     #form_class = forms.PhieuTietKiemForm
 
     def get(self, request, *args, **kwargs):
-        #form = self.form_class()
-        #context = {'form': form}
-        return render(request,self.template_name)
+        ltk = models.Loaitietkiem.objects.all()
+        ltk_list = []
+
+        for i in range(len(ltk)):
+            ltk_list.append(ltk[i].ltk)
+        context = {'ltk': ltk_list}
+
+        return render(request,self.template_name,context)
     
     def post(self, request, *args, **kwargs):
         # lấy thông tin từ request
+        id = request.POST.get('id')
         tenkh = request.POST.get('tenkh')
+        tenkh = tenkh.title()
         CMND = request.POST.get('CMND')
         diachi = request.POST.get('diachi')
         sotiengoi = request.POST.get('sotiengoi')
         loaitietkiem = request.POST.get('loaitietkiem',False)
 
-        # check từng thông tin một
-        if (len(CMND)!=9 or len(CMND)!=12):
-            form = self.form_class(request.POST)
-            context = {'form': form}
-            messages.error(request,"CMND không hợp lệ")
-            return render(request,self.template_name,context)
-        else:
-            khachhang = models.Khachhang.objects.get(cccd=CMND)
-            if khachhang.exists():
-                if khachhang.tenkh.lower() != tenkh.lower():
-                    form = self.form_class(request.POST)
-                    context = {'form': form}
-                    messages.error(request,"Tên khách hàng và CMND không khớp với thông tin khách hàng trong hệ thống")
-                    return render(request,self.template_name,context)
-                else:
-                    flag_khachhangdatontai = True
+        # check từng thông tin một (1: Thông tin khách hàng, 2: Số tiền tối thiểu)
+        # (1)
+        if id != '':
+            khachhang = models.Khachhang.objects.filter(makh=id)
+            if len(khachhang)!=0:
+                if (tenkh != khachhang[0].tenkh or CMND != khachhang[0].cccd) :
+                    messages.error(request, 'Thông tin khách hàng (Tên hoặc CCCD) không đúng với dữ liệu trong cơ sở dữ liệu')
+                    return redirect('normal_site:lap_phieu_tiet_kiem')
+            else: 
+                messages.error(request, 'Khách hàng không tồn tại')
+                return redirect('normal_site:lap_phieu_tiet_kiem')
+        
+        else :
+            if (len(CMND)!=9 and len(CMND)!=12):
+                messages.error(request,"CMND không hợp lệ" + str(len(CMND)))
+                return redirect('normal_site:lap_phieu_tiet_kiem')
+            else :
+                khachhang = models.Khachhang.objects.filter(cccd=CMND)
+                if len(khachhang)!=0:
+                    if (tenkh != khachhang[0].tenkh) :
+                        messages.error(request, 'CCCD đã tồn tại trong cơ sở dữ liệu và tên khách hàng đang nhập không khớp với CCCD đã tồn tại')
+                        return redirect('normal_site:lap_phieu_tiet_kiem')
+                    else:
+                        messages.error(request, 'CCCD và tên khách hàng đã tồn tại trong cơ sở dữ liệu vui lòng nhập thêm ID khách hàng')
+                        return redirect('normal_site:lap_phieu_tiet_kiem')
 
-        sotiengoitoithieu = models.Loaitietkiem.objects.get(ltk=loaitietkiem).sotiengoitoithieu # có thể điều kiện get thay đổi tuy thuộc vào database
+        # (2)
+        sotiengoitoithieu = models.Loaitietkiem.objects.get(ltk=loaitietkiem).sotiengoitoithieu
         if (float(sotiengoi) < sotiengoitoithieu):
-                form = self.form_class(request.POST)
-                context = {'form': form}
-                messages.error(request,"Số tiền gởi phải lớn hơn hoặc bằng {}".format(sotiengoitoithieu))
-                
-                return render(request,self.template_name,context)
-        # oke thì lưu lại -> 2 hướng (1: nếu khách hàng có thông tin rồi thì chỉ lưu vào bảng phieutietkiem; 2: ngược lại)
-        if flag_khachhangdatontai:
-            phieutietkiem = models.Phieutietkiem.objects.create(maptk=random.randint(1000,10000), # random là sai nha
-            makh=models.Khachhang.objects.get(cccd=CMND).makh,
-            maltk=models.Loaitietkiem.objects.get(ltk=loaitietkiem).maltk,
-            sotiengoi=sotiengoi,ngaymophieu=str(date.today()),
-            ngaydongphieu='',sodu=sotiengoi,tinhtrang=1)
-            phieutietkiem.save()
+            messages.error(request,"Số tiền gởi phải lớn hơn hoặc bằng {}".format(sotiengoitoithieu))
+            return redirect('normal_site:lap_phieu_tiet_kiem')
 
-            # chuyen trang
-            return redirect('/normal_site/phieutietkiem/')
+
+        # oke thì lưu lại -> 2 hướng (1: nếu khách hàng có thông tin rồi thì chỉ lưu vào bảng phieutietkiem; 2: ngược lại)
+        if id != '': # đã có nhập id => Khách hàng đã đăng ký tài khoản
+            phieutietkiem = models.Phieutietkiem.objects.create(maptk='PTK' + str(int(models.Thamso.objects.get(tenthamso='SLPhieuTietKiem').giatri)+1),
+            makh=models.Khachhang.objects.get(makh=id),
+            maltk=models.Loaitietkiem.objects.get(ltk=loaitietkiem),
+            sotiengoi=sotiengoi,ngaymophieu=str(date.today()),
+            ngaydongphieu=None,sodu=sotiengoi,tinhtrang=1)
+            phieutietkiem.save()
+        
+            # cập nhật tham số SLPhieuTietKiem
+            models.Thamso.objects.filter(tenthamso='SLPhieuTietKiem').update(giatri=str(int(models.Thamso.objects.get(tenthamso='SLPhieuTietKiem').giatri)+1))
+
+            messages.success(request, 'Lập phiếu tiết kiệm thành công')
+            return redirect('normal_site:lap_phieu_tiet_kiem')
+        
         else:
-            khachhang_save = models.Khachhang.objects.create(makh=random.randint(1000,10000),tenkh=tenkh,diachi=diachi,cccd=CMND) # random cũng là sai nha
+            khachhang_save = models.Khachhang.objects.create(makh='KH' + str(int(models.Thamso.objects.get(tenthamso='SLKhachHang').giatri)+1),
+            tenkh=tenkh,diachi=diachi,cccd=CMND)
+
             khachhang_save.save()
 
-            phieutietkiem = models.Phieutietkiem.objects.create(maptk=random.randint(1000,10000), # random là sai nha
-            makh=models.Khachhang.objects.get(cccd=CMND).makh,
-            maltk=models.Loaitietkiem.objects.get(ltk=loaitietkiem).maltk,
+            phieutietkiem = models.Phieutietkiem.objects.create(maptk='PTK' + str(int(models.Thamso.objects.get(tenthamso='SLPhieuTietKiem').giatri)+1),
+            makh=khachhang_save,
+            maltk=models.Loaitietkiem.objects.get(ltk=loaitietkiem),
             sotiengoi=sotiengoi,ngaymophieu=str(date.today()),
-            ngaydongphieu='',sodu=sotiengoi,tinhtrang=1)
+            ngaydongphieu=None,sodu=sotiengoi,tinhtrang=1)
             phieutietkiem.save()
-            # chuyen trang
-            return redirect('/normal_site/phieutietkiem/')
+
+            # cập nhật tham số SLPhieuTietKiem và SLKhachHang
+            models.Thamso.objects.filter(tenthamso='SLPhieuTietKiem').update(giatri=str(int(models.Thamso.objects.get(tenthamso='SLPhieuTietKiem').giatri)+1))
+            models.Thamso.objects.filter(tenthamso='SLKhachHang').update(giatri=str(int(models.Thamso.objects.get(tenthamso='SLKhachHang').giatri)+1))
+
+            messages.success(request, 'Lập phiếu tiết kiệm thành công')
+            return redirect('normal_site:lap_phieu_tiet_kiem')
 
 # def TraCuu(request):
 #     query = request.GET.get('q',None)
