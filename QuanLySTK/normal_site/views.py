@@ -178,100 +178,100 @@ class LapPhieuTietKiem(View):
 #     else:
 #         return render(request,template_name)
 
-# """ Tóm lại các bước lập phiếu rút tiền như sau nè: 
-# (1) Template lấy thông tin để tìm kiếm phiếu
-# (2) Phiếu được tìm kiếm kèm 2 nut submit là cancel và rút
-# (3) 1 Popup hiện ra. 1 là sẽ báo phiếu này ko thể rút do chưa đến hạn. 2 là báo được rút tiền, 
-# với ko kỳ hạn được phép chọn số tiền rút, với có kỳ hạn thì buộc phải xác nhận rút hết"""
-# class TimKiemPhieuTietKiem(View):
-#     model= models.Phieuruttien
-#     template_name = 'normal_site/lap_phieu_rut_tien.html'
-#     form_class = forms.TimKiemPhieuTietKiemForm
+""" Tóm lại các bước lập phiếu rút tiền như sau nè: 
+(1) Template lấy thông tin để tìm kiếm phiếu
+(2) Phiếu được tìm kiếm kèm 2 nut submit là cancel và rút
+(3) 1 Popup hiện ra. 1 là sẽ báo phiếu này ko thể rút do chưa đến hạn. 2 là báo được rút tiền, 
+với ko kỳ hạn được phép chọn số tiền rút, với có kỳ hạn thì buộc phải xác nhận rút hết"""
+class TimKiemPhieuTietKiem(View):
+    model= models.Phieuruttien
+    template_name = 'normal_site/lap_phieu_rut_tien.html'
+    # form_class = forms.TimKiemPhieuTietKiemForm
 
-#     def get(self, request, *args, **kwargs):
-#         form = self.form_class()
-#         context = {'form': form}
-#         return render(request,self.template_name,context)
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'form': form}
+        return render(request,self.template_name,context)
     
-#     def post(self, request, *args, **kwargs):
-#         tenkh = request.POST.get('tenkh')
-#         maptk = request.POST.get('maptk')
+    def post(self, request, *args, **kwargs):
+        tenkh = request.POST.get('tenkh')
+        maptk = request.POST.get('maptk')
 
-#         # check từng thông tin một
-#         khachhang = models.Khachhang.objects.get(tenkh=tenkh)
-#         phieutietkiem = models.Phieutietkiem.objects.get(maptk=maptk)
+        # check từng thông tin một
+        khachhang = models.Khachhang.objects.get(tenkh=tenkh)
+        phieutietkiem = models.Phieutietkiem.objects.get(maptk=maptk)
 
-#         if phieutietkiem.exists() and khachhang.exists():
-#             # get data from databases
-#             phieutietkiem = models.Phieutietkiem.objects.get(maptk=maptk)
-#             khachhang = models.Khachhang.objects.get(tenkh=tenkh)
+        if phieutietkiem.exists() and khachhang.exists():
+            # get data from databases
+            phieutietkiem = models.Phieutietkiem.objects.get(maptk=maptk)
+            khachhang = models.Khachhang.objects.get(tenkh=tenkh)
 
-#             context = {'ptk': phieutietkiem, 'kh': khachhang}
-#             # render template
-#             return render(request,"normal_site/thong_tin_phieu_tiet_kiem.html",context)
+            context = {'ptk': phieutietkiem, 'kh': khachhang}
+            # render template
+            return render(request,"normal_site/thong_tin_phieu_tiet_kiem.html",context)
 
-#         elif (phieutietkiem.exists() and khachhang.exists() == False):
-#             form = self.form_class(request.POST)
-#             context = {'form': form}
-#             messages.error(request,"Tên khách hàng không tồn tại")
-#             return render(request,self.template_name,context)
+        elif (phieutietkiem.exists() and khachhang.exists() == False):
+            form = self.form_class(request.POST)
+            context = {'form': form}
+            messages.error(request,"Tên khách hàng không tồn tại")
+            return render(request,self.template_name,context)
 
-#         else :
-#             form = self.form_class(request.POST)
-#             context = {'form': form}
-#             messages.error(request,"Mã phiếu không tồn tại")
-#             return render(request,self.template_name,context)
+        else :
+            form = self.form_class(request.POST)
+            context = {'form': form}
+            messages.error(request,"Mã phiếu không tồn tại")
+            return render(request,self.template_name,context)
 
-# class RutPhieuTietKiem (View):
-#     model = models.Phieuruttien
-#     template_name = 'normal_site/confirm_rut_tien.html'
+class RutPhieuTietKiem (View):
+    model = models.Phieuruttien
+    template_name = 'normal_site/confirm_rut_tien.html'
 
-#     def get(self, request, *args, **kwargs):
-#         phieutietkiem = models.Phieuruttien.objects.get(maptk=kwargs['maptk'])
-#         # check phiếu còn hoạt động hay chưa
-#         if phieutietkiem.tinhtrang==0:
-#             context = {'tinhtrang': 'Phiếu đã đóng'}
-#             return render(request,self.template_name,context)
+    def get(self, request, *args, **kwargs):
+        phieutietkiem = models.Phieuruttien.objects.get(maptk=kwargs['maptk'])
+        # check phiếu còn hoạt động hay chưa
+        if phieutietkiem.tinhtrang==0:
+            context = {'tinhtrang': 'Phiếu đã đóng'}
+            return render(request,self.template_name,context)
 
-#         # check phiếu đã đến hạn hay chưa
-#         ngaymophieu = datetime.strptime(phieutietkiem.ngaymophieu, 'd/%m/%Y') # convert string to date
-#         ngayhethan = ngaymophieu + relativedelta(months=+phieutietkiem.maltk.kyhan) # add kyhan to ngaymophieu
-#         if datetime.today() < ngayhethan:
-#             context = {'tinhtrang': 'Phiếu chưa đến kỳ hạn'}
-#             return render(request,self.template_name,context)
+        # check phiếu đã đến hạn hay chưa
+        ngaymophieu = datetime.strptime(phieutietkiem.ngaymophieu, 'd/%m/%Y') # convert string to date
+        ngayhethan = ngaymophieu + relativedelta(months=+phieutietkiem.maltk.kyhan) # add kyhan to ngaymophieu
+        if datetime.today() < ngayhethan:
+            context = {'tinhtrang': 'Phiếu chưa đến kỳ hạn'}
+            return render(request,self.template_name,context)
 
-#         # Render template rút tiền với 2 sự lựa chọn. 1 là sẽ báo rút hết, 2 là có thể lựa chọn số tiền.
+        # Render template rút tiền với 2 sự lựa chọn. 1 là sẽ báo rút hết, 2 là có thể lựa chọn số tiền.
     
-#     def post(self, request, *args, **kwargs):
-#         pass
-# def ThongKe(request):
-#     template_name = 'normal_site/thong_ke.html'
-#     type = request.GET.get('t',None)
-#     date = request.GET.get('d',None)
+    def post(self, request, *args, **kwargs):
+        pass
+def ThongKe(request):
+    template_name = 'normal_site/thong_ke.html'
+    type = request.GET.get('t',None)
+    date = request.GET.get('d',None)
 
-#     if type is None and date is None:
-#         return render(request,template_name)
+    if type is None and date is None:
+        return render(request,template_name)
     
-#     elif type is not None and date is None:
-#         if type == "1":
-#             context = {'t': "1"}
-#             return render(request,template_name,context)
-#         else :
-#             context = {'t': "2"}
-#             return render(request,template_name,context)
+    elif type is not None and date is None:
+        if type == "1":
+            context = {'t': "1"}
+            return render(request,template_name,context)
+        else :
+            context = {'t': "2"}
+            return render(request,template_name,context)
 
-#     else :
-#         if type == "1":
-#             # get objects từ 3 bảng
-#             # xử lý
-#             # lưu xuống database
-#             # đưa vào context
-#             # render template
-#             pass
-#         else :
-#             # get objects từ 3 bảng
-#             # xử lý
-#             # lưu xuống database
-#             # đưa vào context
-#             # render template
-#             pass
+    else :
+        if type == "1":
+            # get objects từ 3 bảng
+            # xử lý
+            # lưu xuống database
+            # đưa vào context
+            # render template
+            pass
+        else :
+            # get objects từ 3 bảng
+            # xử lý
+            # lưu xuống database
+            # đưa vào context
+            # render template
+            pass
