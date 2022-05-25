@@ -152,9 +152,9 @@ INSERT INTO KhachHang (makh, tenkh, diachi,cccd) VALUES ('0015','Pham Van Hung',
 select * from KhachHang;
 
 --  Loại tiết kiệm
-INSERT INTO loaitietkiem(maltk,ltk,kyhan,sotiengoitoithieu,thoigiangoitoithieu,laisuat) VALUES ('LTK01','Khong ky han',0,'100000','15','0.5');
-INSERT INTO loaitietkiem(maltk,ltk,kyhan,sotiengoitoithieu,thoigiangoitoithieu,laisuat) VALUES ('LTK02','3 thang ',90,'100000','90','5.0');
-INSERT INTO loaitietkiem(maltk,ltk,kyhan,sotiengoitoithieu,thoigiangoitoithieu,laisuat) VALUES ('LTK03','6 thang ',180,'100000','180','5.5');
+INSERT INTO loaitietkiem(maltk,ltk,kyhan,sotiengoitoithieu,thoigiangoitoithieu,laisuat) VALUES ('LTK01','Khong ky han',0,'100000',15,'0.5');
+INSERT INTO loaitietkiem(maltk,ltk,kyhan,sotiengoitoithieu,thoigiangoitoithieu,laisuat) VALUES ('LTK02','3 thang ',3,'100000',90,'5.0');
+INSERT INTO loaitietkiem(maltk,ltk,kyhan,sotiengoitoithieu,thoigiangoitoithieu,laisuat) VALUES ('LTK03','6 thang ',9,'100000',180,'5.5');
 
 -- Phieutietkiem
 INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,sodu,tinhtrang) VALUES ('PTK001','0001','LTK03','100000000',STR_TO_DATE('01-04-2022', '%d-%m-%Y'),STR_TO_DATE('01-10-2022', '%d-%m-%Y'),'100000000','1');
