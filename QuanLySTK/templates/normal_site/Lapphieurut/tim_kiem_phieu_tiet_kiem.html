@@ -39,21 +39,31 @@
         <div class="wrapper">
             <h1 class="title">Rút tiết kiệm</h1>
             <hr>
-            <form action="/home/tim_kiem_phieu_tiet_kiem" method class="form-input">
+            <form action="/home/tim_kiem_phieu_tiet_kiem/" method ="POST" class="form-input">
+                {% csrf_token %}
                 <div class="form-control">
-                    <label for="option-input">Tìm phiếu muốn rút theo:</label>
-                    <select name="option-input" id="option-input">
-                        <option value="id-option">ID phiếu</option>
-                        <option value="ngaylap-option">Ngày lập phiếu</option>
-                        <option value="sodu-option">Số dư</option>
-                    </select>
+                    <label for="ID Khach Hang">ID Khách Hàng:</label>
+                    <input type="text" name="id" id="ID Khach Hang" placeholder="Ví dụ: KHxx" Required>
+
+                    <label for="name"> Tên Khách Hàng: <input type="text" title="name" name = "tenkh" 
+                        pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){1,5}$" 
+                        Required 
+                        style="text-transform:uppercase"
+                        placeholder="Họ và tên viết không dấu"></label><br>
+                     
+                    <label for="CCCD"> CCCD: <input type="text" title="CCCD" name='CCCD' 
+                            Required 
+                            pattern="^(\d{9}|\d{12}})"
+                            placeholder="9 (CMND) hoặc 12 (CCCD) chữ số"></label><br>
+
+                    <label for="Mã Phiếu Tiết Kiệm"> Mã Phiếu Tiết Kiệm </label>
+                    <input type="text" name="maptk" id="Mã Phiếu Tiết Kiệm" placeholder="Ví dụ: PTKxx" Required>
+
                 </div>
-                <div class="form-control">
-                    <label for="value-input">Nhập giá trị:</label>
-                    <input type="text" name="value-input" id="value-input">
-                </div>
-                <div class="form-submit">
-                    <input type="submit" value="Tìm phiếu">
+                <div class="classbutton">
+                    <div class="lapphieu">
+                        <button>Tìm Kiếm</button>
+                    </div>
                 </div>
             </form>
         </div>

@@ -27,17 +27,27 @@
         </div>
     </div>
 
+    {% for message in messages %}
+    
+    <div class="alert alert-success">
+        <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ message }}
+    </div>
+        
+    {% endfor %}
+
     <div class="content-container">
         <div class="wrapper">
             <h1 class="title">Tra cứu</h1>
             <hr>
             <div class="search-area">
-                <span class="search-title">Tìm kiếm:</span>
-                <input type="text" class="search-box" placeholder="ID phiếu, tên khách hàng, ngày lập phiếu">
-                <div class="search-btn-wrapper">
-                    <img src="./img/search-btn.svg" class="search-btn" alt="search-btn">
-                </div>
+                <form method ="POST" action="/home/tra_cuu/">
+                    {% csrf_token %}
+                    <input type = 'text' name = "q" placeholder = 'Nhập ID Khách Hàng' required = True>
+                    <button type="submit">Tìm Kiếm</button>
+                </form>
             </div>
+            {% if query %}
             <table>
                 <tr class="first-row-header">
                     <th colspan="5">Danh sách phiếu tiết kiệm</th>
@@ -50,71 +60,18 @@
                     <th class="sd">Số dư</th>
                 </tr>
                 <div class="table-row-data">
-                    <tr>
-                        <td>1</td>
-                        <td>1235</td>
-                        <td>Không thời hạn</td>
-                        <td>Nguyễn Văn D</td>
-                        <td>1000000</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>2456</td>
-                        <td>6 tháng</td>
-                        <td>Nguyễn Thị B</td>
-                        <td>15000000</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>2549</td>
-                        <td>3 tháng</td>
-                        <td>Lê Thị C</td>
-                        <td>3000000</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>2584</td>
-                        <td>6 tháng</td>
-                        <td>Đinh Văn T</td>
-                        <td>1000000</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>2220</td>
-                        <td>Không thời hạn</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>1000000</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>2690</td>
-                        <td>3 tháng</td>
-                        <td>Nguyễn Văn G</td>
-                        <td>1000000</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>2584</td>
-                        <td>3 tháng</td>
-                        <td>Nguyễn Văn D</td>
-                        <td>1000000</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>2586</td>
-                        <td>Không thời hạn</td>
-                        <td>Nguyễn Văn H</td>
-                        <td>1000000</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>2577</td>
-                        <td>6 tháng</td>
-                        <td>Trần Văn K</td>
-                        <td>1000000</td>
-                    </tr>
+                        {% for item in ptk %}
+                        <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{item.maptk}}</td>
+                        <td>{{item.maltk.ltk}}</td>
+                        <td>{{item.makh.tenkh}}</td>
+                        <td>{{item.sodu}}</td>
+                        </tr>
+                        {% endfor %}
                 </div>
             </table>
+            {% endif %}
         </div>
     </div>
 

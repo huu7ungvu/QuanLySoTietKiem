@@ -31,9 +31,37 @@
         <div class="wrapper">
             <h1 class="title">Thống kê</h1>
             <hr>
+            {% if t is None %}
+            <div class="form">
+            <form method ="GET" action='/home/thong_ke/'>
+
+                <label for="Kiểu"> Chọn kiểu thống kê : </label>
+                <select name="t" id="Kieu" placeholder ='Chọn kiểu thống kê' Required = True>
+                    <option value="1">Thống kê theo ngày </option>
+                    <option value="2">Thống kê theo tháng</option>
+                </select>
+                <input type="submit" value="Thống kê">
+            
+            </form>
+            </div>
+            {% endif %}
+            
+            {% if t == '1' %} <!-- '' thôi ko phai ""-->
             <div class="choose-area">
-                <p>Báo cáo Doanh số hoạt động</p>
-                <input type="date" class="date-picker" placeholder="dd-mm-yyyy">
+                <p>Báo cáo Doanh số hoạt động ngày</p>
+            <div class="form">
+            <form method ="GET" action='/home/thong_ke/'>
+                <label for="Kiểu"> Kiểu: </label>
+                <input type="text" id="Kieu" name = "t" value="Thống kê theo ngày" readonly>
+                <br>
+
+                <label for="Chọn ngày"> Chọn ngày: </label>
+                <input type="date" id="date" name = "d"
+                value="2001-01-01"
+                min="2000-01-01" max="2050-12-31" required = True>
+                
+                <input type="submit" value="Thống Kê">
+            </form>
             </div>
             <table>
                 <tr class="first-row-header">
@@ -54,22 +82,51 @@
                         <td>50000000</td>
                         <td>50000000</td>
                     </tr>
+                </div>
+            </table>
+            </div>
+            {% endif %}
+
+            {% if t == '2' %}
+            <div class="choose-area">
+                <p>Báo cáo Doanh số hoạt động tháng</p>
+            <div class="form">
+            <form method ="GET" action='/home/thong_ke/'>
+                <label for="Kiểu"> Kiểu: </label>
+                <input type="text" id="Kieu" name = "t" value="Thống kê theo tháng" readonly>
+                <br>
+
+                <label for="Chọn tháng"> Chọn tháng: </label>
+                <input type="month" id="date" name = "d"
+                value="2010-01"
+                min="2000-01" max="2050-12" required = True>
+                <input type="submit" value="Thống Kê">
+            </form>
+            <table>
+                <tr class="first-row-header">
+                    <th colspan="5">Tháng:...........</th>
+                    <th colspan="5">Loại tiết kiệm:...........</th>
+                </tr>
+                <tr class="second-row-header">
+                    <th class="stt">STT</th>
+                    <th class="ltk">Ngày</th>
+                    <th class="tt">Sổ mở</th>
+                    <th class="tc">Sổ đóng</th>
+                    <th class="cl">Chênh lệch</th>
+                </tr>
+                <div class="table-row-data">
                     <tr>
-                        <td>2</td>
-                        <td>6 tháng</td>
-                        <td>500000000</td>
-                        <td>200000000</td>
-                        <td>300000000</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>3 tháng</td>
-                        <td>200000000</td>
-                        <td>3000000</td>
-                        <td>170000000</td>
+                        <td>1</td>
+                        <td>Không thời hạn</td>
+                        <td>100000000</td>
+                        <td>50000000</td>
+                        <td>50000000</td>
                     </tr>
                 </div>
             </table>
+            </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 

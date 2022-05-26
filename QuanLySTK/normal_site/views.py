@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required, per
 from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin,AccessMixin # add login and permission mixin 
 from braces.views import GroupRequiredMixin # add GroupRequiredMixin to the class 
 from django.views.generic.base import View
-from django.db.models import Q
+from django.db.models import Sum, Count
 from admin_site import models 
 from . import forms 
 import random
@@ -37,25 +37,26 @@ from dateutil.relativedelta import *
 
 #@login_required()
 #@group_required('NhanVien',)
-class Home (View):
+class Home(View):
     def get(self,request,username):
-        user = models.User.objects.get(username=username)
-        position=user.groups.all().values()[0]['name']
-        if position =='NhanVien':
-            context = {'user': user,'position':'Nhân Viên'}
-        elif position =='GiamDoc':
-            context = {'user': user,'position':'Giám Đốc'}
-        else:
-            context = {'user': user,'position':'Nhân Viên Phân Tích Dữ Liệu'}
-        return render(request,"normal_site/Home/home.html",context)
-    def get(self, request, *args, **kwargs):
-        return render(request, 'normal_site/Home/home.html')
-
-# def home(request,username):
-#         user = models.User.objects.get(username=username)
-#         #user_2 = models.UsersExtendClass.objects.get(username=request.POST.get('tendangnhap'))
-#         context = {'user': user}
-#         return render(request,"normal_site/Home/home.html",context)
+        try :
+            user = models.User.objects.get(username=username)
+        except :
+            user = None
+        
+        if user is not None:
+            position=user.groups.all().values()[0]['name']
+            if position =='NhanVien':
+                context = {'user': user,'position':'Nhân Viên'}
+            elif position =='GiamDoc':
+                context = {'user': user,'position':'Giám Đốc'}
+            else:
+                context = {'user': user,'position':'Nhân Viên Phân Tích Dữ Liệu'}
+            return render(request,"normal_site/Home/home.html",context)
+        else :
+            return render(request,"normal_site/Home/home.html")
+    # def get(self, request, *args, **kwargs): # Chưa hiểu đoạn này để làm gì luôn
+        # return render(request, 'normal_site/Home/home.html')
 
 def profile(request,username):
     user = models.User.objects.get(username=username)
@@ -71,7 +72,6 @@ def profile(request,username):
 class LapPhieuTietKiem(View):
     model = models.Phieutietkiem
     template_name = 'normal_site\PhieuTK\phieutk.html'
-    #form_class = forms.PhieuTietKiemForm
 
     def get(self, request, *args, **kwargs):
         ltk = models.Loaitietkiem.objects.all()
@@ -161,22 +161,22 @@ class LapPhieuTietKiem(View):
             messages.success(request, 'Lập phiếu tiết kiệm thành công')
             return redirect('normal_site:lap_phieu_tiet_kiem')
 
-# def TraCuu(request):
-#     query = request.GET.get('q',None)
-#     template_name = 'normal_site/tra_cuu.html'
+class TraCuu(View):
+    template_name = 'normal_site/Tracuu/tra_cuu.html'
 
-#     if query is not None:
-#         ptk = models.Phieutietkiem.objects.all()
-#         ptk = ptk.filter(maptk__icontains=query) # có thêm cái Q search cũng khá hay
+    def post(self, request, *args, **kwargs):
+        query = request.POST.get('q')
+        ptk = models.Phieutietkiem.objects.filter(makh=query)
         
-#         kh_list = []
-#         for i in range(len(ptk)):
-#             kh_list.append(models.Khachhang.objects.get(makh=ptk[i].makh).tenkh)
-        
-#         context = {'ptk':ptk,'kh_list':kh_list}
-#         return render(request, template_name,context)
-#     else:
-#         return render(request,template_name)
+        if len(ptk) == 0:
+            messages.error(request, 'Không tìm thấy phiếu tiết kiệm nào hoặc thông tin không đúng')
+            return redirect('normal_site:tra_cuu')
+        else:
+            context = {'ptk':ptk,'query':query}
+            return render(request, self.template_name, context)
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
 """ Tóm lại các bước lập phiếu rút tiền như sau nè: 
 (1) Template lấy thông tin để tìm kiếm phiếu
@@ -184,68 +184,148 @@ class LapPhieuTietKiem(View):
 (3) 1 Popup hiện ra. 1 là sẽ báo phiếu này ko thể rút do chưa đến hạn. 2 là báo được rút tiền, 
 với ko kỳ hạn được phép chọn số tiền rút, với có kỳ hạn thì buộc phải xác nhận rút hết"""
 class TimKiemPhieuTietKiem(View):
-    model= models.Phieuruttien
-    template_name = 'normal_site/lap_phieu_rut_tien.html'
-    # form_class = forms.TimKiemPhieuTietKiemForm
+    model= models.Phieutietkiem
+    template_name = 'normal_site\Lapphieurut\\tim_kiem_phieu_tiet_kiem.html'
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        context = {'form': form}
-        return render(request,self.template_name,context)
+        return render(request,self.template_name)
     
     def post(self, request, *args, **kwargs):
+        id = request.POST.get('id')
+        id = id.upper()
         tenkh = request.POST.get('tenkh')
+        tenkh = tenkh.title()
+        CCCD = request.POST.get('CCCD')
         maptk = request.POST.get('maptk')
+        maptk = maptk.upper()
 
-        # check từng thông tin một
-        khachhang = models.Khachhang.objects.get(tenkh=tenkh)
-        phieutietkiem = models.Phieutietkiem.objects.get(maptk=maptk)
 
-        if phieutietkiem.exists() and khachhang.exists():
-            # get data from databases
-            phieutietkiem = models.Phieutietkiem.objects.get(maptk=maptk)
-            khachhang = models.Khachhang.objects.get(tenkh=tenkh)
+        # check từng thông tin một (1: thông tin khách hang; 2: Mã phiếu tiết kiệm)
+        khachhang = models.Khachhang.objects.filter(makh=id)
+        phieutietkiem = models.Phieutietkiem.objects.filter(maptk=maptk)
 
-            context = {'ptk': phieutietkiem, 'kh': khachhang}
-            # render template
-            return render(request,"normal_site/thong_tin_phieu_tiet_kiem.html",context)
+        # 1: thông tin khách hàng
+        if len(khachhang) != 0 :
+            if tenkh != khachhang[0].tenkh or CCCD != khachhang[0].cccd:
+                messages.error(request, 'Thông tin khách hàng không chính xác')
+                return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+        else:
+            messages.error(request, 'Không tìm thấy khách hàng')
+            return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
 
-        elif (phieutietkiem.exists() and khachhang.exists() == False):
-            form = self.form_class(request.POST)
-            context = {'form': form}
-            messages.error(request,"Tên khách hàng không tồn tại")
-            return render(request,self.template_name,context)
-
-        else :
-            form = self.form_class(request.POST)
-            context = {'form': form}
-            messages.error(request,"Mã phiếu không tồn tại")
-            return render(request,self.template_name,context)
+        # 2: Mã phiếu tiết kiệm
+        if len(phieutietkiem) == 0:
+            messages.error(request, 'Không tìm thấy phiếu tiết kiệm')
+            return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+        
+        return redirect('normal_site:rut_phieu_tiet_kiem',maptk=maptk)
 
 class RutPhieuTietKiem (View):
     model = models.Phieuruttien
-    template_name = 'normal_site/confirm_rut_tien.html'
+    template_name = 'normal_site/Lapphieurut/lap_phieu_rut_tien.html'
+
+    def tinh_so_du(self,phieutietkiem,ngayhethan):
+        sotien = int(phieutietkiem.sotiengoi)
+        laisuat = phieutietkiem.maltk.laisuat
+        songaygoi = int((ngayhethan - phieutietkiem.ngaymophieu).days)
+        songayquahan = int((date.today() - ngayhethan).days)
+
+        sodukhadung = sotien + int(sotien * (laisuat/100) * (songaygoi/365)) + int(sotien * (laisuat/100) * (songayquahan/365))
+        return sodukhadung
 
     def get(self, request, *args, **kwargs):
-        phieutietkiem = models.Phieuruttien.objects.get(maptk=kwargs['maptk'])
-        # check phiếu còn hoạt động hay chưa
-        if phieutietkiem.tinhtrang==0:
-            context = {'tinhtrang': 'Phiếu đã đóng'}
-            return render(request,self.template_name,context)
+        phieutietkiem = models.Phieutietkiem.objects.get(maptk=kwargs['maptk'])
 
-        # check phiếu đã đến hạn hay chưa
-        ngaymophieu = datetime.strptime(phieutietkiem.ngaymophieu, 'd/%m/%Y') # convert string to date
-        ngayhethan = ngaymophieu + relativedelta(months=+phieutietkiem.maltk.kyhan) # add kyhan to ngaymophieu
-        if datetime.today() < ngayhethan:
-            context = {'tinhtrang': 'Phiếu chưa đến kỳ hạn'}
-            return render(request,self.template_name,context)
+        # Check xem phiếu đủ điều kiện rút tiền hay không (1: Check trạng thái phiếu; 2: Check đến kỳ hạn rút tiền)
 
-        # Render template rút tiền với 2 sự lựa chọn. 1 là sẽ báo rút hết, 2 là có thể lựa chọn số tiền.
+        # (1)
+        if phieutietkiem.tinhtrang == 0:
+            context = {'phieutietkiem':phieutietkiem,'closed':'closed'}
+            return render(request, self.template_name,context)
+        # (2)
+        thoigiangoitoithieu = phieutietkiem.maltk.thoigiangoitoithieu
+        ngayhethan = phieutietkiem.ngaymophieu + relativedelta(days=thoigiangoitoithieu)
+
+        if date.today() < ngayhethan:
+            context = {'phieutietkiem':phieutietkiem,'undue':'undue'}
+            return render(request,self.template_name,context)
+        
+        # Kiểm tra loai tiet kiem
+        if phieutietkiem.maltk.maltk == 'LTK01':
+            is_ruthet = False
+        else :
+            is_ruthet = True
+
+        context = {'phieutietkiem':phieutietkiem,'khachhang':phieutietkiem.makh,'ok':'ok',
+        'sodukhadu': self.tinh_so_du(phieutietkiem,ngayhethan),
+        'ngayhethan':ngayhethan, 
+        'is_ruthet':is_ruthet}
+        return render(request,self.template_name,context)
     
     def post(self, request, *args, **kwargs):
-        pass
-def ThongKe(request):
-    template_name = 'normal_site/thong_ke.html'
+        huy = request.POST.get('huy')
+        if huy == '1'  :
+            return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+        else :
+            maptk = kwargs['maptk']
+            phieutietkiem = models.Phieutietkiem.objects.get(maptk=maptk)
+            ngayhethan = phieutietkiem.ngaymophieu + relativedelta(days=phieutietkiem.maltk.thoigiangoitoithieu)
+            sodukhadu = self.tinh_so_du(phieutietkiem,ngayhethan)
+            rut = request.POST.get('rut_1')
+            if rut == "Rút Phiếu" :
+                sotien = request.POST.get('sotien')
+                sotien = int(sotien)
+                if sotien > sodukhadu :
+                    messages.error(request, 'Số tiền rút không được lớn hơn số dư khả dụng')
+                    return redirect('normal_site:rut_phieu_tiet_kiem',maptk=maptk)
+                elif sotien < 100000 :
+                    messages.error(request, 'Số tiền rút không được nhỏ hơn 100.000 VND')
+                    return redirect('normal_site:rut_phieu_tiet_kiem',maptk=maptk)
+                elif (sodukhadu - sotien) < 100000:
+                    messages.error(request, 'Số tiền khả dụng trong phiếu sau rút không được nhỏ hơn 100.000 VND')
+                    return redirect('normal_site:rut_phieu_tiet_kiem',maptk=maptk)
+                else :
+                    # Tính tiền còn lại
+                    sotienconlai = sodukhadu - sotien
+                    # Kiểm tra số tiền còn lại để xử lý phiếu tiết kiệm (1: đóng phiểu, 2: tiếp tục)
+                    if sotienconlai == 0:
+                        phieutietkiem.tinhtrang = 0
+                        phieutietkiem.sodu = 0
+                        phieutietkiem.ngaydongphieu = str(date.today())
+                        phieutietkiem.save()
+                    else :
+                        phieutietkiem.sodu = sotienconlai
+                        phieutietkiem.save()
+
+                    # Lưu phiếu rút tiền
+                    maprt = 'PRT'+ str(int(models.Thamso.objects.get(tenthamso='SLPhieuRutTien').giatri) + 1)
+                    models.Thamso.objects.filter(tenthamso='SLPhieuRutTien').update(giatri=int(models.Thamso.objects.get(tenthamso='SLPhieuRutTien').giatri) + 1)
+
+                    phieuruttien = models.Phieuruttien.objects.create(maprt=maprt,maptk=phieutietkiem,sotienrut=sotien,ngayrut=str(date.today()),makh=phieutietkiem.makh)
+                    phieuruttien.save()
+                    
+                messages.success(request, 'Rút tiền thành công')
+                return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+
+            else:
+                # hủy phiếu tiết kiệm
+                phieutietkiem.tinhtrang = 0
+                phieutietkiem.sodu = 0
+                phieutietkiem.ngaydongphieu = str(date.today())
+                phieutietkiem.save()
+                
+                # Lưu phiếu rút tiền
+                maprt = 'PRT'+ str(int(models.Thamso.objects.get(tenthamso='SLPhieuRutTien').giatri) + 1)
+                models.Thamso.objects.filter(tenthamso='SLPhieuRutTien').update(giatri=int(models.Thamso.objects.get(tenthamso='SLPhieuRutTien').giatri) + 1)
+
+                phieuruttien = models.Phieuruttien.objects.create(maprt=maprt,maptk=phieutietkiem,sotienrut=sodukhadu,ngayrut=str(date.today()),makh=phieutietkiem.makh)
+                phieuruttien.save()
+                    
+                messages.success(request, 'Rút tiền thành công')
+                return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+
+def ThongKe(request,t=None,d=None):
+    template_name = 'normal_site/Thongke/thong_ke.html'
     type = request.GET.get('t',None)
     date = request.GET.get('d',None)
 
@@ -260,18 +340,64 @@ def ThongKe(request):
             context = {'t': "2"}
             return render(request,template_name,context)
 
-    else :
-        if type == "1":
-            # get objects từ 3 bảng
-            # xử lý
-            # lưu xuống database
+    else:
+        if type == "Thống kê theo ngày":
+            date_split = date.split('-')
+            y = date_split [0]
+            m = date_split [1]
+            d = date_split [2]
+
+            # get objects từ 2 bảng
+            maltk = models.Loaitietkiem.objects.values_list('maltk',flat=True)
+            maltk = list(maltk)
+            phieuruttien = models.Phieuruttien.objects.filter(ngayrut__year=y,ngayrut__month=m,ngayrut__day=d)
+            phieutietkiem = models.Phieutietkiem.objects.filter(ngaymophieu__year=y,ngaymophieu__month=m,ngaymophieu__day=d)
+
+            # xử lý và lưu xuống database
+            for i in maltk:
+                tong_thu = int(phieutietkiem.filter(maltk=i).aggregate(Sum('sotiengoi'))['sotiengoi__sum'])
+                tong_chi = int(phieuruttien.filter(maltk=i).aggregate(Sum('sotienrut'))['sotienrut__sum'])
+                chenhlech = abs(tong_thu - tong_chi)
+
+                baocaongay = models.Baocaongay.objects.create(ngay=date,maltk=models.Loaitietkiem.objects.get(maltk=i),tongthu=tong_thu,tongchi=tong_chi,chenhlech=chenhlech)
+                baocaongay.save()
+
             # đưa vào context
+            baocaongay = models.Baocaongay.objects.filter(ngay__year=y,ngay__month=m,ngay__day=d)
+            context = {'baocaongay': baocaongay}
+
             # render template
-            pass
+            return render(request,template_name,context)
+
         else :
-            # get objects từ 3 bảng
-            # xử lý
-            # lưu xuống database
+            date_split = date.split('-')
+            y = date_split [0]
+            m = date_split [1]
+            # get objects bảng
+            maltk = models.Loaitietkiem.objects.values_list('maltk',flat=True)
+            maltk = list(maltk)
+            phieumo = models.Phieutietkiem.objects.filter(ngaymophieu__year=y,ngaymophieu__month=m)
+            phieudong = models.Phieutietkiem.objects.filter(ngaydongphieu__year=y,ngaydongphieu__month=m)
+
+            # xử lý # lưu xuống database
+            for i in maltk:
+                for j in range (1,32):
+                    somo = int(phieumo.filter(maltk=i,ngaymophieu__day=j).aggregate(Count('maptk'))['maptk__count'])
+                    sodong = int(phieudong.filter(maltk=i,ngaydongphieu__day=j).aggregate(Count('maptk'))['maptk__count'])
+                    chenhlech = abs(somo-sodong)
+                    if j<10:
+                        date_temp = date + str('-0') + str(j) 
+                    else :
+                        date_temp = date + str('-') + str(j)
+                    baocaothang = models.Baocaothang.objects.create(ngaythang=date_temp
+                    ,maltk=models.Loaitietkiem.objects.get(maltk=i)
+                    ,phieugoi=somo,phieudong=sodong,chenhlech=chenhlech)
+
+                    baocaothang.save()
+            
             # đưa vào context
+            baocaothang = models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m)
+            context = {'baocaothang': baocaothang}
+
             # render template
-            pass
+            return render(request,template_name,context)

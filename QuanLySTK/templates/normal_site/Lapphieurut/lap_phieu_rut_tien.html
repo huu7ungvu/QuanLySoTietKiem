@@ -33,49 +33,56 @@
         <div class="wrapper">
             <h1 class="title">Lập phiếu rút tiết kiệm</h1>
             <hr>
-            <form action="" class="form-input">
-                <div class="form-control">
-                    <label for="id-input">ID ghgjd:</label>
-                    <input type="text" id="id-input" name="id-input" placeholder="MH370">
+
+            {% if closed %}
+                <div class="alert alert-danger">
+                    <strong>Phiếu đã bị khóa!</strong>
                 </div>
-                <div class="form-control">
-                    <label for="tkh-input">Tên khách hàng:</label>
-                    <input type="text" id="tkh-input" name="tkh-input" placeholder="Nguyễn Văn A">
+            {% endif %}
+
+            {% if undue %}
+                <div class="alert alert-danger">
+                    <strong>Phiếu không thể rút do chưa đến kỳ hạn</strong>
                 </div>
-                <div class="form-control">
-                    <label for="cmnd-input">CMND/CCCD:</label>
-                    <input type="text" id="cmnd-input" name="cmnd-input" placeholder="1010101011">
-                </div>
-                <div class="form-control">
-                    <label for="dc-input">Địa chỉ:</label>
-                    <input type="text" id="dc-input" name="dc-input" placeholder="Thành phố Thủ Đức">
-                </div>
-                <div class="form-control">
-                    <label for="sd-input">Số dư khả dụng:</label>
-                    <input type="number" id="sd-input" name="sd-input" placeholder="15000000">
-                </div>
-                <div class="form-control">
-                    <label for="ltk-input">Loại tiết kiệm:</label>
-                    <input type="text" id="ltk-input" name="ltk-input" placeholder="Kỳ hạn 6 tháng">
-                </div>
-                <div class="form-control">
-                    <label for="ngaygui-input">Ngày gửi:</label>
-                    <input type="date" id="ngaygui-input" name="ngaygui-input" placeholder="31/12/2021">
-                </div>
-                <div class="form-control">
-                    <label for="ngayhet-input">Ngày hết hạn:</label>
-                    <input type="date" id="ngayhet-input" name="ngayhet-input" placeholder="31/05/2022">
-                </div>
-                <div class="form-control">
-                    <label for="tt-input">Trạng thái:</label>
-                    <input type="text" id="tt-input" name="tt-input" placeholder="Chưa hết kỳ hạn">
-                </div>
-                <div class="submit-input">
-                    <input type="submit" value="Rút phiếu" class="rp-input">
-                    <input type="submit" value="Rút và in phiếu" class="rpip-input">
-                </div>
+            {% endif %}
+
+            {% if ok %}
+                <p>Mã Phiếu Tiết Kiệm: {{phieutietkiem.maptk}}</p>
+                <p>Tên Khách Hàng: {{khachhang.tenkh}}</p>
+                <p>CCCD: {{khachhang.cccd}}</p>
+                <p>Địa Chỉ: {{khachhang.diachi}}</p>
+                <p>Số dư khả dụng:{{sodukhadu}}</p>
+                <p>Ngày Gởi:{{phieutietkiem.ngaymophieu}}</p>
+                <p>Ngày Có Thể Rút (Hết kỳ hạn):{{ngayhethan}}</p>
+                <p>Trạng thái: Đang mở</p>
+
+            <form action="" method="POST" class="ruttien">
+                {% csrf_token %}
+                {% if is_ruthet == False %}
+                    <div class="form-group">
+                        <label for="">Số tiền rút</label>
+                        <input type="decimal" class="form-control" name="sotien" class="form-control" placeholder="Nhập số tiền rút" min = '0'>
+                    </div>
+
+                    <div class="classbutton">
+                        <input type="submit" class="btn btn-primary" value="Rút Phiếu" name ='rut_1'>
+                        <input type="submit" class="btn btn-primary" value="Hủy" name ='huy'>
+                    </div> 
+                {% else %}
+                    <div class="alert alert-danger">
+                        <strong>Phiếu Tiết Kiệm Này Buộc Phải Rút Hết Số Tiền Và Đóng Phiếu</strong>
+                    </div>
+
+                    <div class="classbutton">
+                        <input type="submit" class="btn btn-primary" value="Rút Phiếu" name ='rut_2'>
+                        <input type="submit" class="btn btn-primary" value="Hủy" name ='huy'>
+                    </div>
+                {% endif %}
             </form>
+            {% endif %}
         </div>
+
+
     </div>
 
     <div class="footer-container">
