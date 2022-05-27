@@ -352,7 +352,7 @@ def ThongKe(request,t=None,d=None):
             
             # check đã có trong database hay chưa
             baocaongay_check = models.Baocaongay.objects.filter(ngay__year=y,ngay__month=m,ngay__day=d)
-            if len(baocaongay) != 0:
+            if len(baocaongay_check) != 0:
                 context = {'baocaongay': baocaongay_check,'t':"1",'date':date}
                 return render(request,template_name,context)
 
