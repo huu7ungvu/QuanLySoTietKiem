@@ -230,8 +230,10 @@ class RutPhieuTietKiem (View):
         laisuat = phieutietkiem.maltk.laisuat
         songaygoi = int((ngayhethan - phieutietkiem.ngaymophieu).days)
         songayquahan = int((date.today() - ngayhethan).days)
+        laisuatquahan = models.Loaitietkiem.objects.get(maltk='LTK01').laisuat
 
-        sodukhadung = sotien + int(sotien * (laisuat/100) * (songaygoi/365)) + int(sotien * (laisuat/100) * (songayquahan/365))
+        sodukhadung = sotien + int(sotien * (laisuat/100) * (songaygoi/365)) # lãi theo kỳ hạn
+        sodukhadung = sodukhadung + + int(sodukhadung * (laisuatquahan/100) * (songayquahan/365)) # lãi theo quá hạn
         return sodukhadung
 
     def get(self, request, *args, **kwargs):
