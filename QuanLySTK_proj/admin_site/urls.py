@@ -18,6 +18,7 @@ from django.urls import path, include
 from . import views
 
 app_name = 'adsite'
+admin.site.site_header = 'HỆ THỐNG ADMIN UIT SAVE'
 
 urlpatterns = [
     path('signup', views.signup, name='signup'),
