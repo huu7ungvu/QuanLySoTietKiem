@@ -186,7 +186,7 @@ class TraCuu(View):
 với ko kỳ hạn được phép chọn số tiền rút, với có kỳ hạn thì buộc phải xác nhận rút hết"""
 class TimKiemPhieuTietKiem(View):
     model= models.Phieutietkiem
-    template_name = 'normal_site\Lapphieurut\\tim_kiem_phieu_tiet_kiem.html'
+    template_name = 'normal_site/Lapphieurut/tim_kiem_phieu_tiet_kiem.html'
 
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)

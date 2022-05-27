@@ -1,12 +1,16 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tra cứu</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'css/tra_cuu.css' %}">
 </head>
+
 <body>
     <div class="header-container">
         <div class="wrapper">
@@ -20,7 +24,7 @@
                         <p class="id">ID</p>
                     </div>
                     <div class="user-avatar">
-                        <img src="./img/avatar.svg" alt="avatar">
+                        <img src="{% static 'img/logo.jpg' %}" alt="avatar">
                     </div>
                 </div>
             </nav>
@@ -28,12 +32,12 @@
     </div>
 
     {% for message in messages %}
-    
+
     <div class="alert alert-success">
         <a class="close" href="#" data-dismiss="alert">×</a>
-            {{ message }}
+        {{ message }}
     </div>
-        
+
     {% endfor %}
 
     <div class="content-container">
@@ -41,9 +45,9 @@
             <h1 class="title">Tra cứu</h1>
             <hr>
             <div class="search-area">
-                <form method ="POST" action="/home/tra_cuu/">
+                <form method="POST" action="/home/tra_cuu/">
                     {% csrf_token %}
-                    <input type = 'text' name = "q" placeholder = 'Nhập ID Khách Hàng' required = True>
+                    <input type='text' name="q" placeholder='Nhập ID Khách Hàng' required=True>
                     <button type="submit">Tìm Kiếm</button>
                 </form>
             </div>
@@ -60,15 +64,15 @@
                     <th class="sd">Số dư</th>
                 </tr>
                 <div class="table-row-data">
-                        {% for item in ptk %}
-                        <tr>
+                    {% for item in ptk %}
+                    <tr>
                         <td>{{forloop.counter}}</td>
                         <td>{{item.maptk}}</td>
                         <td>{{item.maltk.ltk}}</td>
                         <td>{{item.makh.tenkh}}</td>
                         <td>{{item.sodu}}</td>
-                        </tr>
-                        {% endfor %}
+                    </tr>
+                    {% endfor %}
                 </div>
             </table>
             {% endif %}
@@ -82,4 +86,5 @@
     </div>
     <script src="main.js"></script>
 </body>
+
 </html>
