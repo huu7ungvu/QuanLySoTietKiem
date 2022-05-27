@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lập phiếu rút tiết kiệm</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lap_phieu_rut_tien.css' %}">
+</head>
+<body>
+    <div class="header-container">
+        <div class="wrapper">
+            <nav>
+                <div class="logo">
+                    Logo
+                </div>
+                <div class="user">
+                    <div class="user-info">
+                        <p class="username">User name</p>
+                        <p class="id">ID</p>
+                    </div>
+                    <div class="user-avatar">
+                        <img src="{% static 'img/avatar.svg' %}" alt="avatar">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    {% for message in messages %}
+    
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+                {{ message }}
+        </div>
+    
+    {% endfor %}
+    <div class="content-container">
+
+        <div class="wrapper">
+            <h1 class="title">Lập phiếu rút tiết kiệm</h1>
+            <hr>
+
+            {% if closed %}
+                <div class="alert alert-danger">
+                    <strong>Phiếu đã bị khóa!</strong>
+                </div>
+            {% endif %}
+
+            {% if undue %}
+                <div class="alert alert-danger">
+                    <strong>Phiếu không thể rút do chưa đến kỳ hạn</strong>
+                </div>
+            {% endif %}
+
+            {% if ok %}
+                <p>Mã Phiếu Tiết Kiệm: {{phieutietkiem.maptk}}</p>
+                <p>Tên Khách Hàng: {{khachhang.tenkh}}</p>
+                <p>CCCD: {{khachhang.cccd}}</p>
+                <p>Địa Chỉ: {{khachhang.diachi}}</p>
+                <p>Số dư khả dụng:{{sodukhadu}}</p>
+                <p>Ngày Gởi:{{phieutietkiem.ngaymophieu}}</p>
+                <p>Ngày Có Thể Rút (Hết kỳ hạn):{{ngayhethan}}</p>
+                <p>Trạng thái: Đang mở</p>
+
+            <form action="" method="POST" class="ruttien">
+                {% csrf_token %}
+                {% if is_ruthet == False %}
+                    <div class="form-group">
+                        <label for="">Số tiền rút</label>
+                        <input type="decimal" class="form-control" name="sotien" class="form-control" placeholder="Nhập số tiền rút" min = '0'>
+                    </div>
+
+                    <div class="classbutton">
+                        <input type="submit" class="btn btn-primary" value="Rút Phiếu" name ='rut_1'>
+                        <input type="submit" class="btn btn-primary" value="Hủy" name ='huy'>
+                    </div> 
+                {% else %}
+                    <div class="alert alert-danger">
+                        <strong>Phiếu Tiết Kiệm Này Buộc Phải Rút Hết Số Tiền Và Đóng Phiếu</strong>
+                    </div>
+
+                    <div class="classbutton">
+                        <input type="submit" class="btn btn-primary" value="Rút Phiếu" name ='rut_2'>
+                        <input type="submit" class="btn btn-primary" value="Hủy" name ='huy'>
+                    </div>
+                {% endif %}
+            </form>
+            {% endif %}
+        </div>
+
+
+    </div>
+
+    <div class="footer-container">
+        <div class="wrapper">
+            Footer
+        </div>
+    </div>
+</body>
+</html>

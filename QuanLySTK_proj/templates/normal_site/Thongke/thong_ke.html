@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống kê</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header-container">
+        <div class="wrapper">
+            <nav>
+                <div class="logo">
+                    Logo
+                </div>
+                <div class="user">
+                    <div class="user-info">
+                        <p class="username">User name</p>
+                        <p class="id">ID</p>
+                    </div>
+                    <div class="user-avatar">
+                        <img src="./img/avatar.svg" alt="avatar">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <div class="wrapper">
+            <h1 class="title">Thống kê</h1>
+            <hr>
+            {% if t is None %}
+            <div class="form">
+            <form method ="GET" action='/home/thong_ke/'>
+
+                <label for="Kiểu"> Chọn kiểu thống kê : </label>
+                <select name="t" id="Kieu" placeholder ='Chọn kiểu thống kê' Required = True>
+                    <option value="1">Thống kê theo ngày </option>
+                    <option value="2">Thống kê theo tháng</option>
+                </select>
+                <input type="submit" value="Thống kê">
+            
+            </form>
+            </div>
+            {% endif %}
+            
+            {% if t == '1' %} <!-- '' thôi ko phai ""-->
+            <div class="choose-area">
+                <p>Báo cáo Doanh số hoạt động ngày</p>
+            <div class="form">
+            <form method ="GET" action='/home/thong_ke/'>
+                <label for="Kiểu"> Kiểu: </label>
+                <input type="text" id="Kieu" name = "t" value="Thống kê theo ngày" readonly>
+                <br>
+
+                <label for="Chọn ngày"> Chọn ngày: </label>
+                <input type="date" id="date" name = "d"
+                value="2001-01-01"
+                min="2000-01-01" max="2050-12-31" required = True>
+                
+                <input type="submit" value="Thống Kê">
+            </form>
+            </div>
+            <table>
+                <tr class="first-row-header">
+                    <th colspan="5">Ngày: {{date}}</th>
+                </tr>
+                <tr class="second-row-header">
+                    <th class="stt">STT</th>
+                    <th class="ltk">Loại tiết kiệm</th>
+                    <th class="tt">Tổng thu</th>
+                    <th class="tc">Tổng chi</th>
+                    <th class="cl">Chênh lệch</th>
+                </tr>
+                <div class="table-row-data">
+                    {% for i in baocaongay %}
+                    <tr>
+                        <td class="stt">{{forloop.counter}}</td>
+                        <td class="ltk">{{i.maltk.ltk}}</td>
+                        <td class="tt">{{i.tongthu}}</td>
+                        <td class="tc">{{i.tongchi}}</td>
+                        <td class="cl">{{i.chenhlech}}</td>
+                    </tr>
+                    {% endfor %}
+                </div>
+            </table>
+            </div>
+            {% endif %}
+
+            {% if t == '2' %}
+            <div class="choose-area">
+                <p>Báo cáo Doanh số hoạt động tháng</p>
+            <div class="form">
+            <form method ="GET" action='/home/thong_ke/'>
+                <label for="Kiểu"> Kiểu: </label>
+                <input type="text" id="Kieu" name = "t" value="Thống kê theo tháng" readonly>
+                <br>
+
+                <label for="Chọn tháng"> Chọn tháng: </label>
+                <input type="month" id="date" name = "d"
+                value="2010-01"
+                min="2000-01" max="2050-12" required = True>
+                <input type="submit" value="Thống Kê">
+            </form>
+            {% for i in maltk %}
+            <table>
+                <tr class="first-row-header">
+                    <th colspan="5">Tháng:{{date}}</th>
+                    <th colspan="5">Loại tiết kiệm: {{i}}</th>
+                </tr>
+                <tr class="second-row-header">
+                    <th class="stt">STT</th>
+                    <th class="ngay">Ngày</th>
+                    <th class="tt">Sổ mở</th>
+                    <th class="tc">Sổ đóng</th>
+                    <th class="cl">Chênh lệch</th>
+                </tr>
+                <div class="table-row-data">
+                    {% for j in baocaothang %}
+                        {% if j.maltk.maltk == i %}
+                        <tr>
+                            <td class="stt">{{forloop.counter}}</td>
+                            <td class="ngay">{{j.ngaythang}}</td>
+                            <td class="tt">{{j.phieugoi}}</td>
+                            <td class="tc">{{j.phieudong}}</td>
+                            <td class="cl">{{j.chenhlechdonggoi}}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </table>
+            <br>
+            {% endfor %}
+            </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="footer-container">
+        <div class="wrapper">
+            Footer
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
