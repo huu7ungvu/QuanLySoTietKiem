@@ -230,7 +230,7 @@ class RutPhieuTietKiem (View):
         laisuat = phieutietkiem.maltk.laisuat
         songaygoi = int((ngayhethan - phieutietkiem.ngaymophieu).days)
         songayquahan = int((date.today() - ngayhethan).days)
-        laisuatquahan = models.Loaitietkiem.objects.get(maltk='LTK01').laisuat
+        laisuatquahan = models.Loaitietkiem.objects.get(maltk='LTK1').laisuat
 
         sodukhadung = sotien + int(sotien * (laisuat/100) * (songaygoi/365)) # lãi theo kỳ hạn
         sodukhadung = sodukhadung + + int(sodukhadung * (laisuatquahan/100) * (songayquahan/365)) # lãi theo quá hạn
@@ -254,7 +254,7 @@ class RutPhieuTietKiem (View):
             return render(request,self.template_name,context)
         
         # Kiểm tra loai tiet kiem
-        if phieutietkiem.maltk.maltk == 'LTK01':
+        if phieutietkiem.maltk.maltk == 'LTK1':
             is_ruthet = False
         else :
             is_ruthet = True
