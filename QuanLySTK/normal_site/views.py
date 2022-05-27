@@ -13,6 +13,7 @@ from . import forms
 import random
 from django.contrib import messages
 from datetime import datetime, date
+import calendar
 from dateutil.relativedelta import *
 
 # # Create group_required decorator
@@ -225,7 +226,7 @@ class RutPhieuTietKiem (View):
     template_name = 'normal_site/Lapphieurut/lap_phieu_rut_tien.html'
 
     def tinh_so_du(self,phieutietkiem,ngayhethan):
-        sotien = int(phieutietkiem.sotiengoi)
+        sotien = int(phieutietkiem.sodu)
         laisuat = phieutietkiem.maltk.laisuat
         songaygoi = int((ngayhethan - phieutietkiem.ngaymophieu).days)
         songayquahan = int((date.today() - ngayhethan).days)
@@ -346,6 +347,12 @@ def ThongKe(request,t=None,d=None):
             y = date_split [0]
             m = date_split [1]
             d = date_split [2]
+            
+            # check đã có trong database hay chưa
+            baocaongay_check = models.Baocaongay.objects.filter(ngay__year=y,ngay__month=m,ngay__day=d)
+            if len(baocaongay) != 0:
+                context = {'baocaongay': baocaongay_check,'t':"1",'date':date}
+                return render(request,template_name,context)
 
             # get objects từ 2 bảng
             maltk = models.Loaitietkiem.objects.values_list('maltk',flat=True)
@@ -355,16 +362,24 @@ def ThongKe(request,t=None,d=None):
 
             # xử lý và lưu xuống database
             for i in maltk:
-                tong_thu = int(phieutietkiem.filter(maltk=i).aggregate(Sum('sotiengoi'))['sotiengoi__sum'])
-                tong_chi = int(phieuruttien.filter(maltk=i).aggregate(Sum('sotienrut'))['sotienrut__sum'])
-                chenhlech = abs(tong_thu - tong_chi)
+                try:
+                    tong_thu = int(phieutietkiem.filter(maltk=i).aggregate(Sum('sotiengoi'))['sotiengoi__sum'])
+                except:
+                    tong_thu = 0
+                    
+                
+                try:
+                    tong_chi = int(phieuruttien.filter(maltk=i).aggregate(Sum('sotienrut'))['sotienrut__sum'])
+                except:
+                    tong_chi = 0
 
-                baocaongay = models.Baocaongay.objects.create(ngay=date,maltk=models.Loaitietkiem.objects.get(maltk=i),tongthu=tong_thu,tongchi=tong_chi,chenhlech=chenhlech)
-                baocaongay.save()
+                chenhlech = abs(tong_thu - tong_chi)
+                
+                baocaongay = models.Baocaongay.objects.create(ngay=date,maltk=models.Loaitietkiem.objects.get(maltk=i),tongthu=tong_thu,tongchi=tong_chi,chechlechthuchi=chenhlech)
 
             # đưa vào context
             baocaongay = models.Baocaongay.objects.filter(ngay__year=y,ngay__month=m,ngay__day=d)
-            context = {'baocaongay': baocaongay}
+            context = {'baocaongay': baocaongay,'t':"1",'date':date}
 
             # render template
             return render(request,template_name,context)
@@ -373,31 +388,47 @@ def ThongKe(request,t=None,d=None):
             date_split = date.split('-')
             y = date_split [0]
             m = date_split [1]
-            # get objects bảng
             maltk = models.Loaitietkiem.objects.values_list('maltk',flat=True)
             maltk = list(maltk)
+            
+            # check đã có trong database hay chưa
+            baocaothang_check = models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m)
+            if len(baocaothang_check) != 0:
+                context = {'baocaothang': baocaothang_check,'t':"2", 'maltk':maltk, 'date':date}
+                return render(request,template_name,context)
+
+            # get objects bảng
             phieumo = models.Phieutietkiem.objects.filter(ngaymophieu__year=y,ngaymophieu__month=m)
             phieudong = models.Phieutietkiem.objects.filter(ngaydongphieu__year=y,ngaydongphieu__month=m)
 
             # xử lý # lưu xuống database
+            songaytrongthang = calendar.monthrange(int(y),int(m))[1]
             for i in maltk:
-                for j in range (1,32):
-                    somo = int(phieumo.filter(maltk=i,ngaymophieu__day=j).aggregate(Count('maptk'))['maptk__count'])
-                    sodong = int(phieudong.filter(maltk=i,ngaydongphieu__day=j).aggregate(Count('maptk'))['maptk__count'])
+                for j in range (1,songaytrongthang+1):
+                    try:
+                        somo = int(phieumo.filter(maltk=i,ngaymophieu__day=j).aggregate(Count('maptk'))['maptk__count'])
+                    except:
+                        somo = 0
+                    
+                    try:
+                        sodong = int(phieudong.filter(maltk=i,ngaydongphieu__day=j).aggregate(Count('maptk'))['maptk__count'])
+                    except:
+                        sodong = 0
+
                     chenhlech = abs(somo-sodong)
+
                     if j<10:
                         date_temp = date + str('-0') + str(j) 
                     else :
                         date_temp = date + str('-') + str(j)
+
                     baocaothang = models.Baocaothang.objects.create(ngaythang=date_temp
                     ,maltk=models.Loaitietkiem.objects.get(maltk=i)
-                    ,phieugoi=somo,phieudong=sodong,chenhlech=chenhlech)
-
-                    baocaothang.save()
+                    ,phieugoi=somo,phieudong=sodong,chenhlechdonggoi=chenhlech)
             
             # đưa vào context
             baocaothang = models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m)
-            context = {'baocaothang': baocaothang}
+            context = {'baocaothang': baocaothang,'t':"2", 'maltk':maltk, 'date':date}
 
             # render template
             return render(request,template_name,context)

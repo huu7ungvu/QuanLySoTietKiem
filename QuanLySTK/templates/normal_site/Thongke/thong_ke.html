@@ -65,7 +65,7 @@
             </div>
             <table>
                 <tr class="first-row-header">
-                    <th colspan="5">Ngày:...........</th>
+                    <th colspan="5">Ngày: {{date}}</th>
                 </tr>
                 <tr class="second-row-header">
                     <th class="stt">STT</th>
@@ -75,13 +75,15 @@
                     <th class="cl">Chênh lệch</th>
                 </tr>
                 <div class="table-row-data">
+                    {% for i in baocaongay %}
                     <tr>
-                        <td>1</td>
-                        <td>Không thời hạn</td>
-                        <td>100000000</td>
-                        <td>50000000</td>
-                        <td>50000000</td>
+                        <td class="stt">{{forloop.counter}}</td>
+                        <td class="ltk">{{i.maltk.ltk}}</td>
+                        <td class="tt">{{i.tongthu}}</td>
+                        <td class="tc">{{i.tongchi}}</td>
+                        <td class="cl">{{i.chenhlech}}</td>
                     </tr>
+                    {% endfor %}
                 </div>
             </table>
             </div>
@@ -102,28 +104,35 @@
                 min="2000-01" max="2050-12" required = True>
                 <input type="submit" value="Thống Kê">
             </form>
+            {% for i in maltk %}
             <table>
                 <tr class="first-row-header">
-                    <th colspan="5">Tháng:...........</th>
-                    <th colspan="5">Loại tiết kiệm:...........</th>
+                    <th colspan="5">Tháng:{{date}}</th>
+                    <th colspan="5">Loại tiết kiệm: {{i}}</th>
                 </tr>
                 <tr class="second-row-header">
                     <th class="stt">STT</th>
-                    <th class="ltk">Ngày</th>
+                    <th class="ngay">Ngày</th>
                     <th class="tt">Sổ mở</th>
                     <th class="tc">Sổ đóng</th>
                     <th class="cl">Chênh lệch</th>
                 </tr>
                 <div class="table-row-data">
-                    <tr>
-                        <td>1</td>
-                        <td>Không thời hạn</td>
-                        <td>100000000</td>
-                        <td>50000000</td>
-                        <td>50000000</td>
-                    </tr>
+                    {% for j in baocaothang %}
+                        {% if j.maltk.maltk == i %}
+                        <tr>
+                            <td class="stt">{{forloop.counter}}</td>
+                            <td class="ngay">{{j.ngaythang}}</td>
+                            <td class="tt">{{j.phieugoi}}</td>
+                            <td class="tc">{{j.phieudong}}</td>
+                            <td class="cl">{{j.chenhlechdonggoi}}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </table>
+            <br>
+            {% endfor %}
             </div>
             </div>
             {% endif %}

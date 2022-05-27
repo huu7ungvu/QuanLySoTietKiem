@@ -28,8 +28,16 @@
             </nav>
         </div>
     </div>
-
+    {% for message in messages %}
+    
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+                {{ message }}
+        </div>
+    
+    {% endfor %}
     <div class="content-container">
+
         <div class="wrapper">
             <h1 class="title">Lập phiếu rút tiết kiệm</h1>
             <hr>
