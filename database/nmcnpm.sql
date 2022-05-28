@@ -14,7 +14,7 @@
 
 use quan_ly_phieu_tiet_kiem;
 
--- Create tables
+# Create tables
 create table KhachHang 
 ( makh varchar(10) not null,
 tenkh varchar(50) not null,
@@ -189,7 +189,6 @@ INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,
 INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,sodu,tinhtrang) VALUES ('PTK16','KH1','LTK2','160000000',STR_TO_DATE('21-04-2022', '%d-%m-%Y'),Null,'160000000','1');
 INSERT INTO Phieutietkiem (maptk,makh,maltk,sotiengoi,ngaymophieu,ngaydongphieu,sodu,tinhtrang) VALUES ('PTK17','KH2','LTK2','600000000',STR_TO_DATE('09-01-2022', '%d-%m-%Y'),STR_TO_DATE('09-05-2022', '%d-%m-%Y'),'0','0');
 
-select * from Phieutietkiem;
 
 -- Phiếu rút tiền
 INSERT INTO Phieuruttien (maprt,makh,maptk,ngayrut,sotienrut) VALUES ('PRT1','KH3','PTK3',STR_TO_DATE('07-05-2022', '%d-%m-%Y'),'200238356');

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,9 +6,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer-header.css' %}">
 
-    <style>
+    <!-- <style>
         body {
             padding: 0 !important;
             margin: 0 !important;
@@ -302,27 +303,27 @@
             }
 
         }
-    </style>
-    <title>Document</title>
+    </style> -->
+    <title>Lập phiếu tiết kiệm</title>
 </head>
 
 <body>
     {% for message in messages %}
-    
+
     <div class="alert alert-success">
         <a class="close" href="#" data-dismiss="alert">×</a>
-            {{ message }}
+        {{ message }}
     </div>
 
     {% endfor %}
     <div class="home">
-        <div class="homeHeader">
+        <!-- <div class="homeHeader">
             <div class="homeHeaderLogo">
                 <p>UIT SAVE</p>
                 <img src="https://wp-tid.zillowstatic.com/trulia/wp-content/uploads/sites/3/2019/03/Tips-for-saving-to-buy-a-house-12a08b-1024x512.jpg"
                     alt="" />
             </div>
-            <!-- <div class="homeHeaderUser">
+            <div class="homeHeaderUser">
                 <div class="infoUser">
                     <p class="username">UserName</p>
                     <p class="Id">ID</p>
@@ -331,27 +332,45 @@
                     <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
                         alt="">
                 </div>
-            </div> -->
+            </div>
+        </div> -->
+
+        <div class="homeHeader">
+            <div class="homeHeaderLogo">
+                <p>UIT SAVE</p>
+                <img src="https://wp-tid.zillowstatic.com/trulia/wp-content/uploads/sites/3/2019/03/Tips-for-saving-to-buy-a-house-12a08b-1024x512.jpg"
+                    alt="" />
+            </div>
+            <div class="homeHeaderUser">
+                <a href="{%url 'normal_site:profile' user.username%} " class="infoUser">
+                    <p class="username">{{user.username}}</p>
+                    <p class="positon">{{position}}</p>
+                </a>
+                <div class="logoUser">
+                    <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
+                        alt="">
+                </div>
+            </div>
         </div>
         <div class="homeBody">
             <form action="/home/lap_phieu_tiet_kiem/" method = 'POST' class="phieutietkiem">
                 {% csrf_token %}
                 <p>LẬP PHIẾU GỬI TIẾT KIỆM</p>
-                <label for="id"> ID: <input type="text" title="id" name ='id' placeholder="Không bắt buộc nhập cho khách hàng mới"></label><br>
-                <label for="name"> Tên Khách Hàng: <input type="text" title="name" name = "tenkh" 
-                    pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){1,5}$" 
-                    Required style="text-transform:uppercase"
-                    placeholder="Họ và tên viết không dấu"></label><br>
-                    
-                <label for="CCCD"> CCCD: <input type="text" title="CCCD" name='CMND' 
-                    Required pattern="^(\d{9}|\d{12}})"
-                    placeholder="9 (CMND) hoặc 12 (CCCD) chữ số"></label><br>
-                    
+                <label for="id"> ID: <input type="text" title="id" name='id'
+                        placeholder="Không bắt buộc nhập cho khách hàng mới"></label><br>
+                <label for="name"> Tên Khách Hàng: <input type="text" title="name" name="tenkh"
+                        pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){1,5}$" Required style="text-transform:uppercase"
+                        placeholder="Họ và tên viết không dấu"></label><br>
+
+                <label for="CCCD"> CCCD: <input type="text" title="CCCD" name='CMND' Required pattern="^(\d{9}|\d{12}})"
+                        placeholder="9 (CMND) hoặc 12 (CCCD) chữ số"></label><br>
+
                 <label for="address"> Địa Chỉ: <input type="text" title="address" name='diachi' Required></label><br>
-                <label for="money"> Số Tiền Gửi: <input type="text" title="money" name='sotiengoi' Required pattern="^[0-9]*$"></label><br>
+                <label for="money"> Số Tiền Gửi: <input type="text" title="money" name='sotiengoi' Required
+                        pattern="^[0-9]*$"></label><br>
                 <label for="savingtype"> Loại Tiết Kiệm: <select name="loaitietkiem" id="savingtype">
                         {%for item in ltk%}
-                            <option value="{{item}}">{{item}}</option>
+                        <option value="{{item}}">{{item}}</option>
                         {%endfor%}
                     </select></label><br>
                 <!-- <label for="date"> Ngày Lập Phiếu: <input type="date" id="current_date" name="date" value="2002-09-09" readonly></label><br> -->
