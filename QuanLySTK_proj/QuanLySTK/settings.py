@@ -58,7 +58,7 @@ ROOT_URLCONF = 'QuanLySTK.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates"], # 'DIRS': [BASE_DIR / 'templates']
+        'DIRS': ["templates"],  # 'DIRS': [BASE_DIR / 'templates']
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,9 +86,9 @@ DATABASES = {
         'PASSWORD': 'asdfghjkl01',
         'HOST': '127.0.0.1',
         'PORT': '3306',
-        'OPTIONS': {  
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
-        }  
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
@@ -96,7 +96,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-   
+
 ]
 
 

@@ -228,13 +228,24 @@ class RutPhieuTietKiem (View):
     def tinh_so_du(self,phieutietkiem,ngayhethan):
         sotien = int(phieutietkiem.sodu)
         laisuat = phieutietkiem.maltk.laisuat
-        songaygoi = int((ngayhethan - phieutietkiem.ngaymophieu).days)
-        songayquahan = int((date.today() - ngayhethan).days)
-        laisuatquahan = models.Loaitietkiem.objects.get(maltk='LTK01').laisuat
+        laisuatquahan = models.Loaitietkiem.objects.get(maltk='LTK1').laisuat
 
-        sodukhadung = sotien + int(sotien * (laisuat/100) * (songaygoi/365)) # lãi theo kỳ hạn
-        sodukhadung = sodukhadung + + int(sodukhadung * (laisuatquahan/100) * (songayquahan/365)) # lãi theo quá hạn
-        return sodukhadung
+        phieurut = models.Phieuruttien.objects.filter(maptk=phieutietkiem.maptk)
+
+        if len(phieurut) == 0 :
+            songaygoi = int((ngayhethan - phieutietkiem.ngaymophieu).days)
+            songayquahan = int((date.today() - ngayhethan).days)
+            sodukhadung = sotien + int(sotien * (laisuat/100) * (songaygoi/365)) # lãi theo kỳ hạn
+            sodukhadung = sodukhadung + + int(sodukhadung * (laisuatquahan/100) * (songayquahan/365)) # lãi theo quá hạn
+            return sodukhadung
+        else: 
+            # sort phiếu rút theo ngày ( get latest phiếu rút )
+            phieurut = models.Phieuruttien.objects.filter(maptk=phieutietkiem.maptk).order_by('-ngayrut')[0]
+            ngayrut = phieurut.ngayrut
+            songaygoi = int((date.today() - ngayrut).days)
+            sodukhadung = sotien + int(sotien * (laisuat/100) * (songaygoi/365))
+            return sodukhadung
+
 
     def get(self, request, *args, **kwargs):
         phieutietkiem = models.Phieutietkiem.objects.get(maptk=kwargs['maptk'])
@@ -254,7 +265,7 @@ class RutPhieuTietKiem (View):
             return render(request,self.template_name,context)
         
         # Kiểm tra loai tiet kiem
-        if phieutietkiem.maltk.maltk == 'LTK01':
+        if phieutietkiem.maltk.maltk == 'LTK1':
             is_ruthet = False
         else :
             is_ruthet = True

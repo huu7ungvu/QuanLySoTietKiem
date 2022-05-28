@@ -79,12 +79,35 @@
                         <input type="text" id="Kieu" name="t" value="Thống kê theo ngày" readonly>
                         <br>
 
-                        <label for="Chọn ngày"> Chọn ngày: </label>
-                        <input type="date" id="date" name="d" value="2001-01-01" min="2000-01-01" max="2050-12-31"
-                            required=True>
-
-                        <input type="submit" value="Thống Kê">
-                    </form>
+                <label for="Chọn ngày"> Chọn ngày: </label>
+                <input type="date" id="date" name = "d"
+                value="2001-01-01"
+                min="2000-01-01" max="2050-12-31" required = True>
+                
+                <input type="submit" value="Thống Kê">
+            </form>
+            </div>
+            <table>
+                <tr class="first-row-header">
+                    <th colspan="5">Ngày: {{date}}</th>
+                </tr>
+                <tr class="second-row-header">
+                    <th class="stt">STT</th>
+                    <th class="ltk">Loại tiết kiệm</th>
+                    <th class="tt">Tổng thu</th>
+                    <th class="tc">Tổng chi</th>
+                    <th class="cl">Chênh lệch</th>
+                </tr>
+                <div class="table-row-data">
+                    {% for i in baocaongay %}
+                    <tr>
+                        <td class="stt">{{forloop.counter}}</td>
+                        <td class="ltk">{{i.maltk.ltk}}</td>
+                        <td class="tt">{{i.tongthu}}</td>
+                        <td class="tc">{{i.tongchi}}</td>
+                        <td class="cl">{{i.chechlechthuchi}}</td>
+                    </tr>
+                    {% endfor %}
                 </div>
                 <table>
                     <tr class="first-row-header">
