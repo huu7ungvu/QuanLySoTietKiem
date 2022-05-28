@@ -72,7 +72,7 @@ def profile(request,username):
 
 class LapPhieuTietKiem(View):
     model = models.Phieutietkiem
-    template_name = 'normal_site\PhieuTK\phieutk.html'
+    template_name = 'normal_site/PhieuTK/phieutk.html'
 
     def get(self, request, *args, **kwargs):
         ltk = models.Loaitietkiem.objects.all()
@@ -230,8 +230,10 @@ class RutPhieuTietKiem (View):
         laisuat = phieutietkiem.maltk.laisuat
         songaygoi = int((ngayhethan - phieutietkiem.ngaymophieu).days)
         songayquahan = int((date.today() - ngayhethan).days)
+        laisuatquahan = models.Loaitietkiem.objects.get(maltk='LTK01').laisuat
 
-        sodukhadung = sotien + int(sotien * (laisuat/100) * (songaygoi/365)) + int(sotien * (laisuat/100) * (songayquahan/365))
+        sodukhadung = sotien + int(sotien * (laisuat/100) * (songaygoi/365)) # lãi theo kỳ hạn
+        sodukhadung = sodukhadung + + int(sodukhadung * (laisuatquahan/100) * (songayquahan/365)) # lãi theo quá hạn
         return sodukhadung
 
     def get(self, request, *args, **kwargs):
@@ -350,7 +352,7 @@ def ThongKe(request,t=None,d=None):
             
             # check đã có trong database hay chưa
             baocaongay_check = models.Baocaongay.objects.filter(ngay__year=y,ngay__month=m,ngay__day=d)
-            if len(baocaongay) != 0:
+            if len(baocaongay_check) != 0:
                 context = {'baocaongay': baocaongay_check,'t':"1",'date':date}
                 return render(request,template_name,context)
 
