@@ -114,7 +114,7 @@ tenmanhinhduocloat varchar(20) not null,
 primary key (macn));
 
 -- Create thamso table
-create table Thamso
+create table thamso
 ( tenthamso varchar(20) not null,
 giatri varchar(10) not null,
 primary key (tenthamso));
@@ -185,12 +185,14 @@ INSERT INTO Phieuruttien (maprt,makh,maptk,ngayrut,sotienrut) VALUES ('PRT005','
 INSERT INTO Phieuruttien (maprt,makh,maptk,ngayrut,sotienrut) VALUES ('PRT006','0002','PTK017',STR_TO_DATE('04-09-2021', '%d-%m-%Y'),'600000000');
 
 -- bangthamso
-Insert into Thamso (tenthamso, giatri) values ('SLNguoiDung','1');
-Insert into Thamso (tenthamso, giatri) values ('SLKhachHang','15');
-Insert into Thamso (tenthamso, giatri) values ('SLPhieuTietKiem','17');
-Insert into Thamso (tenthamso, giatri) values ('SLPhieuRutTien','6');
+Insert into thamso (tenthamso, giatri) values ('SLNguoiDung','1');
+Insert into thamso (tenthamso, giatri) values ('SLKhachHang','15');
+Insert into thamso (tenthamso, giatri) values ('SLPhieuTietKiem','17');
+Insert into thamso (tenthamso, giatri) values ('SLPhieuRutTien','6');
 
 select * from Thamso;
+drop table Thamso;
+
 
 -- SHOW VARIABLES LIKE "sql_safe_updates";
 -- SET SQL_SAFE_UPDATES = 'OFF';
