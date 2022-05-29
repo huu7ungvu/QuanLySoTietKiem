@@ -387,7 +387,11 @@ def ThongKe(request,t=None,d=None):
                     
                 
                 try:
-                    tong_chi = int(phieuruttien.filter(maltk=i).aggregate(Sum('sotienrut'))['sotienrut__sum'])
+                    tong_chi = 0
+                    for j in phieuruttien :
+                        maltk_check = j.maptk.maltk.maltk
+                        if maltk_check == i:
+                            tong_chi = int(j.sotienrut) + tong_chi
                 except:
                     tong_chi = 0
 
@@ -408,11 +412,20 @@ def ThongKe(request,t=None,d=None):
             m = date_split [1]
             maltk = models.Loaitietkiem.objects.values_list('maltk',flat=True)
             maltk = list(maltk)
+
+            ltk = models.Loaitietkiem.objects.values_list('ltk',flat=True)
+            ltk = list(ltk)
             
             # check đã có trong database hay chưa
             baocaothang_check = models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m)
             if len(baocaothang_check) != 0:
-                context = {'baocaothang': baocaothang_check,'t':"2", 'maltk':maltk, 'date':date}
+
+                baocaothang = {}
+                for i in maltk:
+                    query = list(models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m,maltk=i)) 
+                    baocaothang[i] = query
+
+                context = {'baocaothang': baocaothang,'t':"2", 'ltk':ltk, 'date':date}
                 return render(request,template_name,context)
 
             # get objects bảng
@@ -440,13 +453,18 @@ def ThongKe(request,t=None,d=None):
                     else :
                         date_temp = date + str('-') + str(j)
 
-                    baocaothang = models.Baocaothang.objects.create(ngaythang=date_temp
-                    ,maltk=models.Loaitietkiem.objects.get(maltk=i)
-                    ,phieugoi=somo,phieudong=sodong,chenhlechdonggoi=chenhlech)
+                    if (somo!=0 or sodong!=0):
+                        baocaothang = models.Baocaothang.objects.create(ngaythang=date_temp
+                        ,maltk=models.Loaitietkiem.objects.get(maltk=i)
+                        ,phieugoi=somo,phieudong=sodong,chenhlechdonggoi=chenhlech)
             
             # đưa vào context
-            baocaothang = models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m)
-            context = {'baocaothang': baocaothang,'t':"2", 'maltk':maltk, 'date':date}
+            baocaothang = {}
+            for i in maltk:
+                query = list(models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m,maltk=i)) 
+                baocaothang[i] = query
+
+            context = {'baocaothang': baocaothang,'t':"2", 'ltk':ltk, 'date':date}
 
             # render template
             return render(request,template_name,context)
