@@ -7,8 +7,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/home_page.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/footer-header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/homePage.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer_header.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js">
     <title>HomePage</title>
 </head>
 
@@ -39,22 +41,45 @@
 
         <!-- Body -->
         <div class="homeBody">
-            <div class="lapphieu">
-                <div class="lapphieutk">
-                    <button><a href="{%url 'normal_site:lap_phieu_tiet_kiem'%}" class="infoUser">Lập Phiếu Tiết
-                            Kiệm</a></button>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3 col-sm-0 col-xs-0">
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <button class="btn-homebody">
+                            <a href="{%url 'normal_site:lap_phieu_tiet_kiem'%}">Lập Phiếu Tiết Kiệm</a>
+                        </button>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <button class="btn-homebody">
+                            <a href="{%url 'normal_site:tim_kiem_phieu_tiet_kiem'%}">Lập Phiếu Rút Tiền</a>
+                        </button>
+                    </div>
+                    <div class="col-md-3 col-sm-0 col-xs-0">
+
+                    </div>
                 </div>
-                <div class="lapphieurut">
-                    <button><a href="{%url 'normal_site:tim_kiem_phieu_tiet_kiem'%}" class="infoUser">Lập Phiếu Rút
-                            Tiền</a></button>
-                </div>
-            </div>
-            <div class="tracuu_thongke">
-                <div class="tracuu">
-                    <button><a href="{%url 'normal_site:tra_cuu'%}" class="infoUser">Tra Cứu</a></button>
-                </div>
-                <div class="thongke">
-                    <button><a href="{%url 'normal_site:thong_ke'%}" class="infoUser">Thống Kê</a></button>
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-0 col-xs-0">
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <button class="btn-homebody">
+                            <a href="{%url 'normal_site:tra_cuu'%}">Tra Cứu</a>
+                        </button>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <button class="btn-homebody">
+                            <a href="{%url 'normal_site:thong_ke'%}">Thống Kê</a>
+                        </button>
+                    </div>
+                    <div class="col-md-3 col-sm-0 col-xs-0">
+
+                    </div>
                 </div>
             </div>
         </div>
