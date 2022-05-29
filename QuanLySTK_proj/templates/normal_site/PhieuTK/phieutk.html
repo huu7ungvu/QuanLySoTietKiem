@@ -7,303 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer-header.css' %}">
-
-    <!-- <style>
-        body {
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-
-        .home {
-            display: flex;
-            flex-direction: column;
-
-        }
-
-        .homeHeader {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            background-color: lightblue;
-            height: 15vh;
-        }
-
-        .homeHeaderLogo {
-            display: flex;
-            flex-direction: column;
-            align-content: center;
-            align-items: center;
-            padding-left: 10px;
-            cursor: pointer;
-        }
-
-        .homeHeaderLogo:hover {}
-
-        .homeHeaderUser {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-right: 10px;
-            cursor: pointer;
-        }
-
-        .homeHeaderLogo>img {
-            width: auto;
-            height: 60px;
-        }
-
-        .infoUser {
-            padding-right: 20px;
-        }
-
-        .logoUser {
-            width: 60;
-            height: 60;
-        }
-
-        .logoUser>img {
-            width: auto;
-            height: 60px;
-            border-radius: 100px;
-        }
-
-
-        .homeBody {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            height: 55vh;
-        }
-
-        label {
-            padding-top: 10px;
-             
-        }
-
-        input {
-            width: 400px;
-        }
-
-        .classbutton {
-            padding-top: 20px;
-            display: flex;
-            flex-direction: row;
-        }
-
-        .lapphieu {
-            padding-right: 30px;
-        }
-
-        .lapphieu>button {
-            width: 200px;
-            height: 30px;
-            border-radius: 20px;
-            background-color: rgb(28, 111, 189);
-        }
-
-        .lapvainphieu>button {
-            width: 200px;
-            height: 30px;
-            border-radius: 20px;
-            background-color: rgb(28, 189, 55);
-        }
-
-        .homeFooter {
-            height: 30vh;
-        }
-
-        /* css footer */
-        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);
-
-        * {
-            font-family: Open Sans;
-        }
-
-
-        .footer-distributed {
-            background: #666;
-            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
-            box-sizing: border-box;
-            width: 100%;
-            height: 100%;
-            text-align: left;
-            font: bold 16px sans-serif;
-            padding: 55px 50px;
-        }
-
-        .footer-distributed .footer-left,
-        .footer-distributed .footer-center,
-        .footer-distributed .footer-right {
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        /* Footer left */
-
-        .footer-distributed .footer-left {
-            width: 40%;
-        }
-
-        /* The company logo */
-
-        .footer-distributed h3 {
-            color: #ffffff;
-            font: normal 36px 'Open Sans', cursive;
-            margin: 0;
-        }
-
-        .footer-distributed h3 span {
-            color: lightseagreen;
-        }
-
-        /* Footer links */
-
-        .footer-distributed .footer-links {
-            color: #ffffff;
-            margin: 20px 0 12px;
-            padding: 0;
-        }
-
-        .footer-distributed .footer-links a {
-            display: inline-block;
-            line-height: 1.8;
-            font-weight: 400;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .footer-distributed .footer-company-name {
-            color: #222;
-            font-size: 14px;
-            font-weight: normal;
-            margin: 0;
-        }
-
-        /* Footer Center */
-
-        .footer-distributed .footer-center {
-            width: 35%;
-        }
-
-        .footer-distributed .footer-center i {
-            background-color: #33383b;
-            color: #ffffff;
-            font-size: 25px;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 42px;
-            margin: 10px 15px;
-            vertical-align: middle;
-        }
-
-        .footer-distributed .footer-center i.fa-envelope {
-            font-size: 17px;
-            line-height: 38px;
-        }
-
-        .footer-distributed .footer-center p {
-            display: inline-block;
-            color: #ffffff;
-            font-weight: 400;
-            vertical-align: middle;
-            margin: 0;
-        }
-
-        .footer-distributed .footer-center p span {
-            display: block;
-            font-weight: normal;
-            font-size: 14px;
-            line-height: 2;
-        }
-
-        .footer-distributed .footer-center p a {
-            color: lightseagreen;
-            text-decoration: none;
-            ;
-        }
-
-        .footer-distributed .footer-links a:before {
-            content: "|";
-            font-weight: 300;
-            font-size: 20px;
-            left: 0;
-            color: #fff;
-            display: inline-block;
-            padding-right: 5px;
-        }
-
-        .footer-distributed .footer-links .link-1:before {
-            content: none;
-        }
-
-        /* Footer Right */
-
-        .footer-distributed .footer-right {
-            width: 20%;
-        }
-
-        .footer-distributed .footer-company-about {
-            line-height: 20px;
-            color: #92999f;
-            font-size: 13px;
-            font-weight: normal;
-            margin: 0;
-        }
-
-        .footer-distributed .footer-company-about span {
-            display: block;
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .footer-distributed .footer-icons {
-            margin-top: 25px;
-        }
-
-        .footer-distributed .footer-icons a {
-            display: inline-block;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            background-color: #33383b;
-            border-radius: 2px;
-
-            font-size: 20px;
-            color: #ffffff;
-            text-align: center;
-            line-height: 35px;
-
-            margin-right: 3px;
-            margin-bottom: 5px;
-        }
-
-        /* If you don't want the footer to be responsive, remove these media queries */
-
-        @media (max-width: 880px) {
-
-            .footer-distributed {
-                font: bold 14px sans-serif;
-            }
-
-            .footer-distributed .footer-left,
-            .footer-distributed .footer-center,
-            .footer-distributed .footer-right {
-                display: block;
-                width: 100%;
-                margin-bottom: 40px;
-                text-align: center;
-            }
-
-            .footer-distributed .footer-center i {
-                margin-left: 0;
-            }
-
-        }
-    </style> -->
+    <link rel="stylesheet" href="{% static 'css/lapphieutk.css' %}">
     <title>Lập phiếu tiết kiệm</title>
 </head>
 
@@ -317,24 +21,7 @@
 
     {% endfor %}
     <div class="home">
-        <!-- <div class="homeHeader">
-            <div class="homeHeaderLogo">
-                <p>UIT SAVE</p>
-                <img src="https://wp-tid.zillowstatic.com/trulia/wp-content/uploads/sites/3/2019/03/Tips-for-saving-to-buy-a-house-12a08b-1024x512.jpg"
-                    alt="" />
-            </div>
-            <div class="homeHeaderUser">
-                <div class="infoUser">
-                    <p class="username">UserName</p>
-                    <p class="Id">ID</p>
-                </div>
-                <div class="logoUser">
-                    <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
-                        alt="">
-                </div>
-            </div>
-        </div> -->
-
+        <!-- Header -->
         <div class="homeHeader">
             <div class="homeHeaderLogo">
                 <p>UIT SAVE</p>
@@ -342,37 +29,53 @@
                     alt="" />
             </div>
             <div class="homeHeaderUser">
-                <a href="{%url 'normal_site:profile' user.username%} " class="infoUser">
-                    <p class="username">{{user.username}}</p>
-                    <p class="positon">{{position}}</p>
+                <a href="{%url 'normal_site:profile' user.username%} ">
+                    <div class="infoUser">
+                        <p class="username">{{user.username}}</p>
+                        <p class="positon">{{position}}</p>
+                    </div>
+                    <div class="logoUser">
+                        <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
+                            alt="">
+                    </div>
                 </a>
-                <div class="logoUser">
-                    <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
-                        alt="">
-                </div>
             </div>
         </div>
         <div class="homeBody">
             <form action="/home/lap_phieu_tiet_kiem/" method = 'POST' class="phieutietkiem">
                 {% csrf_token %}
-                <p>LẬP PHIẾU GỬI TIẾT KIỆM</p>
-                <label for="id"> ID: <input type="text" title="id" name='id'
-                        placeholder="Không bắt buộc nhập cho khách hàng mới"></label><br>
-                <label for="name"> Tên Khách Hàng: <input type="text" title="name" name="tenkh"
-                        pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){1,5}$" Required style="text-transform:uppercase"
-                        placeholder="Họ và tên viết không dấu"></label><br>
-
-                <label for="CCCD"> CCCD: <input type="text" title="CCCD" name='CMND' Required pattern="^(\d{9}|\d{12}})"
-                        placeholder="9 (CMND) hoặc 12 (CCCD) chữ số"></label><br>
-
-                <label for="address"> Địa Chỉ: <input type="text" title="address" name='diachi' Required></label><br>
-                <label for="money"> Số Tiền Gửi: <input type="text" title="money" name='sotiengoi' Required
-                        pattern="^[0-9]*$"></label><br>
-                <label for="savingtype"> Loại Tiết Kiệm: <select name="loaitietkiem" id="savingtype">
-                        {%for item in ltk%}
-                        <option value="{{item}}">{{item}}</option>
-                        {%endfor%}
-                    </select></label><br>
+                <p class="title">LẬP PHIẾU GỬI TIẾT KIỆM</p>
+                <hr>
+                <div class="form-body">
+                    <div class="form-control">
+                        <label for="id">ID:</label>
+                        <input type="text" title="id" name='id' placeholder="Không bắt buộc nhập cho khách hàng mới">
+                    </div>
+                    <div class="form-control">
+                        <label for="name">Tên Khách Hàng:</label>
+                        <input type="text" title="name" name="tenkh" pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){1,5}$" Required style="text-transform:uppercase" placeholder="Họ và tên viết không dấu">
+                    </div>
+                    <div class="form-control">
+                        <label for="CCCD">CCCD:</label>
+                        <input type="text" title="CCCD" name='CMND' Required pattern="^(\d{9}|\d{12}})" placeholder="9 (CMND) hoặc 12 (CCCD) chữ số">
+                    </div>
+                    <div class="form-control">
+                        <label for="address">Địa Chỉ:</label>
+                        <input type="text" title="address" name='diachi' Required>
+                    </div>
+                    <div class="form-control">
+                        <label for="money">Số Tiền Gửi:</label>
+                        <input type="text" title="address" name='diachi' Required>
+                    </div>
+                    <div class="form-control">
+                        <label for="savingtype">Loại Tiết Kiệm:</label>
+                        <select name="loaitietkiem" id="savingtype">
+                            {%for item in ltk%}
+                            <option value="{{item}}">{{item}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
                 <!-- <label for="date"> Ngày Lập Phiếu: <input type="date" id="current_date" name="date" value="2002-09-09" readonly></label><br> -->
                 <!-- <label for="day2"> Ngày Đóng Phiếu: <input type="text" title="day2"></label><br>  -->
                 <div class="classbutton">

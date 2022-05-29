@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <!-- <style>
         body {
             background: -webkit-linear-gradient(left, #3931af, #00c6ff);
         }
@@ -124,7 +126,7 @@
             font-weight: 600;
             color: #0062cc;
         }
-    </style>
+    </style> -->
     <!------ Include the above in your HEAD tag ---------->
 </head>
 
@@ -178,8 +180,6 @@
                         <a href="">Web Designer</a><br />
                         <a href="">Web Developer</a><br />
                         <a href="">WordPress</a><br />
-                        <a href="">WooCommerce</a><br />
-                        <a href="">PHP, .Net</a><br />
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -269,8 +269,7 @@
                             </div> -->
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Your Bio</label><br />
-                                    <p>Your detail description</p>
+                                    <a href="{% url 'normal_site:logout' %}"><input type="submit" class="profile-logout-btn" name="btnAddMore" value="Logout" /></a>
                                 </div>
                             </div>
                         </div>

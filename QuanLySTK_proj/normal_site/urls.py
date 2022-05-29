@@ -27,4 +27,5 @@ urlpatterns = [
     #path('home/tra_cuu/',views.TraCuu.as_view(), name='tra_cuu'),
     path('home/tra_cuu_2/',views.tracuu, name='tra_cuu'),
     path('home/thong_ke/',views.ThongKe,name='thong_ke'),
+    path('home/logout/', views.logout, name='logout')
     ]
