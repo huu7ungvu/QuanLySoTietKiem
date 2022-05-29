@@ -9,7 +9,7 @@ from braces.views import GroupRequiredMixin # add GroupRequiredMixin to the clas
 from django.views.generic.base import View
 from django.db.models import Sum, Count
 from admin_site import models 
-from . import forms 
+from . import filters
 import random
 from django.contrib import messages
 from datetime import datetime, date
@@ -179,11 +179,19 @@ class TraCuu(View):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
-""" Tóm lại các bước lập phiếu rút tiền như sau nè: 
-(1) Template lấy thông tin để tìm kiếm phiếu
-(2) Phiếu được tìm kiếm kèm 2 nut submit là cancel và rút
-(3) 1 Popup hiện ra. 1 là sẽ báo phiếu này ko thể rút do chưa đến hạn. 2 là báo được rút tiền, 
-với ko kỳ hạn được phép chọn số tiền rút, với có kỳ hạn thì buộc phải xác nhận rút hết"""
+def tracuu(request):
+    ptk = models.Phieutietkiem.objects.all()
+
+    orders = ptk.order_by('ngaymophieu')
+    order_count = orders.count()
+
+    myFilter = filters.PhieutietkiemFilter(request.GET, queryset=orders)
+    orders = myFilter.qs
+
+    context = {'ptk':ptk,'orders':orders,'order_count':order_count,'myFilter':myFilter}
+
+    return render(request, 'normal_site/Tracuu/tra_cuu_2.html', context)
+
 class TimKiemPhieuTietKiem(View):
     model= models.Phieutietkiem
     template_name = 'normal_site/Lapphieurut/tim_kiem_phieu_tiet_kiem.html'
