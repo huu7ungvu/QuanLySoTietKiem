@@ -382,7 +382,11 @@ def ThongKe(request,t=None,d=None):
                     
                 
                 try:
-                    tong_chi = int(phieuruttien.filter(maltk=i).aggregate(Sum('sotienrut'))['sotienrut__sum'])
+                    tong_chi = 0
+                    for j in phieuruttien :
+                        maltk_check = j.maptk.maltk.maltk
+                        if maltk_check == i:
+                            tong_chi = int(j.sotienrut) + tong_chi
                 except:
                     tong_chi = 0
 

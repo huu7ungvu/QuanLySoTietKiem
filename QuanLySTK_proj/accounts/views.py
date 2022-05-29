@@ -54,7 +54,7 @@ def signin(request):
                     return redirect('normal_site:home',username) # điều hướng về trang chủ
                 else:
                     login(request,user)
-                    return redirect('adsite:home') # điều hướng về admin
+                    return redirect('/admin/') # điều hướng về admin
         else:
             messages.error(request,"Invalid Credentials")
             return redirect('accounts:signin')
