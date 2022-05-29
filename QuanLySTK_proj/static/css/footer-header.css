@@ -28,11 +28,23 @@ body{
 }
 
 .homeHeaderUser {
-    display: flex;
+    height: 100%;
     justify-content: space-between;
     align-items: center;
     padding-right: 10px;
     cursor: pointer;
+}
+
+.homeHeaderUser > a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+.homeHeaderUser > a > div {
+
 }
 
 .homeHeaderLogo > p {

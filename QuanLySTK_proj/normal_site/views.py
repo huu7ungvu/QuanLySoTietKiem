@@ -15,6 +15,7 @@ from django.contrib import messages
 from datetime import datetime, date
 import calendar
 from dateutil.relativedelta import *
+from django.contrib.auth import logout as auth_logout
 
 # # Create group_required decorator
 # def group_required(*group_names, login_url=None, raise_exception=False):
@@ -69,6 +70,10 @@ def profile(request,username):
     else:
             context = {'user': user,'position':'Nhân Viên Phân Tích Dữ Liệu'}
     return render(request,"normal_site/Profile/profile.html",context)
+
+def logout(request):
+    auth_logout(request)
+    return HttpResponse("Logout thành công!")
 
 class LapPhieuTietKiem(View):
     model = models.Phieutietkiem

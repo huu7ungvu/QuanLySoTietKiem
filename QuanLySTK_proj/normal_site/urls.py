@@ -26,4 +26,5 @@ urlpatterns = [
     path('home/rut_phieu_tiet_kiem/<str:maptk>', views.RutPhieuTietKiem.as_view(), name='rut_phieu_tiet_kiem'),
     path('home/tra_cuu/',views.TraCuu.as_view(), name='tra_cuu'),
     path('home/thong_ke/',views.ThongKe,name='thong_ke'),
+    path('home/logout/', views.logout, name='logout')
     ]
