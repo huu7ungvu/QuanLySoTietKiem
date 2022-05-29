@@ -109,29 +109,7 @@
                     </tr>
                     {% endfor %}
                 </div>
-                <table>
-                    <tr class="first-row-header">
-                        <th colspan="5">Ngày: {{date}}</th>
-                    </tr>
-                    <tr class="second-row-header">
-                        <th class="stt">STT</th>
-                        <th class="ltk">Loại tiết kiệm</th>
-                        <th class="tt">Tổng thu</th>
-                        <th class="tc">Tổng chi</th>
-                        <th class="cl">Chênh lệch</th>
-                    </tr>
-                    <div class="table-row-data">
-                        {% for i in baocaongay %}
-                        <tr>
-                            <td class="stt">{{forloop.counter}}</td>
-                            <td class="ltk">{{i.maltk.ltk}}</td>
-                            <td class="tt">{{i.tongthu}}</td>
-                            <td class="tc">{{i.tongchi}}</td>
-                            <td class="cl">{{i.chenhlech}}</td>
-                        </tr>
-                        {% endfor %}
-                    </div>
-                </table>
+            </table>
             </div>
             {% endif %}
 
@@ -149,6 +127,7 @@
                             required=True>
                         <input type="submit" value="Thống Kê">
                     </form>
+                    <br>
                     {% for i in ltk %}
                     <table>
                         <tr class="first-row-header">
