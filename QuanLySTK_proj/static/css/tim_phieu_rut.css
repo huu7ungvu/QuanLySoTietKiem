@@ -49,75 +49,49 @@ body {
 }
 
 .content-container .title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
     text-transform: uppercase;
     text-align: center;
-    margin-bottom: 8px;
+    padding: 8px 0;
 }
 
-.content-container hr {
-    color: #48B2FF;
-    margin-bottom: 16px;
-}
-
-.content-container .form-input {
-    max-width: 750px;
-    margin: 0 auto;
+.content-container .form-body {
+    padding: 16px 32px;
 }
 
 .content-container .form-control {
-    padding: 2px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.form-body .form-control input {
+    display: inline-block;
+    width: 75%;
+    font-size: 18px;
 }
 
 .content-container .form-input label {
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
     display: inline-block;
     width: 250px;
 }
 
-.content-container .form-input select {
-    font-size: 18px;
-}
-
-.content-container .form-input input {
-    margin-top: 16px;
-    font-size: 18px;
-    color: #000;
-    background-color: #DDDCDC;
-    display: inline-block;
-    border: none;
-}
-
-.content-container .form-submit {
-    margin-top: 32px;
+.content-container .classbutton .lapphieu {
+    padding: 16px 32px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
-.content-container .form-submit input {
+.content-container .lapphieu button {
     width: 220px;
     padding: 4px 0;
     background-color: #0ba6da;
     border: 1px solid #007094;
     border-radius: 10px;
-}
-
-.footer-container {
-    background-color: #C4C4C4;
-    height: 64px;
-    margin-top: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    position: fixed;
-    bottom: 0px;
-}
-
-.footer-container .wrapper {
-    width: 1000px;
-    margin: 0 auto;
 }
 
