@@ -56,7 +56,7 @@
             <hr>
             {% if t is None %}
             <div class="form">
-                <form method="GET" action='/home/thong_ke/'>
+                <form method="GET" action="{%url 'normal_site:thong_ke' user.username%}">
 
                     <label for="Kiểu"> Chọn kiểu thống kê : </label>
                     <select name="t" id="Kieu" placeholder='Chọn kiểu thống kê' Required=True>
@@ -74,7 +74,7 @@
             <div class="choose-area">
                 <p>Báo cáo Doanh số hoạt động ngày</p>
                 <div class="form">
-                    <form method="GET" action='/home/thong_ke/'>
+                    <form method="GET" action="{%url 'normal_site:thong_ke' user.username%}">
                         <label for="Kiểu"> Kiểu: </label>
                         <input type="text" id="Kieu" name="t" value="Thống kê theo ngày" readonly>
                         <br>
@@ -109,29 +109,7 @@
                     </tr>
                     {% endfor %}
                 </div>
-                <table>
-                    <tr class="first-row-header">
-                        <th colspan="5">Ngày: {{date}}</th>
-                    </tr>
-                    <tr class="second-row-header">
-                        <th class="stt">STT</th>
-                        <th class="ltk">Loại tiết kiệm</th>
-                        <th class="tt">Tổng thu</th>
-                        <th class="tc">Tổng chi</th>
-                        <th class="cl">Chênh lệch</th>
-                    </tr>
-                    <div class="table-row-data">
-                        {% for i in baocaongay %}
-                        <tr>
-                            <td class="stt">{{forloop.counter}}</td>
-                            <td class="ltk">{{i.maltk.ltk}}</td>
-                            <td class="tt">{{i.tongthu}}</td>
-                            <td class="tc">{{i.tongchi}}</td>
-                            <td class="cl">{{i.chenhlech}}</td>
-                        </tr>
-                        {% endfor %}
-                    </div>
-                </table>
+            </table>
             </div>
             {% endif %}
 
@@ -139,7 +117,7 @@
             <div class="choose-area">
                 <p>Báo cáo Doanh số hoạt động tháng</p>
                 <div class="form">
-                    <form method="GET" action='/home/thong_ke/'>
+                    <form method="GET" action="{%url 'normal_site:thong_ke' user.username%}">
                         <label for="Kiểu"> Kiểu: </label>
                         <input type="text" id="Kieu" name="t" value="Thống kê theo tháng" readonly>
                         <br>
@@ -149,6 +127,7 @@
                             required=True>
                         <input type="submit" value="Thống Kê">
                     </form>
+                    <br>
                     {% for i in ltk %}
                     <table class="table__thang"> 
                         <tr class="first-row-header">

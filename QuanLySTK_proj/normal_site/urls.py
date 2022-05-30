@@ -19,11 +19,13 @@ from . import views
 
 app_name = 'normal_site'
 urlpatterns = [
-    path('home/<str:username>', views.Home.as_view(), name='home'),
-    path('home/profile/<str:username>', views.profile, name='profile'),
-    path('home/lap_phieu_tiet_kiem/', views.LapPhieuTietKiem.as_view(), name='lap_phieu_tiet_kiem'),
-    path('home/tim_kiem_phieu_tiet_kiem/', views.TimKiemPhieuTietKiem.as_view(), name='tim_kiem_phieu_tiet_kiem'),
-    path('home/rut_phieu_tiet_kiem/<str:maptk>', views.RutPhieuTietKiem.as_view(), name='rut_phieu_tiet_kiem'),
-    path('home/tra_cuu/',views.TraCuu.as_view(), name='tra_cuu'),
-    path('home/thong_ke/',views.ThongKe,name='thong_ke'),
+    path('', views.Home.as_view(), name='home'),
+    path('profile/', views.profile, name='profile'),
+    path('lap_phieu_tiet_kiem/', views.LapPhieuTietKiem.as_view(), name='lap_phieu_tiet_kiem'),
+    path('tim_kiem_phieu_tiet_kiem/', views.TimKiemPhieuTietKiem.as_view(), name='tim_kiem_phieu_tiet_kiem'),
+    path('rut_phieu_tiet_kiem/<str:maptk>', views.RutPhieuTietKiem.as_view(), name='rut_phieu_tiet_kiem'),
+    #path('tra_cuu/',views.TraCuu.as_view(), name='tra_cuu'),
+    path('tra_cuu_2/',views.tracuu, name='tra_cuu'),
+    path('thong_ke/',views.ThongKe,name='thong_ke'),
+    path('logout/', views.logout, name='logout')
     ]

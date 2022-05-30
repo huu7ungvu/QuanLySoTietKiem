@@ -9,10 +9,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tra cứu</title>
     <link rel="stylesheet" href="{% static 'css/tra_cuu.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/footer_header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer-header.css' %}">
 </head>
 
 <body>
+    <!-- <div class="header-container">
+        <div class="wrapper">
+            <nav>
+                <div class="logo">
+                    Logo
+                </div>
+                <div class="user">
+                    <div class="user-info">
+                        <p class="username">User name</p>
+                        <p class="id">ID</p>
+                    </div>
+                    <div class="user-avatar">
+                        <img src="{% static 'img/logo.jpg' %}" alt="avatar">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div> -->
+
     <!-- Header -->
     <div class="homeHeader">
         <div class="homeHeaderLogo">
@@ -21,16 +40,14 @@
                 alt="" />
         </div>
         <div class="homeHeaderUser">
-            <a href="{%url 'normal_site:profile' user.username%} ">
-                <div class="infoUser">
-                    <p class="username">{{user.username}}</p>
-                    <p class="positon">{{position}}</p>
-                </div>
-                <div class="logoUser">
-                    <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
-                        alt="">
-                </div>
+            <a href="{%url 'normal_site:profile' user.username%} " class="infoUser">
+                <p class="username">{{user.username}}</p>
+                <p class="positon">{{position}}</p>
             </a>
+            <div class="logoUser">
+                <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
+                    alt="">
+            </div>
         </div>
     </div>
 
@@ -47,46 +64,45 @@
         <div class="wrapper">
             <h1 class="title">Tra cứu</h1>
             <hr>
-            <div class="search-area">
-                <form method="POST" action="/home/tra_cuu/">
-                    {% csrf_token %}
-                    <input type='text' name="q" placeholder='Nhập ID Khách Hàng' required=True>
-                    <button type="submit">Tìm Kiếm</button>
-                </form>
-            </div>
-            {% if query %}
-            <table>
-                <tr class="first-row-header">
-                    <th colspan="5">Danh sách phiếu tiết kiệm</th>
-                </tr>
-                <tr class="second-row-header">
-                    <th class="stt">STT</th>
-                    <th class="ms">Mã số</th>
-                    <th class="ltk">Loại tiết kiệm</th>
-                    <th class="kh">Khách hàng</th>
-                    <th class="sd">Số dư</th>
-                </tr>
-                <div class="table-row-data">
-                    {% for item in ptk %}
-                    <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td>{{item.maptk}}</td>
-                        <td>{{item.maltk.ltk}}</td>
-                        <td>{{item.makh.tenkh}}</td>
-                        <td>{{item.sodu}}</td>
-                    </tr>
-                    {% endfor %}
-                </div>
-            </table>
-            {% endif %}
         </div>
-    </div>
 
-    <!-- <div class="footer-container">
-        <div class="wrapper">
-            Footer
+        <div class = 'search-area' id="search">
+            <form method="GET">
+                {{ csrf_field }}
+                {{myFilter.form}}
+                <button class = 'btn btn-primary' type="submit" id="search">Search</button>
+            </form>
         </div>
-    </div> -->
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã Phiếu Tiết Kiệm</th>
+                            <th>Mã Loại Tiết Kiệm</th>
+                            <th>Mã Khách Hàng</th>
+                            <th>Số Dư</th>
+                        </tr>
+        
+                        {% for order in orders %}
+        
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{order.maptk}}</td>
+                            <td>{{order.maltk.ltk}}</td>
+                            <td>{{order.makh.tenkh}}</td>
+                            <td>{{order.sodu}}</td>
+                        </tr>
+                        {% endfor %}
+        
+                    </table>
+                </div>
+            </div>
+            <br>
+        </div>
+
+    </div>
 
     <div class="homeFooter">
         <footer class="footer-distributed">
