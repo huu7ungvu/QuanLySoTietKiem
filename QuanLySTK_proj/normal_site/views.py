@@ -89,7 +89,7 @@ def logout(request):
 
 class LapPhieuTietKiem(UserAccessMixin, View):
     raise_exception = False
-    permission_required = 'admin_site.add_phieutietkiem'
+    permission_required = 'admin_site.add phieutietkiem'
 
     model = models.Phieutietkiem
     template_name = 'normal_site/PhieuTK/phieutk.html'
@@ -221,7 +221,7 @@ def tracuu(request, *args, **kwargs):
 
 class TimKiemPhieuTietKiem(UserAccessMixin, View):
     raise_exception = False
-    permission_required = 'admin_site.add_phieutietkiem'
+    permission_required = 'admin_site.add phieutietkiem'
 
     model= models.Phieutietkiem
     template_name = 'normal_site/Lapphieurut/tim_kiem_phieu_tiet_kiem.html'
@@ -262,7 +262,7 @@ class TimKiemPhieuTietKiem(UserAccessMixin, View):
 
 class RutPhieuTietKiem (UserAccessMixin,View):
     raise_exception = False
-    permission_required = 'admin_site.add_phieutietkiem'
+    permission_required = 'admin_site.add phieutietkiem'
 
     model = models.Phieuruttien
     template_name = 'normal_site/Lapphieurut/lap_phieu_rut_tien.html'
@@ -408,10 +408,10 @@ def ThongKe(request,t=None,d=None,*args,**kwargs):
             d = date_split [2]
             
             # check đã có trong database hay chưa
-            baocaongay_check = models.Baocaongay.objects.filter(ngay__year=y,ngay__month=m,ngay__day=d)
-            if len(baocaongay_check) != 0:
-                context = {'baocaongay': baocaongay_check,'t':"1",'date':date}
-                return render(request,template_name,context)
+            # baocaongay_check = models.Baocaongay.objects.filter(ngay__year=y,ngay__month=m,ngay__day=d)
+            # if len(baocaongay_check) != 0:
+            #     context = {'baocaongay': baocaongay_check,'t':"1",'date':date}
+            #     return render(request,template_name,context)
 
             # get objects từ 2 bảng
             maltk = models.Loaitietkiem.objects.values_list('maltk',flat=True)
@@ -438,7 +438,10 @@ def ThongKe(request,t=None,d=None,*args,**kwargs):
 
                 chenhlech = abs(tong_thu - tong_chi)
                 
-                baocaongay = models.Baocaongay.objects.create(ngay=date,maltk=models.Loaitietkiem.objects.get(maltk=i),tongthu=tong_thu,tongchi=tong_chi,chechlechthuchi=chenhlech)
+                try:
+                    baocaongay = models.Baocaongay.objects.create(ngay=date,maltk=models.Loaitietkiem.objects.get(maltk=i),tongthu=tong_thu,tongchi=tong_chi,chechlechthuchi=chenhlech)
+                except:
+                    pass
 
             # đưa vào context
             baocaongay = models.Baocaongay.objects.filter(ngay__year=y,ngay__month=m,ngay__day=d)
@@ -458,16 +461,16 @@ def ThongKe(request,t=None,d=None,*args,**kwargs):
             ltk = list(ltk)
             
             # check đã có trong database hay chưa
-            baocaothang_check = models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m)
-            if len(baocaothang_check) != 0:
+            # baocaothang_check = models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m)
+            # if len(baocaothang_check) != 0:
 
-                baocaothang = {}
-                for i in maltk:
-                    query = list(models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m,maltk=i)) 
-                    baocaothang[i] = query
+            #     baocaothang = {}
+            #     for i in maltk:
+            #         query = list(models.Baocaothang.objects.filter(ngaythang__year=y,ngaythang__month=m,maltk=i)) 
+            #         baocaothang[i] = query
 
-                context = {'baocaothang': baocaothang,'t':"2", 'ltk':ltk, 'date':date}
-                return render(request,template_name,context)
+            #     context = {'baocaothang': baocaothang,'t':"2", 'ltk':ltk, 'date':date}
+            #     return render(request,template_name,context)
 
             # get objects bảng
             phieumo = models.Phieutietkiem.objects.filter(ngaymophieu__year=y,ngaymophieu__month=m)
@@ -495,9 +498,12 @@ def ThongKe(request,t=None,d=None,*args,**kwargs):
                         date_temp = date + str('-') + str(j)
 
                     if (somo!=0 or sodong!=0):
-                        baocaothang = models.Baocaothang.objects.create(ngaythang=date_temp
-                        ,maltk=models.Loaitietkiem.objects.get(maltk=i)
-                        ,phieugoi=somo,phieudong=sodong,chenhlechdonggoi=chenhlech)
+                        try:
+                            baocaothang = models.Baocaothang.objects.create(ngaythang=date_temp
+                            ,maltk=models.Loaitietkiem.objects.get(maltk=i)
+                            ,phieugoi=somo,phieudong=sodong,chenhlechdonggoi=chenhlech)
+                        except:
+                            pass
             
             # đưa vào context
             baocaothang = {}
