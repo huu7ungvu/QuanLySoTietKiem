@@ -21,24 +21,6 @@
     </div>
 
     {% endfor %}
-    <!-- <div class="header-container">
-        <div class="wrapper">
-            <nav>
-                <div class="logo">
-                    Logo
-                </div>
-                <div class="user">
-                    <div class="user-info">
-                        <p class="username">User name</p>
-                        <p class="id">ID</p>
-                    </div>
-                    <div class="user-avatar">
-                        <img src="{% static 'img/avatar.svg' %}" alt="avatar">
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div> -->
 
     <!-- Header -->
     <div class="homeHeader">
@@ -67,20 +49,25 @@
             <hr>
             <form action="{%url 'normal_site:tim_kiem_phieu_tiet_kiem' user.username%} " method="POST" class="form-input">
                 {% csrf_token %}
-                <div class="form-control">
-                    <label for="ID Khach Hang">ID Khách Hàng:</label>
-                    <input type="text" name="id" id="ID Khach Hang" placeholder="Ví dụ: KHxx" Required>
-
-                    <label for="name"> Tên Khách Hàng: <input type="text" title="name" name="tenkh"
+                <div class="form-body">
+                    <div class="form-control">
+                        <label for="ID Khach Hang">ID Khách Hàng:</label>
+                        <input type="text" name="id" id="ID Khach Hang" placeholder="Ví dụ: KHxx" Required>
+                    </div>
+                    <div class="form-control">
+                        <label for="CCCD"> CCCD:</label>
+                        <input type="text" title="CCCD" name='CCCD' Required pattern="^(\d{9}|\d{12}})" placeholder="9 (CMND) hoặc 12 (CCCD) chữ số">
+                    </div>
+                    <div class="form-control">
+                        <label for="name">Tên Khách Hàng:</label>
+                        <input type="text" title="name" name="tenkh"
                             pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){1,5}$" Required style="text-transform:uppercase"
-                            placeholder="Họ và tên viết không dấu"></label><br>
-
-                    <label for="CCCD"> CCCD: <input type="text" title="CCCD" name='CCCD' Required
-                            pattern="^(\d{9}|\d{12}})" placeholder="9 (CMND) hoặc 12 (CCCD) chữ số"></label><br>
-
-                    <label for="Mã Phiếu Tiết Kiệm"> Mã Phiếu Tiết Kiệm </label>
-                    <input type="text" name="maptk" id="Mã Phiếu Tiết Kiệm" placeholder="Ví dụ: PTKxx" Required>
-
+                            placeholder="Họ và tên viết không dấu">
+                    </div>
+                    <div class="form-control">
+                        <label for="Mã Phiếu Tiết Kiệm">Mã Phiếu Tiết Kiệm</label>
+                        <input type="text" name="maptk" id="Mã Phiếu Tiết Kiệm" placeholder="Ví dụ: PTKxx" Required>    
+                    </div>
                 </div>
                 <div class="classbutton">
                     <div class="lapphieu">
