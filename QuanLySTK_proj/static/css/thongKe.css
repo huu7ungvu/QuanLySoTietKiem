@@ -108,6 +108,7 @@ tr:nth-child(even) {
     background-color: #E6E4E4;
 }
 
+<<<<<<< HEAD:QuanLySTK_proj/static/css/thong_ke.css
 .footer-container {
     background-color: #C4C4C4;
     height: 64px;
@@ -129,3 +130,5 @@ tr:nth-child(even) {
     display: flex;
     width: 100%;
 }
+=======
+>>>>>>> 77785ceebeaa889175d78d00216f37de41ef0c7e:QuanLySTK_proj/static/css/thongKe.css
