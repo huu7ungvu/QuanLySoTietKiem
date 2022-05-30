@@ -16,15 +16,17 @@ import calendar
 from dateutil.relativedelta import *
 from django.contrib.auth import logout as auth_logout
 
-# def group_required(*group_names):
-#     """Requires user membership in at least one of the groups passed in."""
-#     def in_groups(u):
-#         if u.is_authenticated:
-#             if bool(u.groups.filter(name__in=group_names)) | u.is_superuser:
-#                 return True
-#         return False
+decorator_with_arguments = lambda decorator: lambda *args, **kwargs: lambda func: decorator(func, *args, **kwargs)
 
-#     return user_passes_test(in_groups, login_url='accounts:signin')
+@decorator_with_arguments
+def custom_permission_required(function, perm):
+    def _function(request, *args, **kwargs):
+        if request.user.has_perm(perm):
+            return function(request, *args, **kwargs)
+        else:
+            messages.error(request, 'Bạn không có quyền truy cập vào trang này')
+            return redirect('normal_site:home',username=kwargs['username'])
+    return _function
 
 class UserAccessMixin (PermissionRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
@@ -379,8 +381,9 @@ class RutPhieuTietKiem (UserAccessMixin,View):
                 messages.success(request, 'Rút tiền thành công')
                 return redirect('normal_site:tim_kiem_phieu_tiet_kiem',username=username)
 
-# @login_required()
-@permission_required('admin_site.add_baocaothang', raise_exception=False)
+@login_required()
+@custom_permission_required('admin_site.add_baocaothang')
+
 def ThongKe(request,t=None,d=None,*args,**kwargs):
     template_name = 'normal_site/Thongke/thong_ke.html'
     type = request.GET.get('t',None)

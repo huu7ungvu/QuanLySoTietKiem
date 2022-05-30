@@ -62,7 +62,7 @@
         <div class="wrapper">
             <h1 class="title">Rút tiết kiệm</h1>
             <hr>
-            <form action="/home/tim_kiem_phieu_tiet_kiem/" method="POST" class="form-input">
+            <form action="{%url 'normal_site:tim_kiem_phieu_tiet_kiem' user.username%} " method="POST" class="form-input">
                 {% csrf_token %}
                 <div class="form-control">
                     <label for="ID Khach Hang">ID Khách Hàng:</label>
