@@ -126,3 +126,33 @@ body {
     background: -webkit-linear-gradient(left, #3931af, #00c6ff);
     cursor: pointer;
 }
+
+.back-home {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.back-home svg {
+    width: 18px;
+    height: auto;
+    margin-right: 4px;
+}
+
+.back-home a {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000;
+    position: relative;
+}
+
+.back-home a::before {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: -20px;
+}
