@@ -901,7 +901,7 @@ class RutPhieuTietKiem (UserAccessMixin,View):
                 return redirect('normal_site:tim_kiem_phieu_tiet_kiem',username=username)
 
 @login_required()
-@custom_permission_required('admin_site.add_baocaothang')
+@custom_permission_required('admin_site.can_add_baocaothang')
 
 def ThongKe(request,t=None,d=None,*args,**kwargs):
     template_name = 'normal_site/Thongke/thong_ke.html'
