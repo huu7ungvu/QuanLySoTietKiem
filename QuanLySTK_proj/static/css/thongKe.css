@@ -108,20 +108,3 @@ tr:nth-child(even) {
     background-color: #E6E4E4;
 }
 
-.footer-container {
-    background-color: #C4C4C4;
-    height: 64px;
-    margin-top: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    position: fixed;
-    bottom: 0px;
-}
-
-.footer-container .wrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-

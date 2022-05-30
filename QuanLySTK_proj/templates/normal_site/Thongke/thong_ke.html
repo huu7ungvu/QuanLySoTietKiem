@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thống kê</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/thong_ke.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/thongKe.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer-header.css' %}">
 </head>
 
@@ -39,14 +39,16 @@
                 alt="" />
         </div>
         <div class="homeHeaderUser">
-            <a href="{%url 'normal_site:profile' user.username%} " class="infoUser">
-                <p class="username">{{user.username}}</p>
-                <p class="positon">{{position}}</p>
+            <a href="{%url 'normal_site:profile' user.username%} ">
+                <div class="infoUser">
+                    <p class="username">{{user.username}}</p>
+                    <p class="positon">{{position}}</p>
+                </div>
+                <div class="logoUser">
+                    <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
+                        alt="">
+                </div>
             </a>
-            <div class="logoUser">
-                <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
-                    alt="">
-            </div>
         </div>
     </div>
 
