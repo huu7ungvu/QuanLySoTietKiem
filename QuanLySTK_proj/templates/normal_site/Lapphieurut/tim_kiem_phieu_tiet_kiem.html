@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tìm phiếu rút</title>
     <link rel="stylesheet" href="{% static 'css/tim_phieu_rut.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/footer_header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer-header.css' %}">
 </head>
 
 <body>
@@ -62,7 +62,8 @@
         <div class="wrapper">
             <h1 class="title">Rút tiết kiệm</h1>
             <hr>
-            <form action="{%url 'normal_site:tim_kiem_phieu_tiet_kiem' user.username%} " method="POST" class="form-input">
+            <form action="{%url 'normal_site:tim_kiem_phieu_tiet_kiem' user.username%} " method="POST"
+                class="form-input">
                 {% csrf_token %}
                 <div class="form-control">
                     <label for="ID Khach Hang">ID Khách Hàng:</label>

@@ -608,7 +608,7 @@ def logout(request):
 
 class LapPhieuTietKiem(UserAccessMixin, View):
     raise_exception = False
-    permission_required = 'admin_site.add_phieutietkiem'
+    permission_required = 'admin_site.add phieutietkiem'
 
     model = models.Phieutietkiem
     template_name = 'normal_site/PhieuTK/phieutk.html'
@@ -740,7 +740,7 @@ def tracuu(request, *args, **kwargs):
 
 class TimKiemPhieuTietKiem(UserAccessMixin, View):
     raise_exception = False
-    permission_required = 'admin_site.add_phieutietkiem'
+    permission_required = 'admin_site.add phieutietkiem'
 
     model= models.Phieutietkiem
     template_name = 'normal_site/Lapphieurut/tim_kiem_phieu_tiet_kiem.html'
@@ -781,7 +781,7 @@ class TimKiemPhieuTietKiem(UserAccessMixin, View):
 
 class RutPhieuTietKiem (UserAccessMixin,View):
     raise_exception = False
-    permission_required = 'admin_site.add_phieutietkiem'
+    permission_required = 'admin_site.add phieutietkiem'
 
     model = models.Phieuruttien
     template_name = 'normal_site/Lapphieurut/lap_phieu_rut_tien.html'
