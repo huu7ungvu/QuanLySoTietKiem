@@ -125,3 +125,7 @@ tr:nth-child(even) {
     margin: 0 auto;
 }
 
+.table__thang{
+    display: flex;
+    width: 100%;
+}

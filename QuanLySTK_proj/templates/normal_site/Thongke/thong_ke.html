@@ -149,11 +149,13 @@
                             required=True>
                         <input type="submit" value="Thống Kê">
                     </form>
-                    {% for i in maltk %}
-                    <table>
+                    {% for i in ltk %}
+                    <table class="table__thang"> 
                         <tr class="first-row-header">
-                            <th colspan="5">Tháng:{{date}}</th>
                             <th colspan="5">Loại tiết kiệm: {{i}}</th>
+                        </tr>
+                        <tr class="first-row-header">
+                            <th colspan="5">Tháng: {{date}}</th>
                         </tr>
                         <tr class="second-row-header">
                             <th class="stt">STT</th>
@@ -163,17 +165,20 @@
                             <th class="cl">Chênh lệch</th>
                         </tr>
                         <div class="table-row-data">
-                            {% for j in baocaothang %}
-                            {% if j.maltk.maltk == i %}
-                            <tr>
-                                <td class="stt">{{forloop.counter}}</td>
-                                <td class="ngay">{{j.ngaythang}}</td>
-                                <td class="tt">{{j.phieugoi}}</td>
-                                <td class="tc">{{j.phieudong}}</td>
-                                <td class="cl">{{j.chenhlechdonggoi}}</td>
-                            </tr>
-                            {% endif %}
+                            {% for key, values in baocaothang.items %}
+                                {% for k in values %}
+                                    {% if k.maltk.ltk == i %}
+                                    <tr>
+                                        <td class="stt">{{forloop.counter}}</td>
+                                        <td class="ngay">{{k.ngaythang}}</td>
+                                        <td class="tt">{{k.phieugoi}}</td>
+                                        <td class="tc">{{k.phieudong}}</td>
+                                        <td class="cl">{{k.chenhlechdonggoi}}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
+                            
                         </div>
                     </table>
                     <br>
