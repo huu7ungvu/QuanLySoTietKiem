@@ -2,7 +2,7 @@ from urllib import response
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render
@@ -60,3 +60,9 @@ def signin(request):
             return redirect('accounts:signin')
 
     return render(request,"accounts/login.html")
+
+@login_required()
+def logout (request):
+    django_logout(request)
+    messages.success(request,"Logout Successfully")
+    return redirect('accounts:signin')

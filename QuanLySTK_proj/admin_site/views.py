@@ -71,7 +71,8 @@ def signup(request):
                     group = Group.objects.get(name='GiamDoc')
                     user.groups.add(group)
                     user.is_staff = True
-
+                
+                models.Thamso.objects.filter(tenthamso='SLNguoiDung').update(giatri=str(int(models.Thamso.objects.get(tenthamso='SLNguoiDung').giatri)+1))
                 messages.success(request,"You are registered successfully")
                 return redirect('accounts:signin')
         else:

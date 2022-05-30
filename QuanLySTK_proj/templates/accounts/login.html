@@ -68,7 +68,7 @@
         {% endfor %}
     
     <div class="Login">
-        <form action="/accounts/signin" method="POST">
+        <form action="{%url 'accounts:signin'%}" method="POST">
             {% csrf_token %}
             <div class="container login-container">
                     <div class="col-md-6 login-form">

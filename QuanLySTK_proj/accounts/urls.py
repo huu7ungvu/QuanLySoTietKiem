@@ -19,7 +19,8 @@ from . import views
 
 app_name = 'accounts'
 urlpatterns = [
-    path('signin', views.signin, name='signin'),
+    path('', views.signin, name='signin'),
     # path('reset_password', views.reset_password, name='reset_password'), #nếu có thời gian làm
     path('change-password', views.MyPasswordChangeView.as_view(), name='change_password'),
+    path('logout',views.logout, name='logout'),
 ]

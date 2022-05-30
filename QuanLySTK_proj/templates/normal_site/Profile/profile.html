@@ -133,6 +133,7 @@
 <body>
     <div class="container emp-profile">
         <form method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
@@ -169,6 +170,7 @@
                     <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-work">
@@ -187,18 +189,18 @@
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>User Id</label>
+                                    <label>Mã Nhân Viên</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>Panda123</p>
+                                    <p>{{manv}}</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Name</label>
+                                    <label>Họ Và Tên</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>Panda</p>
+                                    <p>{{user.first_name}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -206,15 +208,7 @@
                                     <label>Email</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>panda@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Phone</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>123 456 7890</p>
+                                    <p>{{user.email}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -222,7 +216,7 @@
                                     <label>Profession</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>Nhân Viên Ngân Hàng</p>
+                                    <p>{{position}}</p>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +263,7 @@
                             </div> -->
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="{% url 'normal_site:logout' %}"><input type="submit" class="profile-logout-btn" name="btnAddMore" value="Logout" /></a>
+                                    <a><input type="submit" class="profile-logout-btn" name="btnAddMore" value="Logout" /></a>
                                 </div>
                             </div>
                         </div>

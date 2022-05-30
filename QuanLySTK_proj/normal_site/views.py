@@ -4,42 +4,45 @@ from django.shortcuts import render, redirect
 import six
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import user_passes_test, login_required, permission_required # add login and permission required decorator
-from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin,AccessMixin # add login and permission mixin 
-from braces.views import GroupRequiredMixin # add GroupRequiredMixin to the class 
+from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin # add login and permission mixin 
+# from braces.views import GroupRequiredMixin # add GroupRequiredMixin to the class  khá là khó khăn
 from django.views.generic.base import View
 from django.db.models import Sum, Count
 from admin_site import models 
 from . import filters
-import random
 from django.contrib import messages
 from datetime import datetime, date
 import calendar
 from dateutil.relativedelta import *
 from django.contrib.auth import logout as auth_logout
 
-# # Create group_required decorator
-# def group_required(*group_names, login_url=None, raise_exception=False):
-#     def check_permission(user):
-#         if isinstance(group_names, six.string_types):
-#             group_names = (group_names, )
-#         else:
-#             group_names = group_names
-#         # fist check if user has the permission (even anon users)
-    
-#         if user.groups.filter(name__in=group_names).exists():
-#             return True
-#         # In case the 403 handler should be called raise the exception
-#         if raise_exception:
-#             raise PermissionDenied
-#         # As the last resort, show the login form
+# def group_required(*group_names):
+#     """Requires user membership in at least one of the groups passed in."""
+#     def in_groups(u):
+#         if u.is_authenticated:
+#             if bool(u.groups.filter(name__in=group_names)) | u.is_superuser:
+#                 return True
 #         return False
-#     return user_passes_test(check_permission, login_url=login_url)
 
-# Create your views here.
+#     return user_passes_test(in_groups, login_url='accounts:signin')
 
-#@login_required()
-#@group_required('NhanVien',)
-class Home(View):
+class UserAccessMixin (PermissionRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('accounts:signin')
+        
+        if not self.has_permission():
+            messages.error(request, 'Bạn không có quyền truy cập vào trang này')
+            return redirect('normal_site:home',username=kwargs['username'])
+
+        return super(UserAccessMixin, self).dispatch(request, *args, **kwargs)
+
+
+class Home(View,LoginRequiredMixin):
+    login_url = 'accounts:signin'
+    redirect_field_name = 'hollaback'
+    raise_exception = True
+
     def get(self,request,username):
         try :
             user = models.User.objects.get(username=username)
@@ -60,22 +63,32 @@ class Home(View):
     # def get(self, request, *args, **kwargs): # Chưa hiểu đoạn này để làm gì luôn
         # return render(request, 'normal_site/Home/home.html')
 
+@login_required()
 def profile(request,username):
     user = models.User.objects.get(username=username)
+    manv = models.UsersExtendClass.objects.get(user_id=user.id).manv
     position=user.groups.all().values()[0]['name']
     if position=='NhanVien':
-            context = {'user': user,'position':'Nhân Viên'}
+            context = {'user': user,'position':'Nhân Viên','manv':manv}
     elif position=='GiamDoc':
-            context = {'user': user,'position':'Giám Đốc'}
+            context = {'user': user,'position':'Giám Đốc','manv':manv}
     else:
-            context = {'user': user,'position':'Nhân Viên Phân Tích Dữ Liệu'}
+            context = {'user': user,'position':'Nhân Viên Phân Tích Dữ Liệu','manv':manv}
+    if request.method == 'POST':
+        btnAddMore = request.POST.get('btnAddMore')
+        if btnAddMore == 'Logout':
+            return redirect('accounts:logout')
     return render(request,"normal_site/Profile/profile.html",context)
 
+@login_required()
 def logout(request):
     auth_logout(request)
     return HttpResponse("Logout thành công!")
 
-class LapPhieuTietKiem(View):
+class LapPhieuTietKiem(UserAccessMixin, View):
+    raise_exception = False
+    permission_required = 'admin_site.add_phieutietkiem'
+
     model = models.Phieutietkiem
     template_name = 'normal_site/PhieuTK/phieutk.html'
 
@@ -98,6 +111,7 @@ class LapPhieuTietKiem(View):
         diachi = request.POST.get('diachi')
         sotiengoi = request.POST.get('sotiengoi')
         loaitietkiem = request.POST.get('loaitietkiem',False)
+        username = kwargs.get('username')
 
         # check từng thông tin một (1: Thông tin khách hàng, 2: Số tiền tối thiểu)
         # (1)
@@ -106,30 +120,30 @@ class LapPhieuTietKiem(View):
             if len(khachhang)!=0:
                 if (tenkh != khachhang[0].tenkh or CMND != khachhang[0].cccd) :
                     messages.error(request, 'Thông tin khách hàng (Tên hoặc CCCD) không đúng với dữ liệu trong cơ sở dữ liệu')
-                    return redirect('normal_site:lap_phieu_tiet_kiem')
+                    return redirect('normal_site:lap_phieu_tiet_kiem',username=username)
             else: 
                 messages.error(request, 'Khách hàng không tồn tại')
-                return redirect('normal_site:lap_phieu_tiet_kiem')
+                return redirect('normal_site:lap_phieu_tiet_kiem',username=username)
         
         else :
             if (len(CMND)!=9 and len(CMND)!=12):
                 messages.error(request,"CMND không hợp lệ" + str(len(CMND)))
-                return redirect('normal_site:lap_phieu_tiet_kiem')
+                return redirect('normal_site:lap_phieu_tiet_kiem',username=username)
             else :
                 khachhang = models.Khachhang.objects.filter(cccd=CMND)
                 if len(khachhang)!=0:
                     if (tenkh != khachhang[0].tenkh) :
                         messages.error(request, 'CCCD đã tồn tại trong cơ sở dữ liệu và tên khách hàng đang nhập không khớp với CCCD đã tồn tại')
-                        return redirect('normal_site:lap_phieu_tiet_kiem')
+                        return redirect('normal_site:lap_phieu_tiet_kiem',username=username)
                     else:
                         messages.error(request, 'CCCD và tên khách hàng đã tồn tại trong cơ sở dữ liệu vui lòng nhập thêm ID khách hàng')
-                        return redirect('normal_site:lap_phieu_tiet_kiem')
+                        return redirect('normal_site:lap_phieu_tiet_kiem',username=username)
 
         # (2)
         sotiengoitoithieu = models.Loaitietkiem.objects.get(ltk=loaitietkiem).sotiengoitoithieu
         if (float(sotiengoi) < sotiengoitoithieu):
             messages.error(request,"Số tiền gởi phải lớn hơn hoặc bằng {}".format(sotiengoitoithieu))
-            return redirect('normal_site:lap_phieu_tiet_kiem')
+            return redirect('normal_site:lap_phieu_tiet_kiem',username=username)
 
 
         # oke thì lưu lại -> 2 hướng (1: nếu khách hàng có thông tin rồi thì chỉ lưu vào bảng phieutietkiem; 2: ngược lại)
@@ -145,7 +159,7 @@ class LapPhieuTietKiem(View):
             models.Thamso.objects.filter(tenthamso='SLPhieuTietKiem').update(giatri=str(int(models.Thamso.objects.get(tenthamso='SLPhieuTietKiem').giatri)+1))
 
             messages.success(request, 'Lập phiếu tiết kiệm thành công')
-            return redirect('normal_site:lap_phieu_tiet_kiem')
+            return redirect('normal_site:lap_phieu_tiet_kiem',username=username)
         
         else:
             khachhang_save = models.Khachhang.objects.create(makh='KH' + str(int(models.Thamso.objects.get(tenthamso='SLKhachHang').giatri)+1),
@@ -165,26 +179,32 @@ class LapPhieuTietKiem(View):
             models.Thamso.objects.filter(tenthamso='SLKhachHang').update(giatri=str(int(models.Thamso.objects.get(tenthamso='SLKhachHang').giatri)+1))
 
             messages.success(request, 'Lập phiếu tiết kiệm thành công')
-            return redirect('normal_site:lap_phieu_tiet_kiem')
+            return redirect('normal_site:lap_phieu_tiet_kiem',username=username)
 
-class TraCuu(View):
-    template_name = 'normal_site/Tracuu/tra_cuu.html'
+# class TraCuu(View, LoginRequiredMixin):
+#     # LoginRequiredMixin
+#     login_url = 'accounts:signin'
+#     redirect_field_name = 'hollaback'
+#     raise_exception = True
 
-    def post(self, request, *args, **kwargs):
-        query = request.POST.get('q')
-        ptk = models.Phieutietkiem.objects.filter(makh=query)
+#     template_name = 'normal_site/Tracuu/tra_cuu.html'
+
+#     def post(self, request, *args, **kwargs):
+#         query = request.POST.get('q')
+#         ptk = models.Phieutietkiem.objects.filter(makh=query)
         
-        if len(ptk) == 0:
-            messages.error(request, 'Không tìm thấy phiếu tiết kiệm nào hoặc thông tin không đúng')
-            return redirect('normal_site:tra_cuu')
-        else:
-            context = {'ptk':ptk,'query':query}
-            return render(request, self.template_name, context)
+#         if len(ptk) == 0:
+#             messages.error(request, 'Không tìm thấy phiếu tiết kiệm nào hoặc thông tin không đúng')
+#             return redirect('normal_site:tra_cuu')
+#         else:
+#             context = {'ptk':ptk,'query':query}
+#             return render(request, self.template_name, context)
 
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+#     def get(self, request, *args, **kwargs):
+#         return render(request, self.template_name)
 
-def tracuu(request):
+@login_required()
+def tracuu(request, *args, **kwargs):
     ptk = models.Phieutietkiem.objects.all()
 
     orders = ptk.order_by('ngaymophieu')
@@ -197,7 +217,10 @@ def tracuu(request):
 
     return render(request, 'normal_site/Tracuu/tra_cuu_2.html', context)
 
-class TimKiemPhieuTietKiem(View):
+class TimKiemPhieuTietKiem(UserAccessMixin, View):
+    raise_exception = False
+    permission_required = 'admin_site.add_phieutietkiem'
+
     model= models.Phieutietkiem
     template_name = 'normal_site/Lapphieurut/tim_kiem_phieu_tiet_kiem.html'
 
@@ -212,6 +235,7 @@ class TimKiemPhieuTietKiem(View):
         CCCD = request.POST.get('CCCD')
         maptk = request.POST.get('maptk')
         maptk = maptk.upper()
+        username = kwargs.get('username')
 
 
         # check từng thông tin một (1: thông tin khách hang; 2: Mã phiếu tiết kiệm)
@@ -222,19 +246,22 @@ class TimKiemPhieuTietKiem(View):
         if len(khachhang) != 0 :
             if tenkh != khachhang[0].tenkh or CCCD != khachhang[0].cccd:
                 messages.error(request, 'Thông tin khách hàng không chính xác')
-                return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+                return redirect('normal_site:tim_kiem_phieu_tiet_kiem',username=username)
         else:
             messages.error(request, 'Không tìm thấy khách hàng')
-            return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+            return redirect('normal_site:tim_kiem_phieu_tiet_kiem',username=username)
 
         # 2: Mã phiếu tiết kiệm
         if len(phieutietkiem) == 0:
             messages.error(request, 'Không tìm thấy phiếu tiết kiệm')
-            return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+            return redirect('normal_site:tim_kiem_phieu_tiet_kiem',username=username)
         
-        return redirect('normal_site:rut_phieu_tiet_kiem',maptk=maptk)
+        return redirect('normal_site:rut_phieu_tiet_kiem',maptk=maptk, username=username)
 
-class RutPhieuTietKiem (View):
+class RutPhieuTietKiem (UserAccessMixin,View):
+    raise_exception = False
+    permission_required = 'admin_site.add_phieutietkiem'
+
     model = models.Phieuruttien
     template_name = 'normal_site/Lapphieurut/lap_phieu_rut_tien.html'
 
@@ -291,8 +318,9 @@ class RutPhieuTietKiem (View):
     
     def post(self, request, *args, **kwargs):
         huy = request.POST.get('huy')
+        username = kwargs.get('username')
         if huy == '1'  :
-            return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+            return redirect('normal_site:tim_kiem_phieu_tiet_kiem',username=username)
         else :
             maptk = kwargs['maptk']
             phieutietkiem = models.Phieutietkiem.objects.get(maptk=maptk)
@@ -304,13 +332,13 @@ class RutPhieuTietKiem (View):
                 sotien = int(sotien)
                 if sotien > sodukhadu :
                     messages.error(request, 'Số tiền rút không được lớn hơn số dư khả dụng')
-                    return redirect('normal_site:rut_phieu_tiet_kiem',maptk=maptk)
+                    return redirect('normal_site:rut_phieu_tiet_kiem',username=username,maptk=maptk)
                 elif sotien < 100000 :
                     messages.error(request, 'Số tiền rút không được nhỏ hơn 100.000 VND')
-                    return redirect('normal_site:rut_phieu_tiet_kiem',maptk=maptk)
+                    return redirect('normal_site:rut_phieu_tiet_kiem',username=username,maptk=maptk)
                 elif (sodukhadu - sotien) < 100000:
                     messages.error(request, 'Số tiền khả dụng trong phiếu sau rút không được nhỏ hơn 100.000 VND')
-                    return redirect('normal_site:rut_phieu_tiet_kiem',maptk=maptk)
+                    return redirect('normal_site:rut_phieu_tiet_kiem',username=username,maptk=maptk)
                 else :
                     # Tính tiền còn lại
                     sotienconlai = sodukhadu - sotien
@@ -332,7 +360,7 @@ class RutPhieuTietKiem (View):
                     phieuruttien.save()
                     
                 messages.success(request, 'Rút tiền thành công')
-                return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+                return redirect('normal_site:tim_kiem_phieu_tiet_kiem',username=username)
 
             else:
                 # hủy phiếu tiết kiệm
@@ -349,9 +377,11 @@ class RutPhieuTietKiem (View):
                 phieuruttien.save()
                     
                 messages.success(request, 'Rút tiền thành công')
-                return redirect('normal_site:tim_kiem_phieu_tiet_kiem')
+                return redirect('normal_site:tim_kiem_phieu_tiet_kiem',username=username)
 
-def ThongKe(request,t=None,d=None):
+# @login_required()
+@permission_required('admin_site.add_baocaothang', raise_exception=False)
+def ThongKe(request,t=None,d=None,*args,**kwargs):
     template_name = 'normal_site/Thongke/thong_ke.html'
     type = request.GET.get('t',None)
     date = request.GET.get('d',None)
