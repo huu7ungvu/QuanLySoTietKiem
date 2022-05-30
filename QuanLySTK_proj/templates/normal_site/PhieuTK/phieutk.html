@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="homeBody">
-            <form action="/home/lap_phieu_tiet_kiem/" method = 'POST' class="phieutietkiem">
+            <form action="{% url 'normal_site:lap_phieu_tiet_kiem' user.username%}" method = 'POST' class="phieutietkiem">
                 {% csrf_token %}
                 <p class="title">LẬP PHIẾU GỬI TIẾT KIỆM</p>
                 <hr>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-control">
                         <label for="money">Số Tiền Gửi:</label>
-                        <input type="text" title="address" name='diachi' Required>
+                        <input type="text" title="sotiengoi" name='sotiengoi' Required>
                     </div>
                     <div class="form-control">
                         <label for="savingtype">Loại Tiết Kiệm:</label>

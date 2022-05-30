@@ -3,4 +3,3 @@ django-braces
 mysqlclient
 six
 python-dateutil
-django-filter

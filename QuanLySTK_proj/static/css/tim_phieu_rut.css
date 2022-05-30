@@ -45,6 +45,7 @@ body {
 .content-container {
     max-width: 800px;
     margin: 0 auto;
+    padding: 32px 0;
 }
 
 .content-container .title {
@@ -116,7 +117,7 @@ body {
 }
 
 .footer-container .wrapper {
-    max-width: 1000px;
+    width: 1000px;
     margin: 0 auto;
 }
 

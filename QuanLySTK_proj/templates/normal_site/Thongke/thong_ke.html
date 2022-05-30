@@ -56,7 +56,7 @@
             <hr>
             {% if t is None %}
             <div class="form">
-                <form method="GET" action='/home/thong_ke/'>
+                <form method="GET" action="{%url 'normal_site:thong_ke' user.username%}">
 
                     <label for="Kiểu"> Chọn kiểu thống kê : </label>
                     <select name="t" id="Kieu" placeholder='Chọn kiểu thống kê' Required=True>
@@ -74,7 +74,7 @@
             <div class="choose-area">
                 <p>Báo cáo Doanh số hoạt động ngày</p>
                 <div class="form">
-                    <form method="GET" action='/home/thong_ke/'>
+                    <form method="GET" action="{%url 'normal_site:thong_ke' user.username%}">
                         <label for="Kiểu"> Kiểu: </label>
                         <input type="text" id="Kieu" name="t" value="Thống kê theo ngày" readonly>
                         <br>
@@ -117,7 +117,7 @@
             <div class="choose-area">
                 <p>Báo cáo Doanh số hoạt động tháng</p>
                 <div class="form">
-                    <form method="GET" action='/home/thong_ke/'>
+                    <form method="GET" action="{%url 'normal_site:thong_ke' user.username%}">
                         <label for="Kiểu"> Kiểu: </label>
                         <input type="text" id="Kieu" name="t" value="Thống kê theo tháng" readonly>
                         <br>
