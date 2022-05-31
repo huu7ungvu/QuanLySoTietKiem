@@ -5,7 +5,7 @@ from .models import Khachhang, Loaitietkiem, Phieutietkiem, Phieuruttien, Baocao
 # Register your models here.
 
 
-class KhanghangAdmin (admin.ModelAdmin):
+class KhachhangAdmin (admin.ModelAdmin):
     list_display = ["makh", "tenkh", "diachi", "cccd"]
     search_fields = ["makh", "tenkh"]
 
@@ -30,23 +30,30 @@ class PhieuruttienAdmin (admin.ModelAdmin):
 
 
 class BaocaongayAdmin (admin.ModelAdmin):
-    list_display = ["ngay", "tongthu", "tongchi", "chechlechthuchi"]
+    list_display = ["ngay","maltk", "tongthu", "tongchi", "chechlechthuchi"]
     date_hierarchy = 'ngay'
-    search_fields = ["ngay"],
-    list_filter = ['ngay']
+    search_fields = ["ngay", "maltk"],
+    list_filter = ['ngay','maltk']
 
 
 class BaocaothangAdmin (admin.ModelAdmin):
-    list_display = ["ngaythang", "phieugoi", "phieudong", "chenhlechdonggoi"]
+    list_display = ["ngaythang","maltk", "phieugoi", "phieudong", "chenhlechdonggoi"]
     date_hierarchy = 'ngaythang'
-    list_filter = ['ngaythang']
-    search_fields = ["ngaythang"]
+    list_filter = ['ngaythang','maltk']
+    search_fields = ["ngaythang", "maltk"],
 
 
 # Register your models here.
-admin.site.register(Khachhang, KhanghangAdmin)
+admin.site.register(Khachhang, KhachhangAdmin)
 admin.site.register(Loaitietkiem, LoaitietkiemAdmin)
 admin.site.register(Phieutietkiem, PhieutietkiemAdmin)
 admin.site.register(Phieuruttien, PhieuruttienAdmin)
 admin.site.register(Baocaongay, BaocaongayAdmin)
 admin.site.register(Baocaothang, BaocaothangAdmin)
+
+# admin.site.register(KhachhangAdmin)
+# admin.site.register(LoaitietkiemAdmin)
+# admin.site.register(PhieutietkiemAdmin)
+# admin.site.register(PhieuruttienAdmin)
+# admin.site.register(BaocaongayAdmin)
+# admin.site.register(BaocaothangAdmin)

@@ -1,13 +1,32 @@
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from django.core.management.base import BaseCommand
 # import tất cả các model trong project
-import admin_site.models
+from django.apps import apps
+
+class Command(BaseCommand):
+    def handle(self, *args, **kwargs):
+        pass
 
 # Clear all instances of the model (không nên làm như vậy)
 #Group.objects.all().delete()
 #ContentType.objects.all().delete()
 #Permission.objects.all().delete()
 
+
+# Create all permissions of all tables in the project
+admin_site_models = apps.get_app_config('admin_site').get_models() 
+
+for model in admin_site_models:
+    for type in ['view','change','add','delete']:
+        content_type = ContentType.objects.get_for_model(model)
+        permission = Permission.objects.create(
+            codename='{}_{}'.format(type, model._meta.model_name),
+            name='Can {} {}'.format(type, model._meta.model_name),
+            content_type=content_type
+        )
+
+# Grant permission to group
 # NhanVien
 new_group, created = Group.objects.get_or_create(name='NhanVien')
 permissions_nv = ['view','add']
@@ -17,31 +36,17 @@ models_nv_add = ['phieutietkiem','phieuruttien','khachhang']
 for permission in permissions_nv:
     if permission == 'view':
         for model in models_nv_view:
-            ct=ContentType.objects.get(app_label='admin_site', model=model)
-            permission = Permission.objects.create(codename=f'view {model}',
-                                       name=f'Can view {model}',
-                                       content_type=ct)
+            content_type = ContentType.objects.get(app_label='admin_site', model=model)
+            permission = Permission.objects.get(codename='view_{}'.format(model), content_type=content_type)
             new_group.permissions.add(permission)
-    elif permission == 'add':
-        for model in models_nv_add:
-            ct=ContentType.objects.get(app_label='admin_site', model=model)
-            permission = Permission.objects.create(codename=f'add {model}',
-                                       name=f'Can add {model}',
-                                       content_type=ct)
+            print('{} {}'.format(permission, new_group))
+
+    if permission == 'add':
+        for model in models_nv_add:    
+            content_type = ContentType.objects.get(app_label='admin_site', model=model)
+            permission = Permission.objects.get(codename='add_{}'.format(model), content_type=content_type)
             new_group.permissions.add(permission)
-
-# GiamDoc
-
-new_group, created = Group.objects.get_or_create(name='GiamDoc')
-permissions_gd = 'view'
-models_gd_view = ['phieutietkiem','phieuruttien','loaitietkiem','baocaongay','baocaothang','khachhang']
-
-for model in models_gd_view:
-    ct=ContentType.objects.get(app_label='admin_site', model=model)
-    permission = Permission.objects.create(codename=f'Can view {model}',
-                                name=f'Can view {model}',
-                                content_type=ct)
-    new_group.permissions.add(permission)
+            print('{} {}'.format(permission, new_group))
 
 # NhanVienPhanTichDuLieu
 new_group, created = Group.objects.get_or_create(name='NhanVienPhanTichDuLieu')
@@ -52,18 +57,85 @@ models_nvptdl_add = ['baocaongay','baocaothang']
 for permission in permissions_nvptdl:
     if permission == 'view':
         for model in models_nvptdl_view:
-            ct=ContentType.objects.get(app_label='admin_site', model=model)
-            permission = Permission.objects.create(codename=f'can_view_{model}',
-                                       name=f'Can view {model}',
-                                       content_type=ct)
+            content_type = ContentType.objects.get(app_label='admin_site', model=model)
+            permission = Permission.objects.get(codename='view_{}'.format(model), content_type=content_type)
             new_group.permissions.add(permission)
-    elif permission == 'add':
-        for model in models_nvptdl_add:
-            ct=ContentType.objects.get(app_label='admin_site', model=model)
-            permission = Permission.objects.create(codename=f'can_add_{model}',
-                                       name=f'Can add {model}',
-                                       content_type=ct)
+            print('{} {}'.format(permission, new_group))
+
+    if permission == 'add':
+        for model in models_nvptdl_add:        
+            content_type = ContentType.objects.get(app_label='admin_site', model=model)
+            permission = Permission.objects.get(codename='add_{}'.format(model), content_type=content_type)
             new_group.permissions.add(permission)
+            print('{} {}'.format(permission, new_group))
+
+# GiamDoc
+new_group, created = Group.objects.get_or_create(name='GiamDoc')
+permissions_gd = 'view'
+models_gd_view = ['phieutietkiem','phieuruttien','loaitietkiem','baocaongay','baocaothang','khachhang']
+
+for model in models_gd_view:
+    content_type = ContentType.objects.get(app_label='admin_site', model=model)
+    permission = Permission.objects.get(codename='view_{}'.format(model), content_type=content_type)
+    new_group.permissions.add(permission)
+    print('{} {}'.format(permission, new_group))
+
+# # NhanVien
+# new_group, created = Group.objects.get_or_create(name='NhanVien')
+# permissions_nv = ['view','add']
+# models_nv_view = ['phieutietkiem','phieuruttien','loaitietkiem']
+# models_nv_add = ['phieutietkiem','phieuruttien','khachhang']
+
+# for permission in permissions_nv:
+#     if permission == 'view':
+#         for model in models_nv_view:
+#             ct=ContentType.objects.get(app_label='admin_site', model=model)
+#             permission = Permission.objects.create(codename=f'view {model}',
+#                                        name=f'Can view {model}',
+#                                        content_type=ct)
+#             new_group.permissions.add(permission)
+#     elif permission == 'add':
+#         for model in models_nv_add:
+#             ct=ContentType.objects.get(app_label='admin_site', model=model)
+#             permission = Permission.objects.create(codename=f'add {model}',
+#                                        name=f'Can add {model}',
+#                                        content_type=ct)
+#             new_group.permissions.add(permission)
+
+# # GiamDoc
+
+# new_group, created = Group.objects.get_or_create(name='GiamDoc')
+# permissions_gd = 'view'
+# models_gd_view = ['phieutietkiem','phieuruttien','loaitietkiem','baocaongay','baocaothang','khachhang']
+
+# for model in models_gd_view:
+#     ct=ContentType.objects.get(app_label='admin_site', model=model)
+#     permission = Permission.objects.create(codename=f'Can view {model}',
+#                                 name=f'Can view {model}',
+#                                 content_type=ct)
+#     new_group.permissions.add(permission)
+
+# # NhanVienPhanTichDuLieu
+# new_group, created = Group.objects.get_or_create(name='NhanVienPhanTichDuLieu')
+# permissions_nvptdl = ['view','add']
+# models_nvptdl_view = ['phieutietkiem','phieuruttien','loaitietkiem','baocaongay','baocaothang']
+# models_nvptdl_add = ['baocaongay','baocaothang']
+
+# for permission in permissions_nvptdl:
+#     if permission == 'view':
+#         for model in models_nvptdl_view:
+#             ct=ContentType.objects.get(app_label='admin_site', model=model)
+#             permission = Permission.objects.create(codename=f'can_view_{model}',
+#                                        name=f'Can view {model}',
+#                                        content_type=ct)
+#             new_group.permissions.add(permission)
+#     elif permission == 'add':
+#         for model in models_nvptdl_add:
+#             ct=ContentType.objects.get(app_label='admin_site', model=model)
+#             permission = Permission.objects.create(codename=f'can_add_{model}',
+#                                        name=f'Can add {model}',
+#                                        content_type=ct)
+#             new_group.permissions.add(permission)
 
 # # declare permission of group (block code)
 # Nhan_Vien_Giao_Dich = ['view','add']
