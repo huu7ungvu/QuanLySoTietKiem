@@ -21,25 +21,28 @@ class PhieutietkiemAdmin (admin.ModelAdmin):
                     "ngaydongphieu", "ngaymophieu", "sodu", "tinhtrang"]
     search_fields = ["maptk", "makh"]
     list_filter = ["ngaymophieu"]
+    date_hierarchy = 'ngaymophieu'
 
 
 class PhieuruttienAdmin (admin.ModelAdmin):
     list_display = ["maprt", "makh", "maptk", "ngayrut", "sotienrut"]
     search_fields = ["maprt", "makh_id", "ngayrut"]
     list_filter = ["ngayrut"]
+    date_hierarchy = 'ngayrut'
 
 
 class BaocaongayAdmin (admin.ModelAdmin):
-    list_display = ["ngay","maltk", "tongthu", "tongchi", "chechlechthuchi"]
+    list_display = ["ngay", "maltk", "tongthu", "tongchi", "chechlechthuchi"]
     date_hierarchy = 'ngay'
     search_fields = ["ngay", "maltk"],
-    list_filter = ['ngay','maltk']
+    list_filter = ['ngay', 'maltk']
 
 
 class BaocaothangAdmin (admin.ModelAdmin):
-    list_display = ["ngaythang","maltk", "phieugoi", "phieudong", "chenhlechdonggoi"]
+    list_display = ["ngaythang", "maltk",
+                    "phieugoi", "phieudong", "chenhlechdonggoi"]
     date_hierarchy = 'ngaythang'
-    list_filter = ['ngaythang','maltk']
+    list_filter = ['ngaythang', 'maltk']
     search_fields = ["ngaythang", "maltk"],
 
 
