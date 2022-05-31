@@ -4,6 +4,22 @@
     box-sizing: border-box;
 }
 
+.homeBody {
+    margin-bottom: 30px;
+}
+
+span.carousel-control-prev-icon {
+    color: white;
+}
+
+span.carousel-control-next-icon {
+    color: white;
+}
+
+.carousel-dark .carousel-indicators [data-bs-target] {
+    background-color: #fff;
+}
+
 .btn-homebody {
     background: yellow;
     text-align: center;
