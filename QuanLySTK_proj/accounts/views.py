@@ -33,7 +33,7 @@ def signin(request):
         user = authenticate(request,username=username,password=password)
         if user is not None:
             if user.is_active:
-                if user.is_superuser==False:
+                if user.is_superuser==False and user.is_staff==False:
                     login(request,user)
                     
                     return redirect('normal_site:home',username) # điều hướng về trang chủ
@@ -84,15 +84,16 @@ def signup(request):
                     group = Group.objects.get(name='GiamDoc')
                     user.groups.add(group)
                     user.is_staff = True
+                    user.save()
                 
                 models.Thamso.objects.filter(tenthamso='SLNguoiDung').update(giatri=str(int(models.Thamso.objects.get(tenthamso='SLNguoiDung').giatri)+1))
                 messages.success(request,"You are registered successfully")
                 return redirect('accounts:signin')
         else:
             messages.error(request,"Password not matched")
-            return redirect('adsite:signup')
+            return redirect('accounts:signup')
 
-    return render(request,"admin_site/Register/register.html")
+    return render(request,"accounts/register.html")
 
 def reset_password(request,*args, **kwargs):
     return render(request,"accounts/reset_password.html")
