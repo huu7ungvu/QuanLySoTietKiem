@@ -9,11 +9,11 @@
 }
 
 span.carousel-control-prev-icon {
-    color: white;
+    background: none;
 }
 
 span.carousel-control-next-icon {
-    color: white;
+    background: none;
 }
 
 .carousel-dark .carousel-indicators [data-bs-target] {

@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tra cứu</title>
-    <link rel="stylesheet" href="{% static 'css/traCuu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tra_Cuu.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer_header.css' %}">
 </head>
 
@@ -33,52 +33,53 @@
             </a>
         </div>
     </div>
+    <div class="homeBody">
+        {% for message in messages %}
 
-    {% for message in messages %}
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ message }}
+        </div>
 
-    <div class="alert alert-success">
-        <a class="close" href="#" data-dismiss="alert">×</a>
-        {{ message }}
-    </div>
+        {% endfor %}
 
-    {% endfor %}
-
-    <div class="content-container">
-        <div class="wrapper">
-            <h1 class="title">Tra cứu</h1>
-            <hr>
-            <div class="search-area">
-                <form method="POST" action="/home/tra_cuu/">
-                    {% csrf_token %}
-                    <input type='text' name="q" placeholder='Nhập ID Khách Hàng' required=True>
-                    <button type="submit">Tìm Kiếm</button>
-                </form>
-            </div>
-            {% if query %}
-            <table>
-                <tr class="first-row-header">
-                    <th colspan="5">Danh sách phiếu tiết kiệm</th>
-                </tr>
-                <tr class="second-row-header">
-                    <th class="stt">STT</th>
-                    <th class="ms">Mã số</th>
-                    <th class="ltk">Loại tiết kiệm</th>
-                    <th class="kh">Khách hàng</th>
-                    <th class="sd">Số dư</th>
-                </tr>
-                <div class="table-row-data">
-                    {% for item in ptk %}
-                    <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td>{{item.maptk}}</td>
-                        <td>{{item.maltk.ltk}}</td>
-                        <td>{{item.makh.tenkh}}</td>
-                        <td>{{item.sodu}}</td>
-                    </tr>
-                    {% endfor %}
+        <div class="content-container">
+            <div class="wrapper">
+                <h1 class="title">Tra cứu</h1>
+                <hr>
+                <div class="search-area">
+                    <form method="POST" action="/home/tra_cuu/">
+                        {% csrf_token %}
+                        <input type='text' name="q" placeholder='Nhập ID Khách Hàng' required=True>
+                        <button type="submit">Tìm Kiếm</button>
+                    </form>
                 </div>
-            </table>
-            {% endif %}
+                {% if query %}
+                <table>
+                    <tr class="first-row-header">
+                        <th colspan="5">Danh sách phiếu tiết kiệm</th>
+                    </tr>
+                    <tr class="second-row-header">
+                        <th class="stt">STT</th>
+                        <th class="ms">Mã số</th>
+                        <th class="ltk">Loại tiết kiệm</th>
+                        <th class="kh">Khách hàng</th>
+                        <th class="sd">Số dư</th>
+                    </tr>
+                    <div class="table-row-data">
+                        {% for item in ptk %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{item.maptk}}</td>
+                            <td>{{item.maltk.ltk}}</td>
+                            <td>{{item.makh.tenkh}}</td>
+                            <td>{{item.sodu}}</td>
+                        </tr>
+                        {% endfor %}
+                    </div>
+                </table>
+                {% endif %}
+            </div>
         </div>
     </div>
 

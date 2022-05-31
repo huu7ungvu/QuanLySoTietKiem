@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tìm phiếu rút</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer_header.css' %}">
-    <link rel="stylesheet" href="{% static 'css/tim_phieu_rut1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tim_phieu_rut.css' %}">
 </head>
 
 <body>
@@ -43,39 +43,41 @@
         </div>
     </div>
 
-    <div class="content-container">
-        <div class="wrapper">
-            <h1 class="title">Rút tiết kiệm</h1>
-            <hr>
-            <form action="{%url 'normal_site:tim_kiem_phieu_tiet_kiem' user.username%} " method="POST"
-                class="form-input">
-                {% csrf_token %}
-                <div class="form-body">
-                    <div class="form-control">
-                        <label for="ID Khach Hang">ID Khách Hàng:</label>
-                        <input type="text" name="id" id="ID Khach Hang" placeholder="Ví dụ: KHxx" Required>
+    <div class="homeBody">
+        <div class="content-container">
+            <div class="wrapper">
+                <h1 class="title">Rút tiết kiệm</h1>
+                <hr>
+                <form action="{%url 'normal_site:tim_kiem_phieu_tiet_kiem' user.username%} " method="POST"
+                    class="form-input">
+                    {% csrf_token %}
+                    <div class="form-body">
+                        <div class="form-control">
+                            <label for="ID Khach Hang">ID Khách Hàng:</label>
+                            <input type="text" name="id" id="ID Khach Hang" placeholder="Ví dụ: KHxx" Required>
+                        </div>
+                        <div class="form-control">
+                            <label for="CCCD"> CCCD:</label>
+                            <input type="text" title="CCCD" name='CCCD' Required pattern="^(\d{9}|\d{12}})"
+                                placeholder="9 (CMND) hoặc 12 (CCCD) chữ số">
+                        </div>
+                        <div class="form-control">
+                            <label for="name">Tên Khách Hàng:</label>
+                            <input type="text" title="name" name="tenkh" pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){1,5}$"
+                                Required style="text-transform:uppercase" placeholder="Họ và tên viết không dấu">
+                        </div>
+                        <div class="form-control">
+                            <label for="Mã Phiếu Tiết Kiệm">Mã Phiếu Tiết Kiệm</label>
+                            <input type="text" name="maptk" id="Mã Phiếu Tiết Kiệm" placeholder="Ví dụ: PTKxx" Required>
+                        </div>
                     </div>
-                    <div class="form-control">
-                        <label for="CCCD"> CCCD:</label>
-                        <input type="text" title="CCCD" name='CCCD' Required pattern="^(\d{9}|\d{12}})" placeholder="9 (CMND) hoặc 12 (CCCD) chữ số">
+                    <div class="classbutton">
+                        <div class="lapphieu">
+                            <button>Tìm Kiếm</button>
+                        </div>
                     </div>
-                    <div class="form-control">
-                        <label for="name">Tên Khách Hàng:</label>
-                        <input type="text" title="name" name="tenkh"
-                            pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){1,5}$" Required style="text-transform:uppercase"
-                            placeholder="Họ và tên viết không dấu">
-                    </div>
-                    <div class="form-control">
-                        <label for="Mã Phiếu Tiết Kiệm">Mã Phiếu Tiết Kiệm</label>
-                        <input type="text" name="maptk" id="Mã Phiếu Tiết Kiệm" placeholder="Ví dụ: PTKxx" Required>    
-                    </div>
-                </div>
-                <div class="classbutton">
-                    <div class="lapphieu">
-                        <button>Tìm Kiếm</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 

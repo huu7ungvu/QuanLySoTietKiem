@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tra cứu</title>
-    <link rel="stylesheet" href="{% static 'css/traCuu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tra_Cuu.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer_header.css' %}">
 </head>
 
@@ -51,57 +51,59 @@
         </div>
     </div>
 
-    {% for message in messages %}
+    <div class="homeBody">
+        {% for message in messages %}
 
-    <div class="alert alert-success">
-        <a class="close" href="#" data-dismiss="alert">×</a>
-        {{ message }}
-    </div>
-
-    {% endfor %}
-
-    <div class="content-container">
-        <div class="wrapper">
-            <h1 class="title">Tra cứu</h1>
-            <hr>
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ message }}
         </div>
 
-        <div class = 'search-area' id="search">
-            <form method="GET">
-                {{ csrf_field }}
-                {{myFilter.form}}
-                <button class = 'btn btn-primary' type="submit" id="search">Search</button>
-            </form>
-        </div>
-        <div class="row">
-            <div class="col-md">
-                <div class="card card-body">
-                    <table class="table table-sm">
-                        <tr>
-                            <th>STT</th>
-                            <th>Mã Phiếu Tiết Kiệm</th>
-                            <th>Mã Loại Tiết Kiệm</th>
-                            <th>Mã Khách Hàng</th>
-                            <th>Số Dư</th>
-                        </tr>
-        
-                        {% for order in orders %}
-        
-                        <tr>
-                            <td>{{forloop.counter}}</td>
-                            <td>{{order.maptk}}</td>
-                            <td>{{order.maltk.ltk}}</td>
-                            <td>{{order.makh.tenkh}}</td>
-                            <td>{{order.sodu}}</td>
-                        </tr>
-                        {% endfor %}
-        
-                    </table>
-                </div>
+        {% endfor %}
+
+        <div class="content-container">
+            <div class="wrapper">
+                <h1 class="title">Tra cứu</h1>
+                <hr>
             </div>
-            <br>
-        </div>
 
+            <div class='search-area' id="search">
+                <form method="GET">
+                    {{ csrf_field }}
+                    {{myFilter.form}}
+                    <button class='btn btn-primary' type="submit" id="search">Search</button>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="card card-body">
+                        <table class="table table-sm">
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã Phiếu Tiết Kiệm</th>
+                                <th>Mã Loại Tiết Kiệm</th>
+                                <th>Mã Khách Hàng</th>
+                                <th>Số Dư</th>
+                            </tr>
+
+                            {% for order in orders %}
+
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{order.maptk}}</td>
+                                <td>{{order.maltk.ltk}}</td>
+                                <td>{{order.makh.tenkh}}</td>
+                                <td>{{order.sodu}}</td>
+                            </tr>
+                            {% endfor %}
+
+                        </table>
+                    </div>
+                </div>
+                <br>
+            </div>
+
+        </div>
     </div>
 
     <div class="homeFooter">

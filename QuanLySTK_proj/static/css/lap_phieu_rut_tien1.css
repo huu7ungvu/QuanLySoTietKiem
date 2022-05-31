@@ -45,6 +45,8 @@ body {
 .content-container {
     max-width: 800px;
     margin: 0 auto;
+    margin-top: 140px;
+    min-height: 390px;
 }
 
 .content-container .title {
