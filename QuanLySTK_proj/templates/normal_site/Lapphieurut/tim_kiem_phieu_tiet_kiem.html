@@ -33,16 +33,16 @@
             </a>
         </div>
     </div>
-    {% for message in messages %}
-
-        <div class="alert alert-success">
-            <a class="close" href="#" data-dismiss="alert">×</a>
-            {{ message }}
-        </div>
-
-        {% endfor %}
     <div class="homeBody">
         <div class="content-container">
+            {% for message in messages %}
+
+            <div class="alert alert-success">
+                <a class="close" href="#" data-dismiss="alert">×</a>
+                {{ message }}
+            </div>
+    
+            {% endfor %}
             <div class="wrapper">
                 <h1 class="title">Rút tiết kiệm</h1>
                 <hr>

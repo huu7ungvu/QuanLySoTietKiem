@@ -40,17 +40,18 @@
                 alt="" />
         </div>
         <div class="homeHeaderUser">
-            <a href="{%url 'normal_site:profile' user.username%} " class="infoUser">
-                <p class="username">{{user.username}}</p>
-                <p class="positon">{{position}}</p>
+            <a href="{%url 'normal_site:profile' user.username%} ">
+                <div class="infoUser">
+                    <p class="username">{{user.username}}</p>
+                    <p class="positon">{{position}}</p>
+                </div>
+                <div class="logoUser">
+                    <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
+                        alt="">
+                </div>
             </a>
-            <div class="logoUser">
-                <img src="https://banner2.cleanpng.com/20180716/lra/kisspng-logo-person-user-person-icon-5b4d2bd2236ca6.6010202115317841461451.jpg"
-                    alt="">
-            </div>
         </div>
     </div>
-
     <div class="homeBody">
         {% for message in messages %}
 
