@@ -13,15 +13,6 @@
 </head>
 
 <body>
-    {% for message in messages %}
-
-    <div class="alert alert-success">
-        <a class="close" href="#" data-dismiss="alert">×</a>
-        {{ message }}
-    </div>
-
-    {% endfor %}
-
     <!-- Header -->
     <div class="homeHeader">
         <div class="homeHeaderLogo">
@@ -42,7 +33,14 @@
             </a>
         </div>
     </div>
+    {% for message in messages %}
 
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ message }}
+        </div>
+
+        {% endfor %}
     <div class="homeBody">
         <div class="content-container">
             <div class="wrapper">
@@ -80,7 +78,6 @@
             </div>
         </div>
     </div>
-
     <div class="homeFooter">
         <footer class="footer-distributed">
 

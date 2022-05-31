@@ -75,15 +75,6 @@
             </div>
         </nav>
 
-        {% for message in messages %}
-
-        <div class="alert alert-success">
-            <a class="close" href="#" data-dismiss="alert">×</a>
-            {{ message }}
-        </div>
-
-        {% endfor %}
-
         <!-- Body -->
         <div class="homeBody">
             <!-- slide -->
@@ -199,7 +190,15 @@
 
                 </div>
             </div> -->
+            {% for message in messages %}
 
+            <div class="alert alert-success">
+                <a class="close" href="#" data-dismiss="alert">×</a>
+                {{ message }}
+            </div>
+
+             {% endfor %}
+             
             <div class="special-func">
                 <p>CÁC CHỨC NĂNG NỔI BẬT</p>
                 <div class="func-container">

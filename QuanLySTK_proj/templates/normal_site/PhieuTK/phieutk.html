@@ -12,14 +12,6 @@
 </head>
 
 <body>
-    {% for message in messages %}
-
-    <div class="alert alert-success">
-        <a class="close" href="#" data-dismiss="alert">×</a>
-        {{ message }}
-    </div>
-
-    {% endfor %}
     <div class="home">
         <!-- Header -->
         <div class="homeHeader">
@@ -41,6 +33,14 @@
                 </a>
             </div>
         </div>
+        {% for message in messages %}
+
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert"></a>
+            {{ message }}
+        </div>
+
+        {% endfor %}
         <div class="homeBody">
             <form action="{% url 'normal_site:lap_phieu_tiet_kiem' user.username%}" method = 'POST' class="phieutietkiem">
                 {% csrf_token %}
