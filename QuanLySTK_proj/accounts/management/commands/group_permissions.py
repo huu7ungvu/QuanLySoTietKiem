@@ -9,9 +9,9 @@ class Command(BaseCommand):
         pass
 
 # Clear all instances of the model (không nên làm như vậy)
-#Group.objects.all().delete()
-#ContentType.objects.all().delete()
-#Permission.objects.all().delete()
+Permission.objects.all().delete()
+Group.objects.all().delete()
+
 
 
 # Create all permissions of all tables in the project
