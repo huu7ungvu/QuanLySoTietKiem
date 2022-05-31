@@ -7,23 +7,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer_header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/homePage.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/slider.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+        rel="stylesheet">
     <title>HomePage</title>
 </head>
 
 <body>
-    {% for message in messages %}
-
-    <div class="alert alert-success">
-        <a class="close" href="#" data-dismiss="alert">×</a>
-        {{ message }}
-    </div>
-
-    {% endfor %}
     <div class="home">
         <!-- Header -->
         <div class="homeHeader">
@@ -46,16 +48,20 @@
             </div>
         </div>
 
+        {% for message in messages %}
+
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ message }}
+        </div>
+
+        {% endfor %}
+
         <!-- Body -->
         <div class="homeBody">
             <!-- <div class="slider">
                 <div class="slides">
 
-                    <input type="radio" name="radio-btn" id="radio1">
-                    <input type="radio" name="radio-btn" id="radio2">
-                    <input type="radio" name="radio-btn" id="radio3">
-                    <input type="radio" name="radio-btn" id="radio4">
-                    <input type="radio" name="radio-btn" id="radio5">
 
                     <div class="slider-main">
                         <div class="slider first">
@@ -78,23 +84,6 @@
                             <img src="https://www.mbbank.com.vn/resources/files/KHCN/KhuyenMai/Nam-2022/Thang-2/TK-So-dep-Shopee/1920-x-540-banner-web.jpg"
                                 alt="" />
                         </div>
-                    </div>
-
-
-                    <div class="navigation-auto">
-                        <div class="auto-btn1"></div>
-                        <div class="auto-btn2"></div>
-                        <div class="auto-btn3"></div>
-                        <div class="auto-btn4"></div>
-                        <div class="auto-btn5"></div>
-                    </div>
-
-                    <div class="navigation-manual">
-                        <lable for="radio1" class="manual-btn"></lable>
-                        <label for="radio2" class="manual-btn"></label>
-                        <label for="radio3" class="manual-btn"></label>
-                        <label for="radio4" class="manual-btn"></label>
-                        <label for="radio5" class="manual-btn"></label>
                     </div>
 
                 </div>
@@ -148,7 +137,7 @@
                 </button>
             </div>
 
-            <div class="container-fluid">
+            <!-- <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3 col-sm-0 col-xs-0">
                     </div>
@@ -207,6 +196,48 @@
                     <div class="col-md-3 col-sm-0 col-xs-0">
                     </div>
 
+                </div>
+            </div> -->
+
+            <div class="special-func">
+                <p>CÁC CHỨC NĂNG NỔI BẬT</p>
+                <div class="func-container">
+                    <div class="func-col-4">
+                        <div class="img-wrapper">
+                            <img src="{% static 'img/lap_phieu.png' %}" alt="lap_phieu">
+                        </div>
+                        <h3>Lập phiếu tiết kiệm</h3>
+                        <p>Thủ tục lập phiếu tiết kiệm online linh hoạt và an toàn, lãi suất cao so với tiết kiệm truyền
+                            thống.</p>
+                        <a href="{%url 'normal_site:lap_phieu_tiet_kiem' user.username %}">Xem chi tiết</a>
+                    </div>
+                    <div class="func-col-4">
+                        <div class="img-wrapper">
+                            <img src="{% static 'img/rut_tien.png' %}" alt="rut_tien">
+                        </div>
+                        <h3>Lập phiếu rút tiền</h3>
+                        <p>Rút tiết kiệm online nhanh chóng, đơn giản, thuận tiện, tiết kiệm thời gian cho khách hàng.
+                        </p>
+                        <a href="{%url 'normal_site:tim_kiem_phieu_tiet_kiem' user.username %}">Xem chi tiết</a>
+                    </div>
+                    <div class="func-col-4">
+                        <div class="img-wrapper">
+                            <img src="{% static 'img/tra_cuu.png' %}" alt="tra_cuu">
+                        </div>
+                        <h3>Tra cứu</h3>
+                        <p>Tìm kiếm thông tin nhanh nhất có thể, độ chính xác cao và đáp ứng được nhu cầu của người
+                            dùng.</p>
+                        <a href="{%url 'normal_site:tra_cuu' user.username %}">Xem chi tiết</a>
+                    </div>
+                    <div class="func-col-4">
+                        <div class="img-wrapper">
+                            <img src="{% static 'img/thong_ke.png' %}" alt="thong_ke">
+                        </div>
+                        <h3>Thống kê</h3>
+                        <p>Tìm kiếm thông tin nhanh nhất có thể, độ chính xác cao và đáp ứng được nhu cầu của người
+                            dùng.</p>
+                        <a href="{%url 'normal_site:thong_ke' user.username %}">Xem chi tiết</a>
+                    </div>
                 </div>
             </div>
         </div>

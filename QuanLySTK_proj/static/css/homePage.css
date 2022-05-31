@@ -1,6 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .homeBody {
     margin-bottom: 30px;
 }
+
+span.carousel-control-prev-icon {
+    color: white;
+}
+
+span.carousel-control-next-icon {
+    color: white;
+}
+
+.carousel-dark .carousel-indicators [data-bs-target] {
+    background-color: #fff;
+}
+
 .btn-homebody {
     background: yellow;
     text-align: center;
@@ -45,4 +64,91 @@
 
 .thongke {
     background-color: rgb(129, 52, 216);
+}
+
+.special-func {
+    padding: 32px 64px;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    background-color: #ebebeb;
+}
+
+.special-func > p {
+    padding: 8px 0;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: rgb(20,30,210);
+}
+
+.special-func .func-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.special-func .func-container .func-col-4 {
+    width: 23%;
+    height: 300px;
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
+    padding: 16px;
+}
+
+.func-container .func-col-4 .img-wrapper {
+    text-align: center;
+}
+
+.func-container .func-col-4 img {
+    height: 100px;
+}
+
+.func-container .func-col-4 h3 {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: rgb(20,30,210);
+    text-transform: uppercase;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.func-container .func-col-4 p {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    color: rgb(20,30,210);
+    opacity: 0.9;
+}
+
+.func-container .func-col-4 a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: rgb(20,30,210);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Roboto Condensed', sans-serif;
+    border: 1px solid rgb(20,30,210);
+    padding: 6px 10px;
+}
+
+/* Tablet */
+@media (min-width: 46.25em) and (max-width: 63.9375em) {
+    .special-func .func-container .func-col-4 {
+        width: 48%;
+        margin-bottom: 32px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 46.1875em) {
+    .special-func .func-container {
+        justify-content: center;
+    }
+    .special-func .func-container .func-col-4 {
+        width: 95%;
+        margin-bottom: 16px;
+    }
 }
