@@ -619,7 +619,10 @@ class LapPhieuTietKiem(UserAccessMixin, View):
 
         for i in range(len(ltk)):
             ltk_list.append(ltk[i].ltk)
-        context = {'ltk': ltk_list}
+
+        date_today = str(date.today())
+
+        context = {'ltk': ltk_list, 'date': date_today}
 
         return render(request,self.template_name,context)
     
