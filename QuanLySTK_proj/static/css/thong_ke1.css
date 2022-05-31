@@ -69,6 +69,7 @@ body {
     margin: 16px 0;
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
 }
 
 .content-container .choose-area p {
@@ -113,6 +114,20 @@ th, td {
 tr:nth-child(even) {
     background-color: #E6E4E4;
 }
+
+.form-group{
+    display: flex;
+    flex-direction: row;
+}
+
+label {
+    margin: 20px;
+}
+
+input[type="submit"] {
+    margin-left: 20px;
+}
+
 
 /* .footer-container {
     background-color: #C4C4C4;

@@ -77,19 +77,23 @@
                 <!-- '' thôi ko phai ""-->
                 <div class="choose-area">
                     <p>Báo cáo Doanh số hoạt động ngày</p>
+                    <br />
                     <div class="form">
                         <form method="GET" action="{%url 'normal_site:thong_ke' user.username%}">
-                            <label for="Kiểu"> Kiểu: </label>
+                            <div class="form-group">
+                            <label for="Kiểu"> <h3>Kiểu: </h3></label>
                             <input type="text" id="Kieu" name="t" value="Thống kê theo ngày" readonly>
                             <br>
 
-                            <label for="Chọn ngày"> Chọn ngày: </label>
+                            <label for="Chọn ngày"><h3>Chọn ngày: </h3> </label>
                             <input type="date" id="date" name="d" value="2001-01-01" min="2000-01-01" max="2050-12-31"
                                 required=True>
 
                             <input type="submit" value="Thống Kê">
+                            </div>
                         </form>
                     </div>
+                    <br />
                     <table>
                         <tr class="first-row-header">
                             <th colspan="5">Ngày: {{date}}</th>
@@ -119,16 +123,19 @@
                 {% if t == '2' %}
                 <div class="choose-area">
                     <p>Báo cáo Doanh số hoạt động tháng</p>
+                    <br />
                     <div class="form">
                         <form method="GET" action="{%url 'normal_site:thong_ke' user.username%}">
-                            <label for="Kiểu"> Kiểu: </label>
+                            <div class="form-group">
+                            <label for="Kiểu"><h3> Kiểu: </h3></label>
                             <input type="text" id="Kieu" name="t" value="Thống kê theo tháng" readonly>
                             <br>
 
-                            <label for="Chọn tháng"> Chọn tháng: </label>
+                            <label for="Chọn tháng"><h3>Chọn tháng:</h3> </label>
                             <input type="month" id="date" name="d" value="2010-01" min="2000-01" max="2050-12"
                                 required=True>
                             <input type="submit" value="Thống Kê">
+                            </div>
                         </form>
                         <br>
                         {% for i in ltk %}
