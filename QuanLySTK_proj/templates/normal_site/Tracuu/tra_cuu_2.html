@@ -114,15 +114,15 @@
                             alt="" /></span></h3>
 
                 <p class="footer-links">
-                    <a href="#" class="link-1">Trang Chủ</a>
+                    <a href= "{%url 'normal_site:home' user.username %}" class="link-1">Trang Chủ</a>
 
-                    <a href="#">Lập Phiếu Tiết Kiệm</a>
+                    <a href="{%url 'normal_site:lap_phieu_tiet_kiem' user.username %}">Lập Phiếu Tiết Kiệm</a>
 
-                    <a href="#">Lập Phiếu Rút Tiền</a>
+                    <a href="{%url 'normal_site:tim_kiem_phieu_tiet_kiem' user.username %}">Lập Phiếu Rút Tiền</a>
 
-                    <a href="#">Tra Cứu</a>
+                    <a href="{%url 'normal_site:tra_cuu' user.username %}">Tra Cứu</a>
 
-                    <a href="#">Thống Kê</a>
+                    <a href="{%url 'normal_site:thong_ke' user.username %}">Thống Kê</a>
 
                 </p>
 
