@@ -1,0 +1,280 @@
+[33mcommit 6ee5f886477bfbc71567d69fedb6aca680c3f3a4[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Tue May 31 10:13:33 2022 +0700
+
+    add button register in admin site and change href tag in templete.
+
+[33mcommit a952dfb2a0c23b88bd4e298856791aa0455e41af[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Tue May 31 05:38:16 2022 +0700
+
+    update new homepage
+
+[33mcommit eecaf4a5e0640e900e939355fdd8a48ef4f18850[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Tue May 31 03:04:20 2022 +0700
+
+    update css lapphieurut again
+
+[33mcommit 5411020f34c019613dd3c9bef167025aee52afed[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Tue May 31 02:58:42 2022 +0700
+
+    update css lapphieurut
+
+[33mcommit 77785ceebeaa889175d78d00216f37de41ef0c7e[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Tue May 31 02:33:58 2022 +0700
+
+    update footer
+
+[33mcommit d2f3a7f30a3467d742fa2a2beccfe2f7d0f97a59[m
+Merge: 7fab7a3 c82cdfa
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Tue May 31 02:13:31 2022 +0700
+
+    merge code
+
+[33mcommit c82cdfaddd3273a51244172fd028d395d5517f0a[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Tue May 31 02:12:41 2022 +0700
+
+    Fix bug permission required
+
+[33mcommit 7fab7a36597d1e19e666bf4ff4b58a76f0f96414[m
+Merge: c519c18 1b75432
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Tue May 31 02:02:29 2022 +0700
+
+    add back home btn
+
+[33mcommit c519c18dbbc8d9c90ad6f430b57820a3e1334729[m
+Merge: aef6a7b 1093a95
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Tue May 31 02:02:15 2022 +0700
+
+    add back home btn
+
+[33mcommit 1b75432b48903478afa844a290fed74faa0b2988[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Tue May 31 01:55:07 2022 +0700
+
+    Fix bug permission required
+
+[33mcommit 062036b5bf3d48a8c54416f90e5e61e211f850a6[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Tue May 31 01:32:32 2022 +0700
+
+    Fix bug baocaothang va ngay
+
+[33mcommit aef6a7bad6292256cd561e05f6fe9e2745f6ee65[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Tue May 31 01:05:39 2022 +0700
+
+    Ky add back home btn
+
+[33mcommit 1093a95935b896d767dc84e85c7b3afeb3975b1f[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Tue May 31 00:47:30 2022 +0700
+
+    fix bug user NhanVien click ThongKe
+
+[33mcommit b7399410493fd3366b885609dccb7131d3f03bda[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Tue May 31 00:21:08 2022 +0700
+
+    Changes templetes and fix bug.
+
+[33mcommit 2d404f062be26e7420f21d0eed421b51d1374d93[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Mon May 30 23:37:51 2022 +0700
+
+    after merge
+
+[33mcommit 6110df366664fa4042b0bf206683f65149e9f043[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Mon May 30 23:35:43 2022 +0700
+
+    update before revert
+
+[33mcommit 313ec32cfd1bea0e4d723c41982d47d5e438ca48[m
+Merge: bb0feb0 daad99a
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Mon May 30 21:30:46 2022 +0700
+
+    fix all bugs
+
+[33mcommit bb0feb0558cf385e8b60f13b9550dfe69328ad0d[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Mon May 30 21:27:56 2022 +0700
+
+    fix all bug final
+
+[33mcommit d6d71d256e0465e6bfa1a817e25c2ff83e9f2071[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Mon May 30 20:24:05 2022 +0700
+
+    update
+
+[33mcommit daad99af37e707ce70defe3d063d844f06ac68eb[m
+Merge: 90bcfcc 62f025d
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Mon May 30 01:42:27 2022 +0700
+
+    Ky update css homepage
+
+[33mcommit 90bcfcc18e72c82d86ac05c61018382924ddc6a3[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Mon May 30 01:42:08 2022 +0700
+
+    Ky update css homepage
+
+[33mcommit 62f025dd2829f5f461a12e0f8eb4052c197be8cf[m
+Merge: 3320ad8 5e61dad
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Mon May 30 00:55:39 2022 +0700
+
+    Merge branch 'main' of https://github.com/huu7ungvu/QuanLySoTietKiem
+
+[33mcommit 3320ad8cfa85205e9fbd6b01518e7c9b9b338040[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Mon May 30 00:54:03 2022 +0700
+
+    update tracuu by use filter
+
+[33mcommit 5e61dada8af3a8306d07db1c86d41e0a7ac2d35a[m
+Merge: ad2b1c5 ab5a03c
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Mon May 30 00:02:37 2022 +0700
+
+    Ky update css
+
+[33mcommit ad2b1c5efa2ce712a13e30080bdd5a2bea2b7767[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Sun May 29 23:59:35 2022 +0700
+
+    Ky update css
+
+[33mcommit c825c9c99a106bef7332e2b148db2fe7d1511264[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Sun May 29 22:22:16 2022 +0700
+
+    adjust html templetes
+
+[33mcommit ab5a03c7f92a12aa5ec628a8b8da0e10c2706377[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Sun May 29 22:15:03 2022 +0700
+
+    fix bug in thong ke theo ngay
+
+[33mcommit f3a970dfd3c28b2bce2258c535e7b7a7d2acd04e[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Sun May 29 21:38:43 2022 +0700
+
+    fix bug indexing in thongke
+
+[33mcommit 58c979ec2382f74b9e3d59d1bec4400fc56f7d95[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Sat May 28 13:34:36 2022 +0700
+
+    update
+
+[33mcommit ff8d0b5d93cc671d78dc49e3fe53bcb711a9ef3c[m
+Merge: 4501173 cd5f8f7
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Sat May 28 13:31:15 2022 +0700
+
+    ky update
+
+[33mcommit 4501173503ca32cdc667ff7d67e39ffe46bf0409[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Sat May 28 13:27:16 2022 +0700
+
+    ky update
+
+[33mcommit cd5f8f7710bdd3347b0fe05a8c5a569fe23a8aa2[m
+Merge: b747e18 935f27f
+Author: Tra <19522370@gm.uit.edu.vn>
+Date:   Sat May 28 13:26:36 2022 +0700
+
+    tra edit css
+
+[33mcommit b747e189ca6997e00c79596ac81d8ac49edec5f4[m
+Author: Tra <19522370@gm.uit.edu.vn>
+Date:   Sat May 28 13:11:48 2022 +0700
+
+    tra add css
+
+[33mcommit 935f27f1f0b296a8dae1e01ee95bb507761cf965[m
+Merge: 8baee51 08aa89c
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Sat May 28 11:40:27 2022 +0700
+
+    ky
+
+[33mcommit 8baee519ab6bb3abe42be0a932ec291dbb1efdc7[m
+Author: nguyendaiky <ngdaiky@gmail.com>
+Date:   Sat May 28 11:31:50 2022 +0700
+
+    ky update
+
+[33mcommit 08aa89cb4ba02b0d5a3587d5a383fbbfca1f25c7[m
+Merge: f807501 e94c88f
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Fri May 27 21:32:43 2022 +0700
+
+    Merge branch 'main' of https://github.com/huu7ungvu/QuanLySoTietKiem
+
+[33mcommit f807501e7f3fd1ff4236f662c5b02fe4d4c2249f[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Fri May 27 21:32:30 2022 +0700
+
+    fix bug: how to calculate sodu with ltk01
+
+[33mcommit e94c88f4244332a89c35b51ea864aad04e4189e3[m
+Author: ducthien <19522261@gm.uit.edu.vn>
+Date:   Fri May 27 16:20:34 2022 +0700
+
+    change admin header
+
+[33mcommit 41a54db425bbaefc9af100dc022a73beb74ec2a5[m
+Author: ducthien <19522261@gm.uit.edu.vn>
+Date:   Fri May 27 15:49:56 2022 +0700
+
+    Admin fillter by date
+
+[33mcommit 29975ac5c600b965eb81bcd23bb45e93788551c1[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Fri May 27 15:27:28 2022 +0700
+
+    update sql file
+
+[33mcommit b246b29cb0952873021c36e005fe9f8fd8bc47aa[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Fri May 27 15:19:54 2022 +0700
+
+    fix error in view.py
+
+[33mcommit 8a79ba04414b8ade6c593a7768b1a66d48fb6ff0[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Fri May 27 15:12:00 2022 +0700
+
+    fix error in html file
+
+[33mcommit 4b906bc78634703e922c52759ef864439bea04a3[m
+Author: Tra <19522370@gm.uit.edu.vn>
+Date:   Fri May 27 14:55:05 2022 +0700
+
+    tra edit css
+
+[33mcommit b0c5e42541a3855aa1675b1a2c4d6c6cd1a0d735[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Fri May 27 13:33:55 2022 +0700
+
+    fix error
+
+[33mcommit 187514da3acaec52204795a63b249a0c1f6e7247[m
+Author: HUU TUNG VU <62176133+huu7ungvu@users.noreply.github.com>
+Date:   Fri May 27 13:30:41 2022 +0700
+
+    update how to calculate later mone

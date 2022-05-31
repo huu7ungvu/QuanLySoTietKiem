@@ -21,6 +21,5 @@ app_name = 'adsite'
 admin.site.site_header = 'HỆ THỐNG ADMIN UIT SAVE'
 
 urlpatterns = [
-    path('signup', views.signup, name='signup'),
-    path('home', views.home, name='home'),
+    #path('home', views.home, name='home'),
 ]
