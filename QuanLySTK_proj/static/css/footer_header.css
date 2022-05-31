@@ -14,6 +14,11 @@ body{
     justify-content: space-between;
     background: -webkit-linear-gradient(left, #3931af, #00c6ff);
     height: 15vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
 }
 
 .homeHeaderLogo {
@@ -268,10 +273,10 @@ body{
     }
 
 }
-.homeFooter {
+/* .homeFooter {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     height: max-content;
-}
+} */
