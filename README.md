@@ -1,4 +1,4 @@
-# Mọi người chạy lại file phân quyền group_permissions.py và đăng ký lại tài khoản để chạy web
+# Mọi người chạy lại file phân quyền group_permissions.py bằng lệnh python manage.py group_permissions và đăng ký lại tài khoản để chạy web
 # SE104.M23-QuanLySoTietKiem
 Đề tài: Xây dựng web app quản lý sổ tiết kiệm.
 Thành viên nhóm:
