@@ -1,4 +1,4 @@
-# ĐỒ ÁN NHẬP MÔN CÔNG NGHỆ PHẦN MỀM - SE104.M23 
+# __ĐỒ ÁN NHẬP MÔN CÔNG NGHỆ PHẦN MỀM - SE104.M23__ 
 __QUẢN LÝ PHIẾU TIẾT KIỆM__
 
 __NHÓM 17__
@@ -11,7 +11,7 @@ NGUYỄN THỊ MAI PHƯƠNG | 19522063
 NGUYỄN ĐẠI KỲ | 19521731
 NGÔ ĐỨC THIỆN | 19522261
 
-# Các bước để run source code
+# __CÁC BƯỚC ĐỂ RUN SOURCE CODE__
 ## 1: Tạo môi trường ảo
 ## 2: Cài đặt các thư viện cần thiết trong file requirements 
 ```
