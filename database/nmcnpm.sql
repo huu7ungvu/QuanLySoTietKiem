@@ -131,20 +131,6 @@ ALTER TABLE Phanquyen
 ADD CONSTRAINT FK_PQ_2
 FOREIGN KEY (manhom) REFERENCES Nhomnguoidung(manhom);
 
--- SHOW VARIABLES LIKE "sql_safe_updates";
---SET SQL_SAFE_UPDATES = 'OFF';
-
--- Processing --
---show tables;
-
-delete from baocaongay;
-delete from baocaothang;
-delete from phieuruttien;
-delete from phieutietkiem;
-delete from loaitietkiem;
-delete from khachhang;
-delete from thamso;
-
 -- Insert dữ liệu
 -- Bảng khách hàng
 INSERT INTO KhachHang (makh, tenkh, diachi,cccd) VALUES ('KH1','Nguyen Thi Mai Phuong','Nghe An', '012345678');
@@ -205,5 +191,3 @@ Insert into thamso (tenthamso, giatri) values ('SLKhachHang','15');
 Insert into thamso (tenthamso, giatri) values ('SLPhieuTietKiem','17');
 Insert into thamso (tenthamso, giatri) values ('SLPhieuRutTien','6');
 Insert into thamso (tenthamso, giatri) values ('SLLoaiTietKiem','3');
-
-select * from baocaongay

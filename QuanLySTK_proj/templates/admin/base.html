@@ -55,7 +55,7 @@
                 {% if user.has_usable_password %}
                 <a href="{% url 'admin:password_change' %}">{% translate 'Change password' %}</a> /
                 <a href="{% url 'accounts:signup' %}">{% translate 'Register' %}</a> /
-                <a href="/admin/logout/">Log out</a>
+                <a href="{% url 'accounts:logout' %}">Log out</a>
                 {% else %}
                 {% endif %}
                 <!-- <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
