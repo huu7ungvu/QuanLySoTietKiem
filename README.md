@@ -1,3 +1,16 @@
+# ĐỒ ÁN NHẬP MÔN CÔNG NGHỆ PHẦN MỀM - SE104.M23 
+__QUẢN LÝ PHIẾU TIẾT KIỆM__
+
+__NHÓM 17__
+
+TÊN THÀNH VIÊN | MSSV 
+ ------------ | ------------- 
+BÙI THANH TRÀ ___(Nhóm trưởng)___ | 19522370
+VŨ HỮU TÙNG | 19522497
+NGUYỄN THỊ MAI PHƯƠNG | 19522063
+NGUYỄN ĐẠI KỲ | 19521731
+NGÔ ĐỨC THIỆN | 19522261
+
 # Các bước để run source code
 ## 1: Tạo môi trường ảo
 ## 2: Cài đặt các thư viện cần thiết trong file requirements 
